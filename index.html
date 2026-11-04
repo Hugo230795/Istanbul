@@ -166,6 +166,8 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 .conv input { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
 .conv-eq { font-size: 1.4rem; color: var(--muted); padding-bottom: 8px; }
 .conv-hint { flex-basis: 100%; }
+.linkish { all: unset; cursor: pointer; color: var(--cobalt); text-decoration: underline; }
+.linkish:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
 .lex { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
 .lex div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
 .lex b { font-family: var(--f-display); font-weight: 400; font-size: 1.15rem; color: var(--cobalt); }
@@ -347,11 +349,11 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
       <h2>Convertisseur</h2>
     </div>
     <div class="card conv">
-      <label for="rate" class="rate-l">Taux du jour : 1 € = <input id="rate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="?"> ₺</label>
+      <label for="rate" class="rate-l">Taux : 1 € = <input id="rate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="?"> ₺</label>
       <label for="c-try">Livres turques<input id="c-try" type="number" min="0" step="1" inputmode="decimal" placeholder="1000"></label>
       <span class="conv-eq" aria-hidden="true">⇄</span>
       <label for="c-eur">Euros<input id="c-eur" type="number" min="0" step="0.01" inputmode="decimal"></label>
-      <p class="hint conv-hint" id="c-hint">Indiquez d'abord le taux du jour, affiché par votre banque ou un convertisseur en ligne. Il reste enregistré sur votre téléphone.</p>
+      <p class="hint conv-hint"><span id="c-hint" aria-live="polite">Récupération du taux du jour…</span> <button type="button" class="linkish" id="c-auto" hidden>Reprendre le taux automatique</button></p>
     </div>
   </section>
 
@@ -636,30 +638,61 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
   refresh();
 })();
 
-// Convertisseur : taux saisi par chacun, gardé sur son téléphone
+// Convertisseur : taux du jour récupéré automatiquement, modifiable à la main
 (function () {
   const $ = id => document.getElementById(id);
-  const rateInput = $("rate"), cTry = $("c-try"), cEur = $("c-eur"), hint = $("c-hint");
-  const KEY = "istanbul-taux";
-  let rate = null;
-  try { const r = parseFloat(localStorage.getItem(KEY)); if (r > 0) rate = r; } catch (e) {}
-  if (rate) rateInput.value = rate;
-  const fromTry = () => { cEur.value = rate && cTry.value ? (cTry.value / rate).toFixed(2) : ""; };
-  const fromEur = () => { cTry.value = rate && cEur.value ? Math.round(cEur.value * rate) : ""; };
-  function showHint() {
-    hint.textContent = rate
-      ? "Au taux de 1 € = " + rate.toLocaleString("fr-FR") + " ₺, enregistré sur ce téléphone."
-      : "Indiquez d'abord le taux du jour, affiché par votre banque ou un convertisseur en ligne. Il reste enregistré sur votre téléphone.";
+  const rateInput = $("rate"), cTry = $("c-try"), cEur = $("c-eur"), hint = $("c-hint"), autoBtn = $("c-auto");
+  const KEY = "istanbul-taux-v2"; // { auto: {rate, date, source}, manual: number|null }
+  let store = { auto: null, manual: null };
+  try { store = Object.assign(store, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+  const rate = () => store.manual || (store.auto && store.auto.rate) || null;
+  const fmtDate = d => new Date(d + "T12:00:00Z").toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+
+  const fromTry = () => { const r = rate(); cEur.value = r && cTry.value ? (cTry.value / r).toFixed(2) : ""; };
+  const fromEur = () => { const r = rate(); cTry.value = r && cEur.value ? Math.round(cEur.value * r) : ""; };
+
+  function show(note) {
+    if (document.activeElement !== rateInput) rateInput.value = rate() ? +rate().toFixed(2) : "";
+    autoBtn.hidden = !(store.manual && store.auto);
+    if (store.manual) hint.textContent = "Taux saisi à la main, enregistré sur ce téléphone.";
+    else if (store.auto) hint.textContent = "Taux du " + fmtDate(store.auto.date) + " (" + store.auto.source + "), mis à jour automatiquement." + (note ? " " + note : "");
+    else hint.textContent = note || "Récupération du taux du jour…";
+    fromTry();
   }
+
+  // Deux sources gratuites : la BCE (via Frankfurter), puis ExchangeRate-API en secours
+  async function fetchRate() {
+    const sources = [
+      ["https://api.frankfurter.dev/v1/latest?base=EUR&symbols=TRY", d => ({ rate: d.rates.TRY, date: d.date, source: "BCE" })],
+      ["https://open.er-api.com/v6/latest/EUR", d => ({ rate: d.rates.TRY, date: new Date(d.time_last_update_unix * 1000).toISOString().slice(0, 10), source: "ExchangeRate-API" })]
+    ];
+    for (const [url, parse] of sources) {
+      try {
+        const res = await fetch(url, { signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined });
+        if (!res.ok) continue;
+        const r = parse(await res.json());
+        if (r.rate > 0) return r;
+      } catch (e) {}
+    }
+    return null;
+  }
+
   rateInput.addEventListener("input", () => {
     const r = parseFloat(rateInput.value);
-    rate = r > 0 ? r : null;
-    try { localStorage.setItem(KEY, rate ? String(rate) : ""); } catch (e) {}
-    fromTry(); showHint();
+    store.manual = r > 0 ? r : null;
+    save(); show();
   });
+  autoBtn.addEventListener("click", () => { store.manual = null; save(); show(); });
   cTry.addEventListener("input", fromTry);
   cEur.addEventListener("input", fromEur);
-  showHint();
+
+  show();
+  fetchRate().then(r => {
+    if (r) { store.auto = r; save(); show(); }
+    else if (store.auto) show("Pas de connexion : dernier taux connu.");
+    else if (!store.manual) show("Taux indisponible sans connexion. Saisissez-le à la main.");
+  });
 })();
 </script>
 
