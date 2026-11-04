@@ -607,12 +607,18 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 
   // Fond de carte clair ou sombre selon le thème du téléphone
   const dark = matchMedia("(prefers-color-scheme: dark)");
-  const tileUrl = d => `https://{s}.basemaps.cartocdn.com/${d ? "dark_all" : "rastertiles/voyager"}/{z}/{x}/{y}{r}.png`;
-  const tiles = L.tileLayer(tileUrl(dark.matches), {
-    maxZoom: 19, subdomains: "abcd",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-  }).addTo(map);
-  dark.addEventListener && dark.addEventListener("change", e => tiles.setUrl(tileUrl(e.matches)));
+  // Fonds Esri, utilisables sans clé (CARTO exige désormais une clé)
+  const esri = path => `https://server.arcgisonline.com/ArcGIS/rest/services/${path}/MapServer/tile/{z}/{y}/{x}`;
+  const attribution = 'Fond de carte &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+  const lightBase = L.tileLayer(esri("World_Street_Map"), { maxZoom: 19, maxNativeZoom: 18, attribution });
+  const darkBase = L.layerGroup([
+    L.tileLayer(esri("Canvas/World_Dark_Gray_Base"), { maxZoom: 19, maxNativeZoom: 16, attribution }),
+    L.tileLayer(esri("Canvas/World_Dark_Gray_Reference"), { maxZoom: 19, maxNativeZoom: 16 })
+  ]);
+  let base = null;
+  const setBase = d => { if (base) map.removeLayer(base); base = (d ? darkBase : lightBase).addTo(map); base.bringToBack && base.bringToBack(); };
+  setBase(dark.matches);
+  dark.addEventListener && dark.addEventListener("change", e => setBase(e.matches));
 
   const transport = L.layerGroup().addTo(map);
   L.polyline(tram, { color: css("--cobalt"), weight: 4, opacity: .75 }).bindTooltip("Tram T1", { sticky: true }).addTo(transport);
