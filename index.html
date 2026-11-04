@@ -181,6 +181,22 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 .tips li { color: var(--muted); font-size: .93rem; }
 .tips li strong { color: var(--ink); font-weight: 600; }
 .tips li::marker { color: var(--tile); font-family: var(--f-mono); font-size: .85rem; }
+.eras { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2px; border-top: 2px solid var(--cobalt); }
+.eras li { display: flex; flex-direction: column; gap: 2px; padding: 10px 8px 0 0; position: relative; }
+.eras li::before { content: ""; position: absolute; top: -6px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--cobalt); }
+.eras b { font-family: var(--f-mono); font-size: .8rem; font-weight: 500; color: var(--cobalt); font-variant-numeric: tabular-nums; }
+.eras span { font-size: .85rem; color: var(--muted); }
+.hist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.hist article { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 16px; }
+.hist article:target { border-color: var(--tile); box-shadow: 0 0 0 2px var(--tile-soft); }
+.hist header { display: flex; flex-direction: column; gap: 2px; }
+.hist h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; }
+.hist p { color: var(--muted); font-size: .94rem; max-width: 65ch; }
+.hist p.look { color: var(--ink); background: var(--cobalt-soft); border-radius: 8px; padding: 10px 12px; font-size: .9rem; }
+.hist p.look b { color: var(--cobalt); }
+.hist .to-map { align-self: flex-start; font-size: .85rem; }
+.pp-links { display: flex; gap: 14px; flex-wrap: wrap; }
+@media (max-width: 760px) { .hist { grid-template-columns: 1fr; } }
 .linkish { all: unset; cursor: pointer; color: var(--cobalt); text-decoration: underline; }
 .linkish:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
 .lex { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
@@ -227,6 +243,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 
   <nav aria-label="Jours">
     <a href="#carte">Carte</a>
+    <a href="#histoire">Histoire</a>
     <a href="#j1">Sultanahmet <span>mer. 11</span></a>
     <a href="#j2">Palais et bazars <span>jeu. 12</span></a>
     <a href="#j3">Rive asiatique <span>ven. 13</span></a>
@@ -272,6 +289,139 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     <h2 class="food-title">Où manger</h2>
     <p class="sub">Du sandwich à quelques euros au dîner gastronomique. Les lettres correspondent aux losanges de la carte.</p>
     <div class="food-list" id="food-list"></div>
+  </section>
+
+  <section class="practical" id="histoire">
+    <div class="day-head">
+      <div class="eyebrow">2 700 ans en quatre jours</div>
+      <h2>Histoire des monuments</h2>
+      <p class="sub">De quoi savoir ce que vous regardez. Istanbul a porté trois noms (Byzance, Constantinople, Istanbul) et a été la capitale de deux empires, byzantin puis ottoman, pendant plus de 1 500 ans.</p>
+    </div>
+
+    <ol class="eras" aria-label="Repères chronologiques">
+      <li><b>≈ 660 av. J.-C.</b><span>Des colons grecs fondent Byzance.</span></li>
+      <li><b>330</b><span>Constantin en fait la capitale de l'Empire romain : Constantinople.</span></li>
+      <li><b>532–565</b><span>Justinien : Sainte-Sophie, la Citerne Basilique.</span></li>
+      <li><b>1204</b><span>Les croisés pillent la ville.</span></li>
+      <li><b>1453</b><span>Mehmed II prend la ville : début de l'Istanbul ottomane.</span></li>
+      <li><b>1520–1566</b><span>Soliman le Magnifique et l'architecte Sinan.</span></li>
+      <li><b>1923</b><span>République de Turquie, capitale déplacée à Ankara.</span></li>
+    </ol>
+
+    <div class="hist">
+      <article id="h-sophie" data-place="Sainte-Sophie">
+        <header><h3>Sainte-Sophie</h3><span class="when-eat">532–537 · Justinien</span></header>
+        <p>L'empereur Justinien la fait construire en cinq ans seulement, après une révolte qui avait brûlé l'église précédente. Ses architectes, Anthémios de Tralles et Isidore de Milet, posent une coupole d'environ 31 mètres de diamètre qui semble flotter au-dessus des fenêtres. Pendant près de mille ans, c'est la plus grande église de la chrétienté.</p>
+        <p>En 1453, Mehmed II entre dans la ville et la transforme en mosquée : on ajoute des minarets, et les mosaïques sont peu à peu recouvertes. Atatürk en fait un musée en 1934. Elle redevient une mosquée en 2020.</p>
+        <p class="look"><b>À regarder :</b> la mosaïque de la Déisis (le Christ entre Marie et Jean-Baptiste) dans la galerie, et les immenses médaillons calligraphiés du XIX<sup>e</sup> siècle.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-bleue" data-place="Mosquée Bleue">
+        <header><h3>Mosquée Bleue</h3><span class="when-eat">1609–1616 · Ahmet I<sup>er</sup></span></header>
+        <p>Son vrai nom est mosquée du Sultan Ahmet. Le jeune sultan Ahmet I<sup>er</sup> la fait bâtir juste en face de Sainte-Sophie, sur une partie de l'ancien Grand Palais des empereurs byzantins, pour montrer que l'architecture ottomane peut rivaliser avec elle. L'architecte, Sedefkâr Mehmed Ağa, était un élève de Sinan.</p>
+        <p>Elle a six minarets, un nombre rare qui fit scandale à l'époque, selon la tradition, parce que seule la mosquée de La Mecque en avait autant. Ahmet I<sup>er</sup> meurt en 1617, à 27 ans, un an après la fin des travaux. Il est enterré dans le tombeau voisin.</p>
+        <p class="look"><b>À regarder :</b> plus de 20 000 carreaux de faïence d'Iznik, aux motifs de tulipes et d'œillets, dont les tons bleus ont donné son surnom à la mosquée.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-hippodrome" data-place="Hippodrome">
+        <header><h3>Hippodrome</h3><span class="when-eat">III<sup>e</sup>–IV<sup>e</sup> siècle · Constantin</span></header>
+        <p>C'était le stade de Constantinople : des courses de chars devant des dizaines de milliers de spectateurs, avec deux grands clubs rivaux, les Bleus et les Verts. En 532, leurs supporters s'unissent contre Justinien : c'est la sédition Nika. L'armée la réprime dans l'Hippodrome, et l'on parle d'environ 30 000 morts. La ville est en ruines, et c'est pour la reconstruire que Justinien lance Sainte-Sophie.</p>
+        <p>Il ne reste que la « spina », l'axe central autour duquel tournaient les chars, et ses monuments. Les quatre chevaux de bronze qui la décoraient ont été emportés par les croisés en 1204. On peut toujours les voir à Venise, sur la basilique Saint-Marc.</p>
+        <p class="look"><b>À regarder :</b> l'obélisque égyptien de Thoutmosis III, vieux d'environ 3 500 ans, rapporté de Karnak et dressé ici en 390 ; la colonne serpentine, venue de Delphes, qui célébrait une victoire grecque sur les Perses en 479 av. J.-C. ; et la fontaine offerte par l'empereur allemand Guillaume II.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-citerne" data-place="Citerne Basilique">
+        <header><h3>Citerne Basilique</h3><span class="when-eat">532 · Justinien</span></header>
+        <p>C'est un réservoir d'eau souterrain construit sous une grande basilique, d'où son nom. Il est aussi grand qu'un terrain de football, environ 140 mètres sur 70, et ses voûtes reposent sur 336 colonnes. Il alimentait le Grand Palais des empereurs, puis le palais de Topkapı.</p>
+        <p>Les Ottomans finissent par l'oublier. Vers 1545, un savant français, Pierre Gilles, remarque que les habitants du quartier puisent de l'eau et pêchent des poissons par des trous dans leur sol, et c'est ainsi qu'il la redécouvre. On la voit dans le film de James Bond <i>Bons baisers de Russie</i> (1963).</p>
+        <p class="look"><b>À regarder :</b> les deux têtes de Méduse, réutilisées comme socles de colonnes, l'une posée de côté et l'autre à l'envers, et la « colonne qui pleure », couverte de motifs en forme de larmes.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-topkapi" data-place="Palais de Topkapı">
+        <header><h3>Palais de Topkapı</h3><span class="when-eat">1459–1478 · Mehmed II</span></header>
+        <p>Juste après la conquête, Mehmed II fait construire son palais sur la pointe de la vieille ville, entre la Corne d'Or, le Bosphore et la mer de Marmara. Pendant près de 400 ans, c'est à la fois la maison du sultan et le siège du gouvernement de l'Empire ottoman. Jusqu'à 4 000 personnes y vivaient.</p>
+        <p>En 1856, le sultan Abdülmecid I<sup>er</sup> part pour le palais de Dolmabahçe, plus européen. Topkapı devient un musée en 1924, au début de la République.</p>
+        <p class="look"><b>À regarder :</b> le Harem, où vivaient la mère du sultan, ses épouses et ses enfants ; le Trésor, avec la dague de Topkapı et le diamant du Marchand de cuillères ; et les reliques sacrées, dont un manteau attribué au Prophète.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-bazar" data-place="Grand Bazar">
+        <header><h3>Grand Bazar</h3><span class="when-eat">1455–1461 · Mehmed II</span></header>
+        <p>Tout part d'une halle en pierre, le « bedesten », que Mehmed II fait construire pour mettre à l'abri les marchandises de valeur. Les boutiques s'installent tout autour, puis on couvre les rues. Le bazar grandit ainsi sous Soliman et devient l'un des plus grands marchés couverts du monde : une soixantaine de rues et environ 4 000 boutiques.</p>
+        <p>Il a souvent été frappé par des incendies et des tremblements de terre, notamment en 1766 et en 1894, et à chaque fois reconstruit. Les métiers restaient regroupés par rue, et beaucoup de rues portent encore le nom de ceux qui y travaillaient : bijoutiers, fabricants de bonnets, tisserands…</p>
+        <p class="look"><b>À regarder :</b> le vieux bedesten (Cevahir Bedesteni), au centre, et les « han », des cours d'ateliers cachées autour du bazar. Celle de Büyük Valide Han a un toit d'où l'on voit toute la ville.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-epices" data-place="Bazar aux épices">
+        <header><h3>Bazar aux épices</h3><span class="when-eat">vers 1660 · Turhan Sultan</span></header>
+        <p>Il fait partie du complexe de la Nouvelle Mosquée (Yeni Cami), commencée en 1597 par Safiye Sultan, la mère d'un sultan. Les travaux s'arrêtent à sa mort et ne reprennent qu'un demi-siècle plus tard, avec une autre sultane mère, Turhan Hatice. Les loyers des boutiques servaient à financer l'entretien de la mosquée.</p>
+        <p>En turc, on l'appelle Mısır Çarşısı, le « bazar égyptien », car les épices arrivaient d'Égypte, et une partie de son financement aussi, selon l'explication la plus courante.</p>
+        <p class="look"><b>À regarder :</b> la Nouvelle Mosquée, juste à côté, et derrière elle le petit marché aux plantes et aux oiseaux.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-suleymaniye" data-place="Mosquée Süleymaniye">
+        <header><h3>Mosquée Süleymaniye</h3><span class="when-eat">1550–1557 · Soliman et Sinan</span></header>
+        <p>C'est le chef-d'œuvre de Mimar Sinan, le plus grand architecte ottoman, pour le sultan Soliman le Magnifique, à l'apogée de l'empire. La mosquée était entourée de tout un quartier d'utilité publique : écoles coraniques, hôpital, cuisine qui nourrissait les pauvres, hammam et caravansérail.</p>
+        <p>Selon la tradition, ses quatre minarets rappellent que Soliman est le quatrième sultan à régner depuis Istanbul, et leurs dix balcons qu'il est le dixième sultan ottoman.</p>
+        <p class="look"><b>À regarder :</b> les tombeaux de Soliman et de sa femme Hürrem (Roxelane) dans le jardin. Sinan est enterré tout près, au coin de la rue, dans un tombeau modeste qu'il a lui-même dessiné.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-galata" data-place="Tour de Galata">
+        <header><h3>Tour de Galata</h3><span class="when-eat">1348 · les Génois</span></header>
+        <p>De l'autre côté de la Corne d'Or, Galata était une colonie de marchands génois, avec ses propres remparts. En 1348, ils construisent cette tour d'environ 67 mètres au point le plus haut de leur enceinte. Ils l'appellent la tour du Christ.</p>
+        <p>Les Ottomans s'en servent ensuite comme prison, puis comme tour de guet contre les incendies, très fréquents dans une ville en bois. Une légende raconte qu'au XVII<sup>e</sup> siècle, Hezârfen Ahmed Çelebi s'en serait élancé avec des ailes pour atterrir de l'autre côté du Bosphore, à Üsküdar.</p>
+        <p class="look"><b>À regarder :</b> le panorama depuis le balcon du haut, et les petites rues en pente qui descendent vers Karaköy.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-istiklal" data-place="Rue İstiklal">
+        <header><h3>Rue İstiklal</h3><span class="when-eat">XIX<sup>e</sup> siècle · Péra</span></header>
+        <p>Au XIX<sup>e</sup> siècle, c'est la « Grande Rue de Péra », le quartier européen de la ville, avec les ambassades, les passages couverts, les cafés et les théâtres. On y parlait grec, arménien, italien et français autant que turc. Elle prend le nom d'İstiklal, « indépendance », en 1923, pour célébrer la victoire de la guerre d'indépendance.</p>
+        <p>À son extrémité sud, le Tünel, un petit funiculaire ouvert en 1875, est le deuxième plus vieux métro souterrain du monde après celui de Londres.</p>
+        <p class="look"><b>À regarder :</b> le tramway rouge, le passage aux Fleurs (Çiçek Pasajı), le lycée de Galatasaray et le Palais de France, l'ancienne ambassade de France.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-taksim" data-place="Place Taksim">
+        <header><h3>Place Taksim</h3><span class="when-eat">1732 · le réservoir</span></header>
+        <p>« Taksim » veut dire « partage » : ici se trouvait le réservoir de pierre, construit au XVIII<sup>e</sup> siècle, qui répartissait vers les quartiers l'eau des aqueducs venant du nord. Le petit bâtiment existe toujours, à l'angle de la place.</p>
+        <p>Au centre, le monument de la République (1928) montre Atatürk et les fondateurs de la Turquie moderne. La place est aussi le lieu des grands rassemblements, comme les manifestations du parc Gezi en 2013.</p>
+        <p class="look"><b>À regarder :</b> le monument, et la mosquée de Taksim, inaugurée en 2021.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-kadikoy" data-place="Embarcadère de Kadıköy">
+        <header><h3>Kadıköy, l'ancienne Chalcédoine</h3><span class="when-eat">≈ 685 av. J.-C.</span></header>
+        <p>Kadıköy est plus vieille que Byzance : des colons grecs de Mégare y fondent Chalcédoine une vingtaine d'années avant que d'autres ne fondent Byzance sur la rive d'en face. Selon l'historien Hérodote, un général perse les trouva « aveugles » d'avoir choisi cette rive plutôt que le site magnifique d'en face.</p>
+        <p>En 451, un grand concile chrétien s'y tient et fixe un point de doctrine sur la nature du Christ qui divise encore certaines Églises. Aujourd'hui, c'est le quartier étudiant et branché de la rive asiatique.</p>
+        <p class="look"><b>À regarder :</b> depuis le ferry, la gare de Haydarpaşa (1908), un château néo-allemand posé sur l'eau. C'était le terminus asiatique de la ligne Berlin–Bagdad.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-balat" data-place="Balat et Fener">
+        <header><h3>Balat et Fener</h3><span class="when-eat">XV<sup>e</sup>–XIX<sup>e</sup> siècle</span></header>
+        <p>Ce sont les quartiers des minorités religieuses de l'empire. Fener est le cœur grec orthodoxe : le Patriarcat œcuménique, l'équivalent du Vatican pour une partie des orthodoxes, y siège depuis 1601. Balat a accueilli les Juifs séfarades chassés d'Espagne en 1492, que le sultan Bayezid II avait invités dans l'empire.</p>
+        <p>Les familles grecques et juives sont presque toutes parties au XX<sup>e</sup> siècle, ce qui explique les maisons colorées un peu décrépites, aujourd'hui rénovées une à une.</p>
+        <p class="look"><b>À regarder :</b> la grande école rouge du Phanar, sur la colline ; l'église bulgare Saint-Étienne, entièrement en fonte, préfabriquée à Vienne et livrée par bateau à la fin du XIX<sup>e</sup> siècle ; et la synagogue Ahrida, l'une des plus anciennes de la ville.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+
+      <article id="h-ortakoy" data-place="Ortaköy">
+        <header><h3>Mosquée d'Ortaköy</h3><span class="when-eat">1854–1856 · Abdülmecid I<sup>er</sup></span></header>
+        <p>Son vrai nom est mosquée Büyük Mecidiye. Elle a été construite pour le sultan Abdülmecid I<sup>er</sup> par la famille Balyan, des architectes arméniens qui ont aussi bâti le palais de Dolmabahçe. Elle a de grandes fenêtres et un style néo-baroque : on est en plein XIX<sup>e</sup> siècle, quand l'empire s'inspire de l'Europe.</p>
+        <p>Ortaköy était un village où cohabitaient une mosquée, une église orthodoxe et une synagogue, à quelques rues l'une de l'autre. Le pont du Bosphore, juste au-dessus, a été inauguré en 1973 pour les 50 ans de la République. C'était le premier pont sur le Bosphore.</p>
+        <p class="look"><b>À regarder :</b> la mosquée avec le pont derrière, la photo classique d'Istanbul, surtout de nuit.</p>
+        <button type="button" class="linkish to-map">Voir sur la carte</button>
+      </article>
+    </div>
+    <p class="hint">Les dates et les chiffres sont arrondis comme dans les guides. Les éléments qui relèvent de la tradition ou de la légende sont indiqués comme tels.</p>
   </section>
 
   <section class="day" id="j1">
@@ -596,6 +746,16 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 
   document.getElementById("hotel-link").href = gmaps(hotel.q);
 
+  // Histoire des monuments : lien depuis la fiche du lieu, et retour vers la carte
+  const histOf = {};
+  document.querySelectorAll(".hist article[data-place]").forEach(art => {
+    const i = places.findIndex(p => p[1] === art.dataset.place);
+    if (i < 0) return;
+    histOf[i] = art.id;
+    art.querySelector(".to-map").addEventListener("click", () => select(i, true));
+  });
+  const histLink = i => histOf[i] ? `<a href="#${histOf[i]}" class="pp-hist">Son histoire ↓</a>` : "";
+
   if (!window.L) {
     document.getElementById("map").innerHTML = `<p class="map-fallback">La carte n'a pas pu se charger (pas de connexion ?). Les liens « Itinéraire » ci-dessous ouvrent chaque lieu dans Google Maps.</p>`;
     return;
@@ -635,7 +795,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     const icon = L.divIcon({ className: "", html: `<span class="mk" style="background:${day.color}">${i + 1}</span>`, iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -12] });
     const m = L.marker([pl[2], pl[3]], { icon, title: pl[1], riseOnHover: true })
       .bindTooltip(esc(pl[1]), { direction: "right", offset: [12, 0], permanent: true, className: "mk-lbl" })
-      .bindPopup(`<b>${esc(pl[1])}</b><span class="pp-day">${esc(day.name)}</span><p>${esc(pl[5])}</p><a href="${gmaps(pl[4])}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
+      .bindPopup(`<b>${esc(pl[1])}</b><span class="pp-day">${esc(day.name)}</span><p>${esc(pl[5])}</p><span class="pp-links"><a href="${gmaps(pl[4])}" target="_blank" rel="noopener">Itinéraire ↗</a>${histLink(i)}</span>`)
       .on("click", () => select(i));
     m.addTo(visits);
     markers[i] = m;
