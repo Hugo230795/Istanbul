@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Plan de visite d'Istanbul pour trois amis, du 11 au 14 novembre 2026.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Istanbul, 11–14 novembre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout : en-tête sobre, puis un jour par bloc avec une frise horaire à gauche ; infos pratiques en grille à la fin */
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --ink: #18233a;
+  --muted: #5b6577;
+  --line: #dde3ec;
+  --cobalt: #1f4fa3;     /* bleu d'Iznik */
+  --tile: #c2412d;       /* rouge des faïences */
+  --turq: #138a83;
+  --cobalt-soft: #e6edf9;
+  --tile-soft: #fbebe7;
+  --amber: #b26b12;
+  --water: #d7e4f3;
+  --water-ink: #4f6f9c;
+  --land: #f7f4ee;
+  --shore: #b9c8db;
+  --f-display: "Young Serif", Georgia, serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1522; --surface: #172033; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
+  --cobalt: #7fa6ef; --tile: #f08a74; --turq: #4cc4bb; --cobalt-soft: #1c2a47; --tile-soft: #3a2220;
+  --amber: #e3b25a; --water: #142540; --water-ink: #7f9cc8; --land: #1d2535; --shore: #34425e;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0f1522; --surface: #172033; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
+  --cobalt: #7fa6ef; --tile: #f08a74; --turq: #4cc4bb; --cobalt-soft: #1c2a47; --tile-soft: #3a2220;
+  --amber: #e3b25a; --water: #142540; --water-ink: #7f9cc8; --land: #1d2535; --shore: #34425e;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+}
+.wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); }
+h2 { font-size: 1.7rem; }
+h3 { font-size: 1.1rem; font-family: var(--f-body); font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tile); }
+header { display: flex; flex-direction: column; gap: 14px; }
+.lede { color: var(--muted); max-width: 62ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.chip { font-size: .85rem; padding: 4px 12px; border-radius: 999px; background: var(--cobalt-soft); color: var(--cobalt); font-weight: 500; }
+.chip.warn { background: var(--tile-soft); color: var(--tile); }
+nav { display: flex; flex-wrap: wrap; gap: 8px; }
+nav a {
+  text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface);
+  padding: 8px 14px; border-radius: 10px; font-size: .9rem; display: flex; gap: 8px; align-items: baseline;
+}
+nav a span { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); }
+nav a:hover, nav a:focus-visible { border-color: var(--cobalt); outline: none; }
+
+.day { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px; }
+.day-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 14px; border-bottom: 2px solid var(--cobalt); }
+.day-head .sub { color: var(--muted); }
+.timeline { display: flex; flex-direction: column; }
+.slot { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.slot:last-child { border-bottom: 0; }
+.when { font-family: var(--f-mono); font-size: .8rem; color: var(--cobalt); padding-top: 3px; }
+.what { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.what p { color: var(--muted); }
+.what strong { color: var(--ink); font-weight: 600; }
+.note {
+  font-size: .9rem; padding: 10px 14px; border-radius: 8px;
+  background: var(--tile-soft); color: var(--ink);
+}
+.note b { color: var(--tile); }
+
+.practical { display: flex; flex-direction: column; gap: 20px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.card p, .card li { color: var(--muted); font-size: .95rem; }
+.card ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.food { display: flex; flex-wrap: wrap; gap: 8px; }
+.food span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: .88rem; background: var(--surface); }
+.food em { font-style: normal; color: var(--muted); }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+
+.map-sec { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
+.map-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--water); }
+.map-wrap svg { display: block; width: 100%; min-width: 620px; height: auto; }
+.land { fill: var(--land); stroke: var(--shore); stroke-width: 1.2; }
+.water-label { fill: var(--water-ink); font-family: var(--f-display); font-style: italic; font-size: 17px; }
+.area-label { fill: var(--muted); font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.route { fill: none; stroke: var(--turq); stroke-width: 2; stroke-dasharray: 6 5; }
+.bridge { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.pin { cursor: pointer; }
+.pin circle { stroke: var(--surface); stroke-width: 2.5; transition: r .15s; }
+.pin text.n { fill: #fff; font-family: var(--f-mono); font-size: 11px; font-weight: 500; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.pin text.lbl { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 600; paint-order: stroke; stroke: var(--land); stroke-width: 4px; stroke-linejoin: round; }
+.pin.on circle { r: 15; }
+.pin:focus-visible { outline: none; }
+.pin:focus-visible circle { stroke: var(--ink); }
+.legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
+.legend h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.legend h3 i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.legend ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.legend li { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: baseline; padding: 4px 6px; border-radius: 6px; font-size: .93rem; }
+.legend li.on { background: var(--cobalt-soft); }
+.legend .num { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend button { all: unset; cursor: pointer; min-width: 0; }
+.legend button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 3px; }
+.legend a { font-size: .8rem; color: var(--cobalt); white-space: nowrap; }
+.map-hint { font-size: .85rem; color: var(--muted); }
+.pin.food rect { fill: var(--ink); stroke: var(--surface); stroke-width: 2; }
+.pin.food text.n { fill: var(--bg); font-size: 10px; }
+.pin.food.on rect { stroke: var(--tile); stroke-width: 3; }
+.hotel rect { fill: var(--ink); stroke: var(--surface); stroke-width: 2.5; }
+.hotel text.n { fill: var(--bg); font-family: var(--f-mono); font-size: 12px; font-weight: 500; text-anchor: middle; dominant-baseline: central; }
+.hotel text.lbl { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 600; paint-order: stroke; stroke: var(--land); stroke-width: 4px; stroke-linejoin: round; }
+.hotel-card { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+.hotel-card > div { min-width: 0; }
+.hotel-card p { color: var(--muted); font-size: .92rem; }
+.hotel-card a { font-size: .85rem; color: var(--cobalt); white-space: nowrap; }
+.hbadge { width: 30px; height: 30px; border-radius: 7px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); display: grid; place-items: center; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { font: inherit; font-size: .9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filters button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+.food-title { margin-top: 12px; }
+.food-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.tier h3 { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.price { font-family: var(--f-mono); font-size: .85rem; color: var(--tile); font-weight: 500; }
+.tier ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.tier li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 10px 6px; border-radius: 8px; }
+.tier li.on { background: var(--cobalt-soft); }
+.badge { width: 20px; height: 20px; margin-top: 2px; border-radius: 5px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); font-size: .7rem; display: grid; place-items: center; }
+.r-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.r-body button { all: unset; cursor: pointer; font-weight: 600; }
+.r-body button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 3px; }
+.r-body p { color: var(--muted); font-size: .9rem; }
+.when-eat { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .04em; color: var(--turq); }
+.r-body a { font-size: .8rem; color: var(--cobalt); }
+.exp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; color: var(--muted); font-weight: 500; }
+.card input, .card select {
+  font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0;
+}
+.card input:focus-visible, .card select:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 1px; border-color: var(--cobalt); }
+.rate-l { flex: 1 1 100% !important; flex-direction: row !important; align-items: center; flex-wrap: wrap; gap: 8px !important; }
+.rate-l input { width: 7em; font-size: 1rem !important; }
+.hint { font-size: .82rem; color: var(--muted); }
+.conv { flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 12px; }
+.conv label { flex: 1 1 160px; }
+.conv input { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.conv-eq { font-size: 1.4rem; color: var(--muted); padding-bottom: 8px; }
+.conv-hint { flex-basis: 100%; }
+.lex { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.lex div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+.lex b { font-family: var(--f-display); font-weight: 400; font-size: 1.15rem; color: var(--cobalt); }
+.lex i { font-family: var(--f-mono); font-style: normal; font-size: .78rem; color: var(--tile); }
+.lex span { font-size: .9rem; color: var(--muted); }
+.pack { list-style: none; margin: 0; padding: 0 !important; display: flex; flex-direction: column; gap: 2px !important; }
+.pack label { flex-direction: row; align-items: center; gap: 10px; color: var(--ink); font-size: .95rem; font-weight: 400; padding: 4px 0; cursor: pointer; }
+.pack input { width: 18px; height: 18px; padding: 0; accent-color: var(--cobalt); flex: none; }
+.pack input:checked + span { text-decoration: line-through; color: var(--muted); }
+.facts-list { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: .92rem; }
+.facts-list dt { font-weight: 600; }
+.facts-list dd { margin: 0; color: var(--muted); min-width: 0; }
+.facts-list a, .lex a { color: var(--cobalt); }
+@media (max-width: 760px) { .food-list, .exp-grid { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .facts-list { grid-template-columns: 1fr; gap: 2px; } .facts-list dd { margin-bottom: 8px; } }
+@media (max-width: 600px) { .legend { grid-template-columns: 1fr; } .hotel-card { grid-template-columns: auto 1fr; } .hotel-card a { grid-column: 2; } }
+
+@media (max-width: 600px) {
+  .slot { grid-template-columns: 1fr; gap: 4px; }
+  .grid { grid-template-columns: 1fr; }
+  body { padding-block: 24px 48px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Voyage à trois · mer. 11 → sam. 14 nov. 2026</div>
+    <h1>Istanbul en quatre jours</h1>
+    <p class="lede">Un plan à pied, en tram et en ferry, rive européenne puis rive asiatique. Les premier et dernier jours restent légers pour laisser de la place aux vols.</p>
+    <div class="facts">
+      <span class="chip warn" id="countdown">Départ le mercredi 11 novembre</span>
+      <span class="chip">12–17 °C, pluie possible</span>
+      <span class="chip">Coucher du soleil ≈ 16h50</span>
+      <span class="chip">Hôtel : Raymond Old City, Sirkeci</span>
+      <span class="chip">Payer en livres turques</span>
+      <span class="chip warn">Vendredi midi : mosquées fermées</span>
+    </div>
+  </header>
+
+  <nav aria-label="Jours">
+    <a href="#carte">Carte</a>
+    <a href="#j1">Sultanahmet <span>mer. 11</span></a>
+    <a href="#j2">Palais et bazars <span>jeu. 12</span></a>
+    <a href="#j3">Rive asiatique <span>ven. 13</span></a>
+    <a href="#j4">Balat et départ <span>sam. 14</span></a>
+    <a href="#pratique">Infos pratiques</a>
+    <a href="#convertir">Convertisseur</a>
+    <a href="#lexique">Lexique</a>
+    <a href="#valise">Valise</a>
+  </nav>
+
+  <section class="map-sec" id="carte">
+    <div class="day-head">
+      <div class="eyebrow">Les lieux du séjour</div>
+      <h2>Carte</h2>
+      <p class="sub">Ronds de couleur : les visites, une couleur par jour. Losanges : les restaurants. Touchez un point pour le retrouver dans la liste, et « Itinéraire » pour l'ouvrir dans Google Maps.</p>
+    </div>
+    <div class="hotel-card">
+      <span class="hbadge">H</span>
+      <div><strong>Raymond Hotel Old City</strong><p>Ebussuud Cd. 22, Sirkeci. Entre la gare de Sirkeci (Marmaray) et l'arrêt de tram Gülhane (T1) : Sultanahmet, Eminönü et le ferry sont à pied.</p></div>
+      <a id="hotel-link" href="https://www.google.com/maps/search/?api=1&amp;query=Raymond%20Hotel%20Old%20City%20Istanbul" target="_blank" rel="noopener">Itinéraire ↗</a>
+    </div>
+    <div class="filters" role="group" aria-label="Afficher sur la carte">
+      <button type="button" data-f="all" aria-pressed="true">Tout</button>
+      <button type="button" data-f="visit" aria-pressed="false">Visites</button>
+      <button type="button" data-f="food" aria-pressed="false">Restaurants</button>
+    </div>
+    <div class="map-wrap"><svg id="map" viewBox="0 0 900 795" role="img" aria-label="Carte schématique d'Istanbul avec les lieux du séjour"></svg></div>
+    <p class="map-hint">Carte schématique, côtes simplifiées. Sur téléphone, faites-la glisser sur le côté.</p>
+    <div class="legend" id="legend"></div>
+    <h2 class="food-title">Où manger</h2>
+    <p class="sub">Du sandwich à quelques euros au dîner gastronomique. Les lettres correspondent aux losanges de la carte.</p>
+    <div class="food-list" id="food-list"></div>
+  </section>
+
+  <section class="day" id="j1">
+    <div class="day-head">
+      <div class="eyebrow">Mercredi 11 novembre</div>
+      <h2>Sultanahmet, le cœur historique</h2>
+      <p class="sub">Tout se fait à pied, dans un rayon d'environ 500 m.</p>
+    </div>
+    <div class="timeline">
+      <div class="slot"><div class="when">Arrivée</div><div class="what"><h3>Aéroport → hôtel</h3><p>L'hôtel est à Sirkeci. Depuis IST (1 h–1 h 30) : bus Havaist direction Sultanahmet. Depuis SAW : métro M4 jusqu'à Ayrılık Çeşmesi, puis Marmaray jusqu'à Sirkeci, à deux pas de l'hôtel. Achetez l'Istanbulkart dès l'aéroport.</p></div></div>
+      <div class="slot"><div class="when">Après-midi</div><div class="what"><h3>Sainte-Sophie</h3><p>Environ 25 € pour les visiteurs étrangers, accès à la galerie du haut seulement. Moins de monde en fin de journée.</p></div></div>
+      <div class="slot"><div class="when">Après-midi</div><div class="what"><h3>Mosquée Bleue et Hippodrome</h3><p>Entrée gratuite, fermée pendant les prières. L'Hippodrome est juste à côté, avec l'obélisque égyptien.</p></div></div>
+      <div class="slot"><div class="when">Fin d'aprèm</div><div class="what"><h3>Citerne Basilique</h3><p>Souterraine, éclairée, avec les deux têtes de Méduse. Parfait quand la nuit tombe à 17 h.</p></div></div>
+      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Karaköy</h3><p>Évitez les restaurants à rabatteurs de Sultanahmet. <strong>Tram T1, 10 min</strong> jusqu'à Karaköy pour dîner et boire un verre.</p></div></div>
+    </div>
+  </section>
+
+  <section class="day" id="j2">
+    <div class="day-head">
+      <div class="eyebrow">Jeudi 12 novembre</div>
+      <h2>Palais et bazars</h2>
+      <p class="sub">La journée la plus chargée, en descente vers la Corne d'Or.</p>
+    </div>
+    <div class="timeline">
+      <div class="slot"><div class="when">Ouverture</div><div class="what"><h3>Palais de Topkapı</h3><p>Comptez 2 à 3 h. Fermé le mardi, donc aucun souci un jeudi. Le Harem vaut le supplément.</p></div></div>
+      <div class="slot"><div class="when">Midi</div><div class="what"><h3>Grand Bazar</h3><p>Fermé le dimanche. On négocie : commencez vers la moitié du prix annoncé et restez souriants.</p></div></div>
+      <div class="slot"><div class="when">Début d'aprèm</div><div class="what"><h3>Bazar aux épices et Eminönü</h3><p>Descendez à pied à travers les ruelles marchandes. <strong>Balık ekmek</strong> (sandwich au poisson) au bord de l'eau.</p></div></div>
+      <div class="slot"><div class="when">≈ 16h30</div><div class="what"><h3>Mosquée Süleymaniye au coucher du soleil</h3><p>La plus belle vue sur la Corne d'Or, et bien moins de monde qu'à la Mosquée Bleue.</p></div></div>
+      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Galata, İstiklal, Cihangir</h3><p>La tour de Galata illuminée, la grande rue piétonne, puis rooftops et bars de Karaköy et Cihangir.</p></div></div>
+    </div>
+  </section>
+
+  <section class="day" id="j3">
+    <div class="day-head">
+      <div class="eyebrow">Vendredi 13 novembre</div>
+      <h2>Rive asiatique</h2>
+      <p class="sub">Le jour idéal pour traverser : pas de mosquées à visiter le vendredi midi.</p>
+    </div>
+    <div class="timeline">
+      <div class="slot"><div class="when">Matin</div><div class="what"><h3>Ferry Eminönü → Kadıköy</h3><p>20 minutes sur le Bosphore pour le prix d'un ticket de transport. C'est la meilleure croisière de la ville.</p></div></div>
+      <div class="slot"><div class="when">Journée</div><div class="what"><h3>Kadıköy et Moda</h3><p>Le marché, les cafés, les friperies, puis la promenade de Moda au bord de l'eau.</p></div></div>
+      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Rue Kadife (« Barlar Sokağı »)</h3><p>Le vendredi soir, c'est le quartier le plus vivant pour votre âge, plus local et moins cher que Taksim.</p></div></div>
+      <div class="slot"><div class="when">Nuit</div><div class="what"><h3>Retour en ferry de nuit</h3><p>La ville illuminée depuis l'eau.</p><p class="note"><b>Vérifiez l'heure du dernier ferry</b> avant de vous installer au bar. À défaut : Marmaray (train sous le Bosphore) ou taxi via l'application.</p></div></div>
+    </div>
+  </section>
+
+  <section class="day" id="j4">
+    <div class="day-head">
+      <div class="eyebrow">Samedi 14 novembre</div>
+      <h2>Balat et départ</h2>
+      <p class="sub">À adapter à l'heure du vol.</p>
+    </div>
+    <div class="timeline">
+      <div class="slot"><div class="when">Matin</div><div class="what"><h3>Kahvaltı à Balat ou Fener</h3><p>Le grand petit-déjeuner turc, puis les rues pentues aux maisons colorées. Idéal pour les photos.</p></div></div>
+      <div class="slot"><div class="when">Si le temps le permet</div><div class="what"><h3>Ortaköy et Bebek</h3><p>Un kumpir (pomme de terre garnie) au pied de la mosquée et du pont, puis balade le long du Bosphore.</p></div></div>
+      <div class="slot"><div class="when">Départ</div><div class="what"><h3>Direction l'aéroport</h3><p class="note"><b>Partez tôt.</b> Comptez 1 h à 1 h 30 pour IST, plus avec la circulation du samedi.</p></div></div>
+    </div>
+  </section>
+
+  <section class="practical" id="pratique">
+    <div class="day-head">
+      <div class="eyebrow">À savoir</div>
+      <h2>Infos pratiques</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Transports</h3><ul>
+        <li>Istanbulkart : une seule carte peut payer pour plusieurs personnes (tram, métro, ferry).</li>
+        <li>Une carte par personne si vous comptez vous séparer.</li>
+        <li>Taxis via BiTaksi ou Uber, pour éviter les compteurs « en panne ».</li>
+      </ul></div>
+      <div class="card"><h3>Arnaques classiques</h3><ul>
+        <li>Le cireur qui laisse tomber sa brosse devant vous.</li>
+        <li>L'inconnu sympa qui vous emmène dans « un bar qu'il connaît » à Taksim : l'addition se chiffre en centaines d'euros.</li>
+        <li>Refusez poliment et continuez votre chemin.</li>
+      </ul></div>
+      <div class="card"><h3>Mosquées</h3><ul>
+        <li>Épaules et genoux couverts.</li>
+        <li>Cheveux couverts pour les femmes (foulards souvent prêtés à l'entrée).</li>
+        <li>Chaussures retirées, fermeture pendant les prières.</li>
+      </ul></div>
+      <div class="card"><h3>Budget</h3><ul>
+        <li>Les prix ont beaucoup augmenté et les grands sites sont chers.</li>
+        <li>Payez en livres turques plutôt qu'en euros : le taux est meilleur.</li>
+        <li>Retirez dans les distributeurs des banques, pas dans les bureaux de change de rue.</li>
+      </ul></div>
+    </div>
+    <h3>À goûter</h3>
+    <div class="food">
+      <span>Simit <em>· pain au sésame</em></span>
+      <span>Pide <em>· pizza turque</em></span>
+      <span>Lahmacun</span>
+      <span>Balık ekmek</span>
+      <span>Kokoreç <em>· si vous osez</em></span>
+      <span>Kumpir</span>
+      <span>Baklava <em>· Karaköy Güllüoğlu</em></span>
+      <span>Çay <em>· partout, tout le temps</em></span>
+    </div>
+  </section>
+
+  <section class="practical" id="convertir">
+    <div class="day-head">
+      <div class="eyebrow">Au bazar</div>
+      <h2>Convertisseur</h2>
+    </div>
+    <div class="card conv">
+      <label for="rate" class="rate-l">Taux du jour : 1 € = <input id="rate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="?"> ₺</label>
+      <label for="c-try">Livres turques<input id="c-try" type="number" min="0" step="1" inputmode="decimal" placeholder="1000"></label>
+      <span class="conv-eq" aria-hidden="true">⇄</span>
+      <label for="c-eur">Euros<input id="c-eur" type="number" min="0" step="0.01" inputmode="decimal"></label>
+      <p class="hint conv-hint" id="c-hint">Indiquez d'abord le taux du jour, affiché par votre banque ou un convertisseur en ligne. Il reste enregistré sur votre téléphone.</p>
+    </div>
+  </section>
+
+  <section class="practical" id="lexique">
+    <div class="day-head">
+      <div class="eyebrow">Parler un peu turc</div>
+      <h2>Lexique de survie</h2>
+      <p class="sub">La prononciation est écrite à la française. En turc, « c » se dit « dj », « ç » « tch », « ş » « ch », et « ı » est un « eu » bref.</p>
+    </div>
+    <div class="lex">
+      <div><b>Merhaba</b><i>mèr-ha-ba</i><span>Bonjour</span></div>
+      <div><b>Teşekkürler</b><i>té-ché-ku-lèr</i><span>Merci</span></div>
+      <div><b>Lütfen</b><i>lut-fèn</i><span>S'il vous plaît</span></div>
+      <div><b>Evet / Hayır</b><i>é-vèt / ha-yeur</i><span>Oui / Non</span></div>
+      <div><b>Üç kişi</b><i>utch ki-chi</i><span>Trois personnes (au restaurant)</span></div>
+      <div><b>Ne kadar?</b><i>né ka-dar</i><span>Combien ?</span></div>
+      <div><b>Çok pahalı</b><i>tchok pa-ha-leu</i><span>Trop cher (au bazar)</span></div>
+      <div><b>Hesap, lütfen</b><i>hé-sap lut-fèn</i><span>L'addition, s'il vous plaît</span></div>
+      <div><b>Nerede?</b><i>né-ré-dé</i><span>Où est… ? (Tuvalet nerede? : où sont les toilettes ?)</span></div>
+      <div><b>Afiyet olsun</b><i>a-fi-yèt ol-soun</i><span>Bon appétit</span></div>
+      <div><b>Şerefe!</b><i>ché-ré-fé</i><span>Santé !</span></div>
+      <div><b>Çok güzel</b><i>tchok gu-zèl</i><span>Très beau, très bon</span></div>
+      <div><b>Bir, iki, üç</b><i>bir, i-ki, utch</i><span>Un, deux, trois</span></div>
+      <div><b>Hoşça kal</b><i>hoch-tcha kal</i><span>Au revoir</span></div>
+    </div>
+  </section>
+
+  <section class="practical" id="valise">
+    <div class="day-head">
+      <div class="eyebrow">Avant de partir</div>
+      <h2>Valise et formalités</h2>
+      <p class="sub">La liste est cochée sur votre téléphone seulement : chacun suit sa propre valise.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="card">
+        <h3>À emporter <span class="price" id="pack-count"></span></h3>
+        <ul class="pack" id="pack"></ul>
+      </div>
+      <div class="card">
+        <h3>Bon à savoir</h3>
+        <dl class="facts-list">
+          <dt>Papiers</dt><dd>Carte d'identité ou passeport en cours de validité, pas de visa pour les Français (séjour de moins de 90 jours). À confirmer sur <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/turquie/" target="_blank" rel="noopener">Conseils aux voyageurs</a>.</dd>
+          <dt>Heure</dt><dd>+2 h par rapport à la France en novembre.</dd>
+          <dt>Prises</dt><dd>Les mêmes qu'en France, pas besoin d'adaptateur.</dd>
+          <dt>Téléphone</dt><dd>La Turquie est hors UE : l'itinérance coûte cher. Prenez une eSIM avant de partir ou vérifiez votre forfait.</dd>
+          <dt>Argent</dt><dd>La carte passe presque partout. Gardez des espèces en livres pour la street food, les bazars et les petits pourboires (5 à 10 % au restaurant).</dd>
+          <dt>Eau</dt><dd>Préférez l'eau en bouteille.</dd>
+          <dt>Urgences</dt><dd>Composez le 112. Consulat général de France : <a href="https://istanbul.consulfrance.org/" target="_blank" rel="noopener">istanbul.consulfrance.org</a>, sur İstiklal.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <footer>Les horaires et tarifs changent souvent : vérifiez-les sur les sites officiels la veille de chaque visite.</footer>
+</div>
+
+<script>
+(function () {
+  // Projection simple : longitude 28.94 → 29.06, latitude 41.055 → 40.975
+  const X = lon => (lon - 28.94) * 7500;
+  const Y = lat => (41.055 - lat) * 9937;
+  const P = pts => pts.map(([la, lo]) => X(lo).toFixed(1) + "," + Y(la).toFixed(1)).join(" ");
+
+  const peninsula = [[41.0385,28.940],[41.0360,28.9445],[41.0320,28.9490],[41.0285,28.9525],[41.0235,28.958],[41.0205,28.966],[41.0180,28.974],[41.0180,28.980],[41.0165,28.988],[41.0095,28.9875],[41.0045,28.984],[41.003,28.978],[41.0035,28.965],[41.002,28.955],[41.001,28.940]];
+  const north = [[41.0435,28.940],[41.040,28.948],[41.036,28.955],[41.031,28.962],[41.026,28.969],[41.0228,28.9755],[41.0245,28.981],[41.0275,28.9855],[41.0330,28.9930],[41.0390,29.0000],[41.0425,29.0080],[41.0450,29.0180],[41.0470,29.0265],[41.0510,29.0300],[41.0550,29.0330],[41.056,28.939]];
+  const asia = [[40.974,29.032],[40.979,29.022],[40.984,29.020],[40.9925,29.0225],[40.997,29.017],[41.005,29.012],[41.020,29.006],[41.027,29.013],[41.037,29.030],[41.045,29.042],[41.056,29.050],[41.056,29.061],[40.974,29.061]];
+
+  const days = [
+    { id: 1, name: "Mer. 11 · Sultanahmet", color: "var(--cobalt)" },
+    { id: 2, name: "Jeu. 12 · Palais et bazars", color: "var(--tile)" },
+    { id: 3, name: "Ven. 13 · Rive asiatique", color: "var(--turq)" },
+    { id: 4, name: "Sam. 14 · Balat et départ", color: "var(--amber)" }
+  ];
+  // [jour, nom, lat, lon, côté du libellé, recherche Google Maps]
+  const places = [
+    [1, "Sultanahmet : Sainte-Sophie, Mosquée Bleue, Hippodrome, Citerne", 41.0086, 28.9802, "r", "Hagia Sophia Istanbul", "Sultanahmet"],
+    [1, "Karaköy", 41.0255, 28.9775, "r", "Karaköy Istanbul", "Karaköy"],
+    [2, "Palais de Topkapı", 41.0115, 28.9834, "r", "Topkapi Palace", "Topkapı"],
+    [2, "Grand Bazar", 41.0107, 28.9681, "l", "Grand Bazaar Istanbul", "Grand Bazar"],
+    [2, "Eminönü et Bazar aux épices", 41.0182, 28.9745, "r", "Spice Bazaar Istanbul", "Eminönü"],
+    [2, "Mosquée Süleymaniye", 41.0162, 28.9639, "t", "Süleymaniye Mosque", "Süleymaniye"],
+    [2, "Tour de Galata", 41.0256, 28.9742, "l", "Galata Tower", "Galata"],
+    [2, "Rue İstiklal", 41.0335, 28.9779, "l", "Istiklal Avenue", "İstiklal"],
+    [2, "Cihangir", 41.0315, 28.9830, "r", "Cihangir Istanbul", "Cihangir"],
+    [3, "Kadıköy : quai et marché", 40.9925, 29.0230, "l", "Kadıköy İskelesi", "Kadıköy"],
+    [3, "Rue Kadife (Barlar Sokağı)", 40.9870, 29.0290, "r", "Kadife Sokak Kadıköy", "Kadife"],
+    [3, "Moda", 40.9810, 29.0255, "l", "Moda Sahili", "Moda"],
+    [4, "Balat et Fener", 41.0295, 28.9495, "l", "Balat Istanbul", "Balat"],
+    [4, "Ortaköy", 41.0485, 29.0255, "l", "Ortaköy Mosque", "Ortaköy"]
+  ];
+  const hotel = { name: "Raymond Hotel Old City", addr: "Ebussuud Cd. 22, Sirkeci", lat: 41.0140, lon: 28.9772, q: "Raymond Hotel Old City Istanbul" };
+  const tiers = [
+    { id: "pouce", name: "Sur le pouce", price: "₺" },
+    { id: "resto", name: "Restaurant", price: "₺₺" },
+    { id: "chic", name: "Plus chic", price: "₺₺₺" }
+  ];
+  // [lettre, gamme, nom, lat, lon, description, recherche Google Maps, à caser quand]
+  const food = [
+    ["A", "pouce", "Tarihi Sultanahmet Köftecisi Selim Usta", 41.0081, 28.9764, "Köfte (boulettes grillées) et salade de haricots blancs, une institution depuis 1920.", "Tarihi Sultanahmet Köftecisi Selim Usta", "Mer. 11, entre deux visites"],
+    ["B", "pouce", "Hafız Mustafa 1864", 41.0157, 28.9763, "Baklava, loukoums et thé, à deux minutes de l'hôtel.", "Hafız Mustafa 1864 Sirkeci", "N'importe quand"],
+    ["C", "pouce", "Vefa Bozacısı", 41.0163, 28.9580, "La boza, boisson d'hiver au millet fermenté avec cannelle et pois chiches grillés. Novembre est la saison.", "Vefa Bozacısı", "Jeu. 12, près de Süleymaniye"],
+    ["D", "pouce", "Dürümzade", 41.0349, 28.9804, "Dürüm adana ou au foie, ouvert tard. Parfait avant ou après les bars.", "Dürümzade Beyoğlu", "Jeu. 12, soir"],
+    ["E", "pouce", "Kızılkayalar", 41.0366, 28.9854, "Le « ıslak burger », petit burger mou à la sauce tomate, place Taksim. Le classique de fin de soirée.", "Kızılkayalar Taksim", "Jeu. 12, fin de soirée"],
+    ["F", "resto", "Hamdi", 41.0166, 28.9718, "Kebabs du sud-est (pistache, aubergine) avec vue sur la Corne d'Or. Demandez la terrasse du dernier étage, réservation conseillée.", "Hamdi Restaurant Eminönü", "Jeu. 12, midi ou soir"],
+    ["G", "resto", "Karaköy Lokantası", 41.0237, 28.9794, "Mezzés et cuisine turque maison dans une salle carrelée de turquoise. Le soir, ambiance meyhane avec rakı.", "Karaköy Lokantası", "Mer. 11, soir"],
+    ["H", "resto", "Çiya Sofrası", 40.9898, 29.0265, "Cuisine régionale d'Anatolie, plats du jour au comptoir, prix raisonnables.", "Çiya Sofrası Kadıköy", "Ven. 13, midi"],
+    ["I", "chic", "Mikla", 41.0318, 28.9740, "Cuisine turque contemporaine au sommet d'un hôtel de Pera, vue sur toute la ville. Menu dégustation cher, réservation indispensable, tenue soignée.", "Mikla Restaurant Istanbul", "Le dîner « on se fait plaisir »"],
+    ["J", "chic", "Feriye", 41.0449, 29.0157, "Ancien palais ottoman au bord du Bosphore, près d'Ortaköy. Cuisine ottomane revisitée, terrasse sur l'eau. Réservation conseillée.", "Feriye Lokantası", "Sam. 14, si le vol est tard"]
+  ];
+
+  const svg = document.getElementById("map");
+  const ns = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, text) => {
+    const e = document.createElementNS(ns, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text) e.textContent = text;
+    return e;
+  };
+
+  [peninsula, north, asia].forEach(p => svg.appendChild(el("polygon", { points: P(p), class: "land" })));
+
+  svg.appendChild(el("line", { x1: X(28.9733), y1: Y(41.0182), x2: X(28.9745), y2: Y(41.0228), class: "bridge" }));
+  svg.appendChild(el("path", { class: "route", d: `M${X(28.9760)},${Y(41.0180)} Q${X(29.004)},${Y(41.010)} ${X(29.0205)},${Y(40.9935)}` }));
+  svg.appendChild(el("text", { x: X(29.0), y: Y(41.0045), class: "area-label", fill: "var(--turq)", style: "fill:var(--turq)" }, "Ferry · 20 min"));
+
+  svg.appendChild(el("text", { x: 118, y: 285, class: "water-label", transform: "rotate(-38 118 285)" }, "Corne d'Or"));
+  svg.appendChild(el("text", { x: 560, y: 230, class: "water-label", transform: "rotate(-52 560 230)" }, "Bosphore"));
+  svg.appendChild(el("text", { x: 250, y: 680, class: "water-label" }, "Mer de Marmara"));
+  svg.appendChild(el("text", { x: 300, y: 110, class: "area-label" }, "Rive européenne"));
+  svg.appendChild(el("text", { x: 700, y: 470, class: "area-label" }, "Rive asiatique"));
+  svg.appendChild(el("text", { x: 40, y: 500, class: "area-label" }, "Péninsule historique"));
+  svg.appendChild(el("text", { x: 745, y: 24, class: "area-label" }, "↑ Bebek, 3 km"));
+
+  const legend = document.getElementById("legend");
+  const pins = [], rows = [];
+  function select(i) {
+    pins.forEach((p, j) => p.classList.toggle("on", i === j));
+    rows.forEach((r, j) => r.classList.toggle("on", i === j));
+  }
+
+  places.forEach((pl, i) => {
+    const [d, , lat, lon, side, , short] = pl;
+    const day = days[d - 1];
+    const x = X(lon), y = Y(lat);
+    const g = el("g", { class: "pin", "data-kind": "visit", tabindex: "0", role: "button", "aria-label": (i + 1) + ". " + pl[1] });
+    g.appendChild(el("circle", { cx: x, cy: y, r: 11, style: "fill:" + day.color }));
+    g.appendChild(el("text", { x: x, y: y, class: "n" }, String(i + 1)));
+    const lx = side === "r" ? x + 16 : side === "l" ? x - 16 : x;
+    const ly = side === "t" ? y - 17 : y + 4.5;
+    g.appendChild(el("text", { x: lx, y: ly, class: "lbl", "text-anchor": side === "r" ? "start" : side === "l" ? "end" : "middle" }, short));
+    g.addEventListener("click", () => { select(i); rows[i].scrollIntoView({ block: "nearest" }); });
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); } });
+    svg.appendChild(g);
+    pins.push(g);
+  });
+
+  food.forEach((f, k) => {
+    const i = places.length + k;
+    const x = X(f[4]), y = Y(f[3]);
+    const g = el("g", { class: "pin food", "data-kind": "food", tabindex: "0", role: "button", "aria-label": f[0] + ". " + f[2] });
+    g.appendChild(el("title", {}, f[2]));
+    g.appendChild(el("rect", { x: x - 8, y: y - 8, width: 16, height: 16, rx: 3, transform: `rotate(45 ${x} ${y})` }));
+    g.appendChild(el("text", { x: x, y: y, class: "n" }, f[0]));
+    g.addEventListener("click", () => { select(i); rows[i].scrollIntoView({ block: "nearest" }); });
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); } });
+    svg.appendChild(g);
+    pins.push(g);
+  });
+
+  const hx = X(hotel.lon), hy = Y(hotel.lat);
+  const hg = el("g", { class: "hotel" });
+  hg.appendChild(el("title", {}, hotel.name + ", " + hotel.addr));
+  hg.appendChild(el("rect", { x: hx - 11, y: hy - 11, width: 22, height: 22, rx: 5 }));
+  hg.appendChild(el("text", { x: hx, y: hy, class: "n" }, "H"));
+  hg.appendChild(el("text", { x: hx + 17, y: hy + 4.5, class: "lbl" }, "Hôtel"));
+  svg.appendChild(hg);
+
+  days.forEach(day => {
+    const box = document.createElement("div");
+    box.innerHTML = `<h3><i style="background:${day.color}"></i>${day.name}</h3>`;
+    const ol = document.createElement("ol");
+    places.forEach((pl, i) => {
+      if (pl[0] !== day.id) return;
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.textContent = pl[1];
+      btn.addEventListener("click", () => select(i));
+      const a = document.createElement("a");
+      a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(pl[5]);
+      a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Itinéraire ↗";
+      const n = document.createElement("span");
+      n.className = "num"; n.textContent = String(i + 1).padStart(2, "0");
+      li.append(n, btn, a);
+      ol.appendChild(li);
+      rows[i] = li;
+    });
+    box.appendChild(ol);
+    legend.appendChild(box);
+  });
+
+  const foodList = document.getElementById("food-list");
+  tiers.forEach(t => {
+    const box = document.createElement("div");
+    box.className = "tier";
+    box.innerHTML = `<h3>${t.name} <span class="price">${t.price}</span></h3>`;
+    const ol = document.createElement("ol");
+    food.forEach((f, k) => {
+      if (f[1] !== t.id) return;
+      const i = places.length + k;
+      const li = document.createElement("li");
+      li.innerHTML = `<span class="badge">${f[0]}</span><div class="r-body"><button type="button"></button><p></p><span class="when-eat"></span></div>`;
+      li.querySelector("button").textContent = f[2];
+      li.querySelector("p").textContent = f[5];
+      li.querySelector(".when-eat").textContent = f[7];
+      li.querySelector("button").addEventListener("click", () => select(i));
+      const a = document.createElement("a");
+      a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(f[6]);
+      a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Itinéraire ↗";
+      li.querySelector(".r-body").appendChild(a);
+      ol.appendChild(li);
+      rows[i] = li;
+    });
+    box.appendChild(ol);
+    foodList.appendChild(box);
+  });
+
+  const hotelLink = document.getElementById("hotel-link");
+  hotelLink.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(hotel.q);
+
+  document.querySelectorAll(".filters button").forEach(b => {
+    b.addEventListener("click", () => {
+      const f = b.dataset.f;
+      document.querySelectorAll(".filters button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      pins.forEach(p => p.toggleAttribute("hidden", f !== "all" && p.getAttribute("data-kind") !== f));
+    });
+  });
+})();
+
+// Compte à rebours (heure d'Istanbul, UTC+3)
+(function () {
+  const chip = document.getElementById("countdown");
+  const start = Date.UTC(2026, 10, 10, 21, 0); // 11 nov. 00:00 à Istanbul
+  const DAY = 86400000;
+  const now = Date.now();
+  if (now < start) {
+    const d = Math.ceil((start - now) / DAY);
+    chip.textContent = d === 1 ? "Départ demain" : "Départ dans " + d + " jours";
+  } else if (now < start + 4 * DAY) {
+    chip.textContent = "Jour " + (Math.floor((now - start) / DAY) + 1) + " sur 4";
+  } else {
+    chip.textContent = "Voyage terminé, bon retour";
+  }
+})();
+
+// Valise : cochée localement, par personne
+(function () {
+  const items = [
+    "Carte d'identité ou passeport", "Billets d'avion et réservation de l'hôtel", "Carte bancaire sans frais à l'étranger",
+    "eSIM ou option internet à l'étranger", "Chargeur et batterie externe", "Veste imperméable ou parapluie",
+    "Chaussures confortables (ça grimpe)", "Foulard ou écharpe pour les mosquées", "Un pull pour les soirées sur le ferry",
+    "Médicaments et carte d'assurance", "Un peu d'euros en espèces", "Sac à dos pour la journée"
+  ];
+  const KEY = "istanbul-valise";
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  const ul = document.getElementById("pack"), count = document.getElementById("pack-count");
+  const refresh = () => { count.textContent = items.filter((_, i) => done[i]).length + " / " + items.length; };
+  items.forEach((t, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<label for="pk${i}"><input type="checkbox" id="pk${i}"><span></span></label>`;
+    li.querySelector("span").textContent = t;
+    const cb = li.querySelector("input");
+    cb.checked = !!done[i];
+    cb.addEventListener("change", () => {
+      done[i] = cb.checked; refresh();
+      try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
+    });
+    ul.appendChild(li);
+  });
+  refresh();
+})();
+
+// Convertisseur : taux saisi par chacun, gardé sur son téléphone
+(function () {
+  const $ = id => document.getElementById(id);
+  const rateInput = $("rate"), cTry = $("c-try"), cEur = $("c-eur"), hint = $("c-hint");
+  const KEY = "istanbul-taux";
+  let rate = null;
+  try { const r = parseFloat(localStorage.getItem(KEY)); if (r > 0) rate = r; } catch (e) {}
+  if (rate) rateInput.value = rate;
+  const fromTry = () => { cEur.value = rate && cTry.value ? (cTry.value / rate).toFixed(2) : ""; };
+  const fromEur = () => { cTry.value = rate && cEur.value ? Math.round(cEur.value * rate) : ""; };
+  function showHint() {
+    hint.textContent = rate
+      ? "Au taux de 1 € = " + rate.toLocaleString("fr-FR") + " ₺, enregistré sur ce téléphone."
+      : "Indiquez d'abord le taux du jour, affiché par votre banque ou un convertisseur en ligne. Il reste enregistré sur votre téléphone.";
+  }
+  rateInput.addEventListener("input", () => {
+    const r = parseFloat(rateInput.value);
+    rate = r > 0 ? r : null;
+    try { localStorage.setItem(KEY, rate ? String(rate) : ""); } catch (e) {}
+    fromTry(); showHint();
+  });
+  cTry.addEventListener("input", fromTry);
+  cEur.addEventListener("input", fromEur);
+  showHint();
+})();
+</script>
+
+</body>
+</html>
