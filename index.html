@@ -166,6 +166,10 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 .conv input { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
 .conv-eq { font-size: 1.4rem; color: var(--muted); padding-bottom: 8px; }
 .conv-hint { flex-basis: 100%; }
+.tips ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+.tips li { color: var(--muted); font-size: .93rem; }
+.tips li strong { color: var(--ink); font-weight: 600; }
+.tips li::marker { color: var(--tile); font-family: var(--f-mono); font-size: .85rem; }
 .linkish { all: unset; cursor: pointer; color: var(--cobalt); text-decoration: underline; }
 .linkish:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
 .lex { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
@@ -217,6 +221,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     <a href="#j3">Rive asiatique <span>ven. 13</span></a>
     <a href="#j4">Balat et départ <span>sam. 14</span></a>
     <a href="#pratique">Infos pratiques</a>
+    <a href="#argent-tel">Argent et téléphone</a>
     <a href="#convertir">Convertisseur</a>
     <a href="#lexique">Lexique</a>
     <a href="#valise">Valise</a>
@@ -343,6 +348,37 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     </div>
   </section>
 
+  <section class="practical" id="argent-tel">
+    <div class="day-head">
+      <div class="eyebrow">Avant de partir</div>
+      <h2>Argent et téléphone</h2>
+      <p class="sub">Les deux postes où l'on perd le plus d'argent sans s'en rendre compte. Dans chaque carte, les solutions sont classées de la meilleure à la moins bonne.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="card tips">
+        <h3>Payer sans frais de change</h3>
+        <ol>
+          <li><strong>Partez avec une carte sans frais hors zone euro.</strong> Les néobanques et la plupart des banques en ligne ne prennent rien sur les paiements, ou très peu. Une banque classique prend souvent 2 à 3 % par paiement, plus 2 à 5 € par retrait. Vérifiez dans votre appli bancaire avant de partir.</li>
+          <li><strong>Payez et retirez toujours en livres turques.</strong> Quand le terminal ou le distributeur propose « payer en euros » ou un taux « garanti », refusez et choisissez TRY ou « sans conversion ». Ce taux de conversion dynamique est presque toujours mauvais.</li>
+          <li><strong>Retirez dans une banque publique, en agence.</strong> Ziraat, VakıfBank ou Halkbank sont souvent les moins chères. Évitez les distributeurs isolés et les Euronet. Regardez les frais affichés avant de valider.</li>
+          <li><strong>Faites un seul gros retrait pour trois</strong> plutôt que trois petits : les frais fixes ne sont payés qu'une fois.</li>
+          <li><strong>Pour changer des euros en espèces</strong>, choisissez un bureau de change (« döviz ») du centre. Il y en a beaucoup autour de Sirkeci et du Grand Bazar. Comparez l'écart entre le prix d'achat et de vente affiché. Évitez l'aéroport et l'hôtel, et ne changez pas en France.</li>
+          <li><strong>Ne changez que ce dont vous avez besoin.</strong> Revendre des livres en euros au retour fait perdre de l'argent.</li>
+        </ol>
+      </div>
+      <div class="card tips">
+        <h3>Internet sur place</h3>
+        <ol>
+          <li><strong>Regardez d'abord votre forfait.</strong> Plusieurs forfaits français incluent la Turquie : 35 Go chez Free (forfait à 19,99 € et Free Max), et certains forfaits « Voyage » chez Orange, SFR, Sosh ou B&amp;You. Sinon, coupez les données à l'étranger : hors forfait, c'est hors de prix.</li>
+          <li><strong>Sinon, une eSIM achetée en France avant de partir.</strong> Airalo, Saily et Holafly en vendent, par exemple. Comptez environ 5 € pour 1 Go et 30 € pour 20 Go. <strong>Installez-la avant le vol</strong> : plusieurs de ces sites sont bloqués depuis la Turquie. Il faut un téléphone compatible eSIM et désimlocké.</li>
+          <li><strong>Une seule connexion pour trois.</strong> Si l'un de vous a un bon forfait, il peut partager sa connexion aux deux autres pendant les sorties.</li>
+          <li><strong>Dernier recours : la SIM Turkcell.</strong> Son pack touriste coûte environ 1 800 ₺ (à peu près 32 €) pour 20 Go. Elle s'achète en boutique avec un passeport. C'est cher et long pour 4 jours.</li>
+        </ol>
+        <p class="hint">Les prix et quotas changent souvent : vérifiez-les sur le site de l'opérateur avant d'acheter.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="practical" id="convertir">
     <div class="day-head">
       <div class="eyebrow">Au bazar</div>
@@ -398,7 +434,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
           <dt>Papiers</dt><dd>Carte d'identité ou passeport en cours de validité, pas de visa pour les Français (séjour de moins de 90 jours). À confirmer sur <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/turquie/" target="_blank" rel="noopener">Conseils aux voyageurs</a>.</dd>
           <dt>Heure</dt><dd>+2 h par rapport à la France en novembre.</dd>
           <dt>Prises</dt><dd>Les mêmes qu'en France, pas besoin d'adaptateur.</dd>
-          <dt>Téléphone</dt><dd>La Turquie est hors UE : l'itinérance coûte cher. Prenez une eSIM avant de partir ou vérifiez votre forfait.</dd>
+          <dt>Téléphone</dt><dd>La Turquie est hors UE : vérifiez votre forfait ou prenez une eSIM avant le vol (voir <a href="#argent-tel">Argent et téléphone</a>).</dd>
           <dt>Argent</dt><dd>La carte passe presque partout. Gardez des espèces en livres pour la street food, les bazars et les petits pourboires (5 à 10 % au restaurant).</dd>
           <dt>Eau</dt><dd>Préférez l'eau en bouteille.</dd>
           <dt>Urgences</dt><dd>Composez le 112. Consulat général de France : <a href="https://istanbul.consulfrance.org/" target="_blank" rel="noopener">istanbul.consulfrance.org</a>, sur İstiklal.</dd>
