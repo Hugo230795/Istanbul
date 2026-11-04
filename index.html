@@ -6,6 +6,7 @@
 <meta name="description" content="Plan de visite d'Istanbul pour trois amis, du 11 au 14 novembre 2026.">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Istanbul, 11–14 novembre</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
@@ -97,20 +98,36 @@ nav a:hover, nav a:focus-visible { border-color: var(--cobalt); outline: none; }
 footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
 
 .map-sec { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
-.map-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--water); }
-.map-wrap svg { display: block; width: 100%; min-width: 620px; height: auto; }
-.land { fill: var(--land); stroke: var(--shore); stroke-width: 1.2; }
-.water-label { fill: var(--water-ink); font-family: var(--f-display); font-style: italic; font-size: 17px; }
-.area-label { fill: var(--muted); font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
-.route { fill: none; stroke: var(--turq); stroke-width: 2; stroke-dasharray: 6 5; }
-.bridge { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
-.pin { cursor: pointer; }
-.pin circle { stroke: var(--surface); stroke-width: 2.5; transition: r .15s; }
-.pin text.n { fill: #fff; font-family: var(--f-mono); font-size: 11px; font-weight: 500; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-.pin text.lbl { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 600; paint-order: stroke; stroke: var(--land); stroke-width: 4px; stroke-linejoin: round; }
-.pin.on circle { r: 15; }
-.pin:focus-visible { outline: none; }
-.pin:focus-visible circle { stroke: var(--ink); }
+.map-wrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--water); }
+#map { height: 560px; max-height: 75vh; width: 100%; background: var(--water); font-family: var(--f-body); }
+.map-fallback { padding: 24px; color: var(--muted); }
+.mk { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: #fff; font-family: var(--f-mono); font-size: 11px; font-weight: 500; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); box-sizing: border-box; transition: transform .15s; }
+.mk-food { position: relative; display: grid; place-items: center; width: 22px; height: 22px; }
+.mk-food::before { content: ""; position: absolute; width: 15px; height: 15px; background: var(--ink); border: 2px solid var(--surface); border-radius: 3px; transform: rotate(45deg); box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.mk-food b { position: relative; color: var(--bg); font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
+.mk-hotel { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); font-size: 13px; border: 2.5px solid var(--surface); box-shadow: 0 1px 5px rgba(0,0,0,.4); box-sizing: border-box; }
+.leaflet-marker-icon.on .mk, .leaflet-marker-icon:focus-visible .mk { transform: scale(1.3); }
+.leaflet-marker-icon.on .mk-food::before { border-color: var(--tile); }
+.leaflet-tooltip.mk-lbl { background: transparent; border: 0; box-shadow: none; padding: 0; font-weight: 600; font-size: 12px; color: var(--ink); text-shadow: 0 0 3px var(--bg), 0 0 3px var(--bg), 0 0 3px var(--bg); display: none; }
+.leaflet-tooltip.mk-lbl::before { display: none; }
+.leaflet-tooltip.mk-lbl.hotel { display: block; }
+#map.show-labels .leaflet-tooltip.mk-lbl { display: block; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
+.leaflet-popup-content { margin: 12px 14px; font-size: .9rem; line-height: 1.45; display: flex; flex-direction: column; gap: 3px; }
+.leaflet-popup-content p { margin: 2px 0 4px; color: var(--muted); }
+.leaflet-popup-content a { color: var(--cobalt); }
+.pp-day { font-family: var(--f-mono); font-size: .72rem; color: var(--tile); }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
+.leaflet-bar a { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.leaflet-control-attribution { font-size: 10px; }
+.filters .sep { width: 1px; background: var(--line); margin: 0 4px; }
+.locate-msg { font-size: .85rem; color: var(--tile); }
+.map-key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .82rem; color: var(--muted); }
+.map-key span { display: inline-flex; align-items: center; gap: 6px; }
+.map-key i { display: inline-block; width: 22px; height: 0; border-top: 4px solid var(--cobalt); }
+.map-key i.ferry { border-top: 3px dashed var(--turq); }
+.map-key i.funi { border-top: 3px dotted var(--muted); }
+@media (max-width: 600px) { #map { height: 440px; } }
 .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
 .legend h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .legend h3 i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
@@ -122,12 +139,6 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
 .legend button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 3px; }
 .legend a { font-size: .8rem; color: var(--cobalt); white-space: nowrap; }
 .map-hint { font-size: .85rem; color: var(--muted); }
-.pin.food rect { fill: var(--ink); stroke: var(--surface); stroke-width: 2; }
-.pin.food text.n { fill: var(--bg); font-size: 10px; }
-.pin.food.on rect { stroke: var(--tile); stroke-width: 3; }
-.hotel rect { fill: var(--ink); stroke: var(--surface); stroke-width: 2.5; }
-.hotel text.n { fill: var(--bg); font-family: var(--f-mono); font-size: 12px; font-weight: 500; text-anchor: middle; dominant-baseline: central; }
-.hotel text.lbl { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 600; paint-order: stroke; stroke: var(--land); stroke-width: 4px; stroke-linejoin: round; }
 .hotel-card { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
 .hotel-card > div { min-width: 0; }
 .hotel-card p { color: var(--muted); font-size: .92rem; }
@@ -231,7 +242,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     <div class="day-head">
       <div class="eyebrow">Les lieux du séjour</div>
       <h2>Carte</h2>
-      <p class="sub">Ronds de couleur : les visites, une couleur par jour. Losanges : les restaurants. Touchez un point pour le retrouver dans la liste, et « Itinéraire » pour l'ouvrir dans Google Maps.</p>
+      <p class="sub">Ronds numérotés : les visites, une couleur par jour. Losanges : les restaurants. Zoomez pour voir les noms, touchez un point pour sa fiche et son lien Google Maps.</p>
     </div>
     <div class="hotel-card">
       <span class="hbadge">H</span>
@@ -242,9 +253,21 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
       <button type="button" data-f="all" aria-pressed="true">Tout</button>
       <button type="button" data-f="visit" aria-pressed="false">Visites</button>
       <button type="button" data-f="food" aria-pressed="false">Restaurants</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" data-v="hotel">Autour de l'hôtel</button>
+      <button type="button" data-v="europe">Rive européenne</button>
+      <button type="button" data-v="kadikoy">Kadıköy</button>
+      <button type="button" data-v="tout">Tout le séjour</button>
+      <button type="button" id="locate">Me localiser</button>
     </div>
-    <div class="map-wrap"><svg id="map" viewBox="0 0 900 795" role="img" aria-label="Carte schématique d'Istanbul avec les lieux du séjour"></svg></div>
-    <p class="map-hint">Carte schématique, côtes simplifiées. Sur téléphone, faites-la glisser sur le côté.</p>
+    <p class="locate-msg" id="locate-msg" aria-live="polite"></p>
+    <div class="map-wrap"><div id="map" role="region" aria-label="Carte d'Istanbul avec les lieux du séjour"></div></div>
+    <div class="map-key">
+      <span><i></i>Tram T1</span>
+      <span><i class="ferry"></i>Ferries vers Kadıköy</span>
+      <span><i class="funi"></i>Funiculaire Kabataş → Taksim</span>
+      <span>Tracés approximatifs, d'après les arrêts.</span>
+    </div>
     <div class="legend" id="legend"></div>
     <h2 class="food-title">Où manger</h2>
     <p class="sub">Du sandwich à quelques euros au dîner gastronomique. Les lettres correspondent aux losanges de la carte.</p>
@@ -446,39 +469,38 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
   <footer>Les horaires et tarifs changent souvent : vérifiez-les sur les sites officiels la veille de chaque visite.</footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
-  // Projection simple : longitude 28.94 → 29.06, latitude 41.055 → 40.975
-  const X = lon => (lon - 28.94) * 7500;
-  const Y = lat => (41.055 - lat) * 9937;
-  const P = pts => pts.map(([la, lo]) => X(lo).toFixed(1) + "," + Y(la).toFixed(1)).join(" ");
-
-  const peninsula = [[41.0385,28.940],[41.0360,28.9445],[41.0320,28.9490],[41.0285,28.9525],[41.0235,28.958],[41.0205,28.966],[41.0180,28.974],[41.0180,28.980],[41.0165,28.988],[41.0095,28.9875],[41.0045,28.984],[41.003,28.978],[41.0035,28.965],[41.002,28.955],[41.001,28.940]];
-  const north = [[41.0435,28.940],[41.040,28.948],[41.036,28.955],[41.031,28.962],[41.026,28.969],[41.0228,28.9755],[41.0245,28.981],[41.0275,28.9855],[41.0330,28.9930],[41.0390,29.0000],[41.0425,29.0080],[41.0450,29.0180],[41.0470,29.0265],[41.0510,29.0300],[41.0550,29.0330],[41.056,28.939]];
-  const asia = [[40.974,29.032],[40.979,29.022],[40.984,29.020],[40.9925,29.0225],[40.997,29.017],[41.005,29.012],[41.020,29.006],[41.027,29.013],[41.037,29.030],[41.045,29.042],[41.056,29.050],[41.056,29.061],[40.974,29.061]];
-
   const days = [
     { id: 1, name: "Mer. 11 · Sultanahmet", color: "var(--cobalt)" },
     { id: 2, name: "Jeu. 12 · Palais et bazars", color: "var(--tile)" },
     { id: 3, name: "Ven. 13 · Rive asiatique", color: "var(--turq)" },
     { id: 4, name: "Sam. 14 · Balat et départ", color: "var(--amber)" }
   ];
-  // [jour, nom, lat, lon, côté du libellé, recherche Google Maps]
+  // [jour, nom, lat, lon, recherche Google Maps, description]
   const places = [
-    [1, "Sultanahmet : Sainte-Sophie, Mosquée Bleue, Hippodrome, Citerne", 41.0086, 28.9802, "r", "Hagia Sophia Istanbul", "Sultanahmet"],
-    [1, "Karaköy", 41.0255, 28.9775, "r", "Karaköy Istanbul", "Karaköy"],
-    [2, "Palais de Topkapı", 41.0115, 28.9834, "r", "Topkapi Palace", "Topkapı"],
-    [2, "Grand Bazar", 41.0107, 28.9681, "l", "Grand Bazaar Istanbul", "Grand Bazar"],
-    [2, "Eminönü et Bazar aux épices", 41.0182, 28.9745, "r", "Spice Bazaar Istanbul", "Eminönü"],
-    [2, "Mosquée Süleymaniye", 41.0162, 28.9639, "t", "Süleymaniye Mosque", "Süleymaniye"],
-    [2, "Tour de Galata", 41.0256, 28.9742, "l", "Galata Tower", "Galata"],
-    [2, "Rue İstiklal", 41.0335, 28.9779, "l", "Istiklal Avenue", "İstiklal"],
-    [2, "Cihangir", 41.0315, 28.9830, "r", "Cihangir Istanbul", "Cihangir"],
-    [3, "Kadıköy : quai et marché", 40.9925, 29.0230, "l", "Kadıköy İskelesi", "Kadıköy"],
-    [3, "Rue Kadife (Barlar Sokağı)", 40.9870, 29.0290, "r", "Kadife Sokak Kadıköy", "Kadife"],
-    [3, "Moda", 40.9810, 29.0255, "l", "Moda Sahili", "Moda"],
-    [4, "Balat et Fener", 41.0295, 28.9495, "l", "Balat Istanbul", "Balat"],
-    [4, "Ortaköy", 41.0485, 29.0255, "l", "Ortaköy Mosque", "Ortaköy"]
+    [1, "Sainte-Sophie", 41.0086, 28.9802, "Hagia Sophia Istanbul", "Environ 25 €, galerie du haut seulement pour les visiteurs étrangers."],
+    [1, "Mosquée Bleue", 41.0054, 28.9768, "Blue Mosque Istanbul", "Gratuite, fermée pendant les prières. Tenue couvrante."],
+    [1, "Hippodrome", 41.0063, 28.9752, "Hippodrome of Constantinople", "La grande place, avec l'obélisque égyptien et la colonne serpentine."],
+    [1, "Citerne Basilique", 41.0084, 28.9779, "Basilica Cistern", "Réservoir souterrain byzantin et ses deux têtes de Méduse."],
+    [1, "Karaköy", 41.0242, 28.9773, "Karaköy Istanbul", "Quartier des bars et des cafés, au pied de Galata."],
+    [2, "Palais de Topkapı", 41.0115, 28.9834, "Topkapi Palace", "2 à 3 heures. Fermé le mardi. Le Harem vaut le supplément."],
+    [2, "Grand Bazar", 41.0107, 28.9681, "Grand Bazaar Istanbul", "Fermé le dimanche. On négocie, en partant de la moitié du prix."],
+    [2, "Bazar aux épices", 41.0165, 28.9705, "Spice Bazaar Istanbul", "Épices, loukoums et thés, à côté de la mosquée Yeni Cami."],
+    [2, "Balık ekmek d'Eminönü", 41.0176, 28.9718, "Eminönü balık ekmek", "Le sandwich au poisson grillé sur les bateaux du quai."],
+    [2, "Mosquée Süleymaniye", 41.0162, 28.9639, "Süleymaniye Mosque", "La plus belle vue sur la Corne d'Or, au coucher du soleil."],
+    [2, "Tour de Galata", 41.0256, 28.9742, "Galata Tower", "Belle de l'extérieur la nuit. La montée est payante et souvent longue."],
+    [2, "Rue İstiklal", 41.0335, 28.9779, "Istiklal Avenue", "La grande rue piétonne, avec son tramway rouge."],
+    [2, "Place Taksim", 41.0369, 28.9850, "Taksim Square", "Le bout d'İstiklal, et le quartier de la vie nocturne."],
+    [2, "Cihangir", 41.0315, 28.9830, "Cihangir Istanbul", "Rues calmes, cafés et petits bars de quartier."],
+    [3, "Embarcadère de Kadıköy", 40.9925, 29.0230, "Kadıköy İskelesi", "Arrivée du ferry depuis Eminönü ou Karaköy."],
+    [3, "Marché de Kadıköy", 40.9897, 29.0262, "Kadıköy Çarşı", "Poissonniers, fromages, épiceries fines et street food."],
+    [3, "Rue Kadife (Barlar Sokağı)", 40.9867, 29.0285, "Kadife Sokak Kadıköy", "La rue des bars, la plus animée le vendredi soir."],
+    [3, "Moda", 40.9815, 29.0258, "Moda Sahili", "Promenade au bord de l'eau, idéale au coucher du soleil."],
+    [4, "Balat et Fener", 41.0296, 28.9495, "Balat Istanbul", "Maisons colorées, rues pentues et petits-déjeuners turcs."],
+    [4, "Ortaköy", 41.0473, 29.0270, "Ortaköy Mosque", "La mosquée au pied du pont, et le kumpir des stands."],
+    [4, "Bebek", 41.0770, 29.0435, "Bebek Istanbul", "Balade chic le long du Bosphore, cafés en terrasse."]
   ];
   const hotel = { name: "Raymond Hotel Old City", addr: "Ebussuud Cd. 22, Sirkeci", lat: 41.0140, lon: 28.9772, q: "Raymond Hotel Old City Istanbul" };
   const tiers = [
@@ -499,74 +521,33 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     ["I", "chic", "Mikla", 41.0318, 28.9740, "Cuisine turque contemporaine au sommet d'un hôtel de Pera, vue sur toute la ville. Menu dégustation cher, réservation indispensable, tenue soignée.", "Mikla Restaurant Istanbul", "Le dîner « on se fait plaisir »"],
     ["J", "chic", "Feriye", 41.0449, 29.0157, "Ancien palais ottoman au bord du Bosphore, près d'Ortaköy. Cuisine ottomane revisitée, terrasse sur l'eau. Réservation conseillée.", "Feriye Lokantası", "Sam. 14, si le vol est tard"]
   ];
+  // Transports, tracés à partir des arrêts (positions approximatives)
+  const tram = [[41.0326, 28.9926], [41.0297, 28.9867], [41.0268, 28.9817], [41.0222, 28.9763], [41.0172, 28.9733], [41.0151, 28.9768], [41.0130, 28.9800], [41.0087, 28.9770], [41.0084, 28.9714], [41.0098, 28.9640]];
+  const tramStops = ["Kabataş", "Fındıklı", "Tophane", "Karaköy", "Eminönü", "Sirkeci", "Gülhane", "Sultanahmet", "Çemberlitaş", "Beyazıt"];
+  const ferryEm = [[41.0176, 28.9757], [41.0120, 28.9900], [41.0030, 29.0080], [40.9930, 29.0222]];
+  const ferryKa = [[41.0213, 28.9790], [41.0140, 28.9960], [41.0030, 29.0110], [40.9935, 29.0225]];
+  const funi = [[41.0326, 28.9926], [41.0369, 28.9858]];
 
-  const svg = document.getElementById("map");
-  const ns = "http://www.w3.org/2000/svg";
-  const el = (tag, attrs, text) => {
-    const e = document.createElementNS(ns, tag);
-    for (const k in attrs) e.setAttribute(k, attrs[k]);
-    if (text) e.textContent = text;
-    return e;
-  };
-
-  [peninsula, north, asia].forEach(p => svg.appendChild(el("polygon", { points: P(p), class: "land" })));
-
-  svg.appendChild(el("line", { x1: X(28.9733), y1: Y(41.0182), x2: X(28.9745), y2: Y(41.0228), class: "bridge" }));
-  svg.appendChild(el("path", { class: "route", d: `M${X(28.9760)},${Y(41.0180)} Q${X(29.004)},${Y(41.010)} ${X(29.0205)},${Y(40.9935)}` }));
-  svg.appendChild(el("text", { x: X(29.0), y: Y(41.0045), class: "area-label", fill: "var(--turq)", style: "fill:var(--turq)" }, "Ferry · 20 min"));
-
-  svg.appendChild(el("text", { x: 118, y: 285, class: "water-label", transform: "rotate(-38 118 285)" }, "Corne d'Or"));
-  svg.appendChild(el("text", { x: 560, y: 230, class: "water-label", transform: "rotate(-52 560 230)" }, "Bosphore"));
-  svg.appendChild(el("text", { x: 250, y: 680, class: "water-label" }, "Mer de Marmara"));
-  svg.appendChild(el("text", { x: 300, y: 110, class: "area-label" }, "Rive européenne"));
-  svg.appendChild(el("text", { x: 700, y: 470, class: "area-label" }, "Rive asiatique"));
-  svg.appendChild(el("text", { x: 40, y: 500, class: "area-label" }, "Péninsule historique"));
-  svg.appendChild(el("text", { x: 745, y: 24, class: "area-label" }, "↑ Bebek, 3 km"));
+  const gmaps = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
   const legend = document.getElementById("legend");
-  const pins = [], rows = [];
-  function select(i) {
-    pins.forEach((p, j) => p.classList.toggle("on", i === j));
-    rows.forEach((r, j) => r.classList.toggle("on", i === j));
+  const foodList = document.getElementById("food-list");
+  const markers = [], rows = [];
+  let map = null;
+
+  function select(i, fly) {
+    markers.forEach((m, j) => m && m.getElement() && m.getElement().classList.toggle("on", i === j));
+    rows.forEach((r, j) => r && r.classList.toggle("on", i === j));
+    if (fly && map && markers[i]) {
+      map.flyTo(markers[i].getLatLng(), Math.max(map.getZoom(), 16), { duration: 0.6 });
+      markers[i].openPopup();
+      document.getElementById("map").scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
   }
 
-  places.forEach((pl, i) => {
-    const [d, , lat, lon, side, , short] = pl;
-    const day = days[d - 1];
-    const x = X(lon), y = Y(lat);
-    const g = el("g", { class: "pin", "data-kind": "visit", tabindex: "0", role: "button", "aria-label": (i + 1) + ". " + pl[1] });
-    g.appendChild(el("circle", { cx: x, cy: y, r: 11, style: "fill:" + day.color }));
-    g.appendChild(el("text", { x: x, y: y, class: "n" }, String(i + 1)));
-    const lx = side === "r" ? x + 16 : side === "l" ? x - 16 : x;
-    const ly = side === "t" ? y - 17 : y + 4.5;
-    g.appendChild(el("text", { x: lx, y: ly, class: "lbl", "text-anchor": side === "r" ? "start" : side === "l" ? "end" : "middle" }, short));
-    g.addEventListener("click", () => { select(i); rows[i].scrollIntoView({ block: "nearest" }); });
-    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); } });
-    svg.appendChild(g);
-    pins.push(g);
-  });
-
-  food.forEach((f, k) => {
-    const i = places.length + k;
-    const x = X(f[4]), y = Y(f[3]);
-    const g = el("g", { class: "pin food", "data-kind": "food", tabindex: "0", role: "button", "aria-label": f[0] + ". " + f[2] });
-    g.appendChild(el("title", {}, f[2]));
-    g.appendChild(el("rect", { x: x - 8, y: y - 8, width: 16, height: 16, rx: 3, transform: `rotate(45 ${x} ${y})` }));
-    g.appendChild(el("text", { x: x, y: y, class: "n" }, f[0]));
-    g.addEventListener("click", () => { select(i); rows[i].scrollIntoView({ block: "nearest" }); });
-    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); } });
-    svg.appendChild(g);
-    pins.push(g);
-  });
-
-  const hx = X(hotel.lon), hy = Y(hotel.lat);
-  const hg = el("g", { class: "hotel" });
-  hg.appendChild(el("title", {}, hotel.name + ", " + hotel.addr));
-  hg.appendChild(el("rect", { x: hx - 11, y: hy - 11, width: 22, height: 22, rx: 5 }));
-  hg.appendChild(el("text", { x: hx, y: hy, class: "n" }, "H"));
-  hg.appendChild(el("text", { x: hx + 17, y: hy + 4.5, class: "lbl" }, "Hôtel"));
-  svg.appendChild(hg);
-
+  // Listes sous la carte (affichées même si la carte ne charge pas)
   days.forEach(day => {
     const box = document.createElement("div");
     box.innerHTML = `<h3><i style="background:${day.color}"></i>${day.name}</h3>`;
@@ -574,15 +555,13 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     places.forEach((pl, i) => {
       if (pl[0] !== day.id) return;
       const li = document.createElement("li");
-      const btn = document.createElement("button");
-      btn.textContent = pl[1];
-      btn.addEventListener("click", () => select(i));
-      const a = document.createElement("a");
-      a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(pl[5]);
-      a.target = "_blank"; a.rel = "noopener";
-      a.textContent = "Itinéraire ↗";
       const n = document.createElement("span");
       n.className = "num"; n.textContent = String(i + 1).padStart(2, "0");
+      const btn = document.createElement("button");
+      btn.type = "button"; btn.textContent = pl[1];
+      btn.addEventListener("click", () => select(i, true));
+      const a = document.createElement("a");
+      a.href = gmaps(pl[4]); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Itinéraire ↗";
       li.append(n, btn, a);
       ol.appendChild(li);
       rows[i] = li;
@@ -591,7 +570,6 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     legend.appendChild(box);
   });
 
-  const foodList = document.getElementById("food-list");
   tiers.forEach(t => {
     const box = document.createElement("div");
     box.className = "tier";
@@ -605,11 +583,9 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
       li.querySelector("button").textContent = f[2];
       li.querySelector("p").textContent = f[5];
       li.querySelector(".when-eat").textContent = f[7];
-      li.querySelector("button").addEventListener("click", () => select(i));
+      li.querySelector("button").addEventListener("click", () => select(i, true));
       const a = document.createElement("a");
-      a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(f[6]);
-      a.target = "_blank"; a.rel = "noopener";
-      a.textContent = "Itinéraire ↗";
+      a.href = gmaps(f[6]); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Itinéraire ↗";
       li.querySelector(".r-body").appendChild(a);
       ol.appendChild(li);
       rows[i] = li;
@@ -618,16 +594,107 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     foodList.appendChild(box);
   });
 
-  const hotelLink = document.getElementById("hotel-link");
-  hotelLink.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(hotel.q);
+  document.getElementById("hotel-link").href = gmaps(hotel.q);
 
-  document.querySelectorAll(".filters button").forEach(b => {
+  if (!window.L) {
+    document.getElementById("map").innerHTML = `<p class="map-fallback">La carte n'a pas pu se charger (pas de connexion ?). Les liens « Itinéraire » ci-dessous ouvrent chaque lieu dans Google Maps.</p>`;
+    return;
+  }
+
+  map = L.map("map", { zoomControl: true, scrollWheelZoom: false, tap: true }).setView([41.0150, 28.9850], 14);
+  map.on("focus", () => map.scrollWheelZoom.enable());
+  map.on("blur", () => map.scrollWheelZoom.disable());
+
+  // Fond de carte clair ou sombre selon le thème du téléphone
+  const dark = matchMedia("(prefers-color-scheme: dark)");
+  const tileUrl = d => `https://{s}.basemaps.cartocdn.com/${d ? "dark_all" : "rastertiles/voyager"}/{z}/{x}/{y}{r}.png`;
+  const tiles = L.tileLayer(tileUrl(dark.matches), {
+    maxZoom: 19, subdomains: "abcd",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(map);
+  dark.addEventListener && dark.addEventListener("change", e => tiles.setUrl(tileUrl(e.matches)));
+
+  const transport = L.layerGroup().addTo(map);
+  L.polyline(tram, { color: css("--cobalt"), weight: 4, opacity: .75 }).bindTooltip("Tram T1", { sticky: true }).addTo(transport);
+  tram.forEach((p, i) => L.circleMarker(p, { radius: 3.5, color: css("--cobalt"), weight: 2, fillColor: "#fff", fillOpacity: 1 })
+    .bindTooltip("T1 · " + tramStops[i], { direction: "top" }).addTo(transport));
+  L.polyline(ferryEm, { color: css("--turq"), weight: 3, dashArray: "7 6", smoothFactor: 2 }).bindTooltip("Ferry Eminönü → Kadıköy, 20 min", { sticky: true }).addTo(transport);
+  L.polyline(ferryKa, { color: css("--turq"), weight: 3, dashArray: "7 6", opacity: .6 }).bindTooltip("Ferry Karaköy → Kadıköy, 20 min", { sticky: true }).addTo(transport);
+  L.polyline(funi, { color: css("--muted"), weight: 3, dashArray: "2 5" }).bindTooltip("Funiculaire F1 Kabataş → Taksim, 3 min", { sticky: true }).addTo(transport);
+
+  const visits = L.layerGroup().addTo(map), eats = L.layerGroup().addTo(map);
+
+  places.forEach((pl, i) => {
+    const day = days[pl[0] - 1];
+    const icon = L.divIcon({ className: "", html: `<span class="mk" style="background:${day.color}">${i + 1}</span>`, iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -12] });
+    const m = L.marker([pl[2], pl[3]], { icon, title: pl[1], riseOnHover: true })
+      .bindTooltip(esc(pl[1]), { direction: "right", offset: [12, 0], permanent: true, className: "mk-lbl" })
+      .bindPopup(`<b>${esc(pl[1])}</b><span class="pp-day">${esc(day.name)}</span><p>${esc(pl[5])}</p><a href="${gmaps(pl[4])}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
+      .on("click", () => select(i));
+    m.addTo(visits);
+    markers[i] = m;
+  });
+
+  food.forEach((f, k) => {
+    const i = places.length + k;
+    const tier = tiers.find(t => t.id === f[1]);
+    const icon = L.divIcon({ className: "", html: `<span class="mk-food"><b>${f[0]}</b></span>`, iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -10] });
+    const m = L.marker([f[3], f[4]], { icon, title: f[2], riseOnHover: true })
+      .bindTooltip(esc(f[2]), { direction: "right", offset: [10, 0], permanent: true, className: "mk-lbl food" })
+      .bindPopup(`<b>${esc(f[2])}</b><span class="pp-day">${tier.name} · ${tier.price}</span><p>${esc(f[5])}</p><a href="${gmaps(f[6])}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
+      .on("click", () => select(i));
+    m.addTo(eats);
+    markers[i] = m;
+  });
+
+  const hIcon = L.divIcon({ className: "", html: `<span class="mk-hotel">H</span>`, iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -12] });
+  L.marker([hotel.lat, hotel.lon], { icon: hIcon, title: hotel.name, zIndexOffset: 1000 })
+    .bindTooltip("Hôtel", { direction: "right", offset: [14, 0], permanent: true, className: "mk-lbl hotel" })
+    .bindPopup(`<b>${hotel.name}</b><span class="pp-day">${hotel.addr}</span><p>Tram T1 à Gülhane, Marmaray à Sirkeci.</p><a href="${gmaps(hotel.q)}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
+    .addTo(map);
+
+  // Les noms n'apparaissent qu'en zoomant, pour ne pas surcharger la vue d'ensemble
+  const mapEl = document.getElementById("map");
+  const labels = () => mapEl.classList.toggle("show-labels", map.getZoom() >= 16);
+  map.on("zoomend", labels); labels();
+
+  document.querySelectorAll(".filters button[data-f]").forEach(b => {
     b.addEventListener("click", () => {
       const f = b.dataset.f;
-      document.querySelectorAll(".filters button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
-      pins.forEach(p => p.toggleAttribute("hidden", f !== "all" && p.getAttribute("data-kind") !== f));
+      document.querySelectorAll(".filters button[data-f]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      [[visits, "visit"], [eats, "food"]].forEach(([layer, kind]) => {
+        if (f === "all" || f === kind) map.addLayer(layer); else map.removeLayer(layer);
+      });
     });
   });
+
+  // Vues rapides
+  const views = {
+    europe: [[41.0040, 28.9600], [41.0380, 28.9950]],
+    kadikoy: [[40.9790, 29.0180], [40.9950, 29.0320]],
+    tout: [[40.9790, 28.9450], [41.0790, 29.0460]]
+  };
+  document.querySelectorAll(".filters button[data-v]").forEach(b => {
+    b.addEventListener("click", () => {
+      if (b.dataset.v === "hotel") map.flyTo([hotel.lat, hotel.lon], 16, { duration: 0.6 });
+      else map.flyToBounds(views[b.dataset.v], { duration: 0.6, padding: [20, 20] });
+    });
+  });
+
+  // Ma position (demande l'autorisation du téléphone)
+  const locBtn = document.getElementById("locate"), locMsg = document.getElementById("locate-msg");
+  let me = null;
+  locBtn.addEventListener("click", () => {
+    locMsg.textContent = "Recherche de votre position…";
+    map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
+  });
+  map.on("locationfound", e => {
+    locMsg.textContent = "";
+    if (me) me.setLatLng(e.latlng); else me = L.circleMarker(e.latlng, { radius: 8, color: "#fff", weight: 3, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip("Vous êtes ici").addTo(map);
+  });
+  map.on("locationerror", () => { locMsg.textContent = "Position indisponible : autorisez la localisation pour ce site dans le navigateur."; });
+
+  map.fitBounds(views.europe, { padding: [10, 10] });
 })();
 
 // Compte à rebours (heure d'Istanbul, UTC+3)
