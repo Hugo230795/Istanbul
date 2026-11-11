@@ -1,0 +1,1789 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kit de vol Istanbul</title>
+<meta name="description" content="Trois heures de vol sans réseau : turc de survie, quiz Istanbul, jeux, oreille musicale, révisions et étirements.">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1522" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kit de vol">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icone-180.png">
+<link rel="icon" href="icone-192.png" type="image/png">
+<!-- Polices chargées sans bloquer l'affichage : sans réseau, la page garde ses polices de secours -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
+<style>
+/* Kit de vol : une colonne sur téléphone, grille de cartes sur grand écran ; palette reprise du site du voyage (faïences d'Iznik) */
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f7;
+  --ink: #18233a;
+  --muted: #5b6577;
+  --line: #dde3ec;
+  --cobalt: #1f4fa3;
+  --cobalt-ink: #ffffff;
+  --tile: #c2412d;
+  --turq: #138a83;
+  --amber: #b26b12;
+  --cobalt-soft: #e6edf9;
+  --tile-soft: #fbebe7;
+  --turq-soft: #e2f3f1;
+  --amber-soft: #f8eedf;
+  --f-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1522; --surface: #172033; --surface-2: #1d2840; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
+  --cobalt: #7fa6ef; --cobalt-ink: #0f1522; --tile: #f08a74; --turq: #4cc4bb; --amber: #e3b25a;
+  --cobalt-soft: #1c2a47; --tile-soft: #3a2220; --turq-soft: #13302f; --amber-soft: #352a17;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0f1522; --surface: #172033; --surface-2: #1d2840; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
+  --cobalt: #7fa6ef; --cobalt-ink: #0f1522; --tile: #f08a74; --turq: #4cc4bb; --amber: #e3b25a;
+  --cobalt-soft: #1c2a47; --tile-soft: #3a2220; --turq-soft: #13302f; --amber-soft: #352a17;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+}
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.15; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.05rem; font-family: var(--f-body); font-weight: 600; }
+p { margin: 0 0 .75em; }
+a { color: var(--cobalt); }
+small, .muted { color: var(--muted); }
+.mono { font-family: var(--f-mono); }
+
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 20px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.view { animation: entree .18s ease-out; }
+@keyframes entree { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* En-tête */
+.entete { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.entete .sur-titre { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tile); font-weight: 600; }
+.etat-hors-ligne { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  font-size: .85rem; padding: 6px 12px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+.etat-hors-ligne.pret { background: var(--turq-soft); color: var(--turq); font-weight: 600; }
+.etat-hors-ligne .point { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+/* Barre de vue (retour + titre) */
+.barre { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.retour { min-height: 44px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font: inherit; font-weight: 600; cursor: pointer; }
+.barre h2 { flex: 1; }
+
+/* Cartes et blocs */
+.grille { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.carte { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+.carte-lien { display: flex; flex-direction: column; gap: 6px; text-align: left; cursor: pointer; font: inherit; color: inherit;
+  transition: border-color .15s, transform .15s; }
+.carte-lien:hover { border-color: var(--cobalt); }
+.carte-lien:active { transform: scale(.99); }
+.carte-lien .icone { font-size: 1.6rem; line-height: 1; }
+.carte-lien .meta { font-size: .85rem; color: var(--muted); }
+.carte-lien .record { font-size: .8rem; color: var(--turq); font-weight: 600; }
+.section { margin: 28px 0 12px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.bloc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+.bloc h3 { margin-bottom: 8px; }
+
+details.bloc > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+details.bloc > summary::-webkit-details-marker { display: none; }
+details.bloc > summary::after { content: "▾"; color: var(--muted); transition: transform .15s; }
+details.bloc[open] > summary::after { transform: rotate(180deg); }
+details.bloc > summary h3 { margin: 0; }
+
+/* Liste à cocher (ce soir) */
+.coches { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+.coches label { display: flex; gap: 12px; align-items: flex-start; padding: 8px 4px; cursor: pointer; border-radius: 8px; }
+.coches input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--turq); flex: none; }
+.coches .detail { display: block; font-size: .88rem; color: var(--muted); }
+.coches input:checked + span { opacity: .55; text-decoration: line-through; }
+
+/* Programme */
+.programme { list-style: none; margin: 0; padding: 0; position: relative; }
+.programme li { display: grid; grid-template-columns: 74px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.programme li:first-child { border-top: 0; }
+.programme.large li { grid-template-columns: 96px 1fr; }
+.programme .heure { font-family: var(--f-mono); font-size: .85rem; color: var(--cobalt); padding-top: 2px; }
+.programme button { all: unset; cursor: pointer; color: var(--cobalt); font-weight: 600; }
+.programme button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+
+/* Boutons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 18px;
+  border-radius: 12px; border: 1px solid var(--cobalt); background: var(--cobalt); color: var(--cobalt-ink);
+  font: inherit; font-weight: 600; cursor: pointer; touch-action: manipulation; }
+.btn.fantome { background: transparent; color: var(--cobalt); }
+.btn.discret { background: var(--surface-2); border-color: var(--line); color: var(--ink); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.btn.petit { min-height: 38px; padding: 0 12px; font-size: .9rem; }
+.rangee { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rangee.centre { justify-content: center; }
+.segment { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.segment button { white-space: nowrap; min-height: 40px; padding: 0 12px; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: .9rem; cursor: pointer; }
+.segment button + button { border-left: 1px solid var(--line); }
+.segment button[aria-pressed="true"] { background: var(--cobalt); color: var(--cobalt-ink); font-weight: 600; }
+.champ { min-height: 46px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; width: 100%; }
+.champ:focus { outline: 2px solid var(--cobalt); outline-offset: 1px; }
+
+/* Quiz */
+.quiz { max-width: 640px; margin: 0 auto; }
+.progression { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin-bottom: 14px; }
+.progression > span { display: block; height: 100%; background: var(--cobalt); transition: width .25s; }
+.tour { font-size: .9rem; color: var(--tile); font-weight: 600; margin-bottom: 6px; }
+.question { font-size: 1.2rem; font-weight: 600; margin-bottom: 14px; }
+.choix { display: grid; gap: 8px; }
+.choix button { text-align: left; min-height: 52px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; touch-action: manipulation; }
+.choix button:hover:not([disabled]) { border-color: var(--cobalt); }
+.choix button.bon { border-color: var(--turq); background: var(--turq-soft); font-weight: 600; }
+.choix button.faux { border-color: var(--tile); background: var(--tile-soft); }
+.choix button[disabled] { cursor: default; }
+.explication { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); font-size: .95rem; }
+.explication > strong { display: block; margin-bottom: 2px; }
+.score-final { text-align: center; padding: 10px 0 4px; }
+.score-final .grand { font-family: var(--f-display); font-size: 3rem; line-height: 1; color: var(--cobalt); }
+.tableau-scores { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.tableau-scores td { padding: 8px 4px; border-top: 1px solid var(--line); }
+.tableau-scores td:last-child { text-align: right; font-family: var(--f-mono); }
+.erreurs { margin: 0; padding-left: 18px; font-size: .92rem; }
+.erreurs li { margin-bottom: 8px; }
+.joueurs { display: grid; gap: 8px; margin: 10px 0; }
+
+/* Turc : fiches */
+.fiche { min-height: 230px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  gap: 6px; cursor: pointer; user-select: none; -webkit-user-select: none; position: relative; }
+.fiche .mot { font-family: var(--f-display); font-size: clamp(1.7rem, 8vw, 2.4rem); line-height: 1.15; }
+.fiche .prono { font-family: var(--f-mono); color: var(--cobalt); font-size: 1rem; }
+.fiche .sens { font-size: 1.15rem; font-weight: 600; }
+.fiche .indice { font-size: .85rem; color: var(--muted); }
+.fiche .cat { position: absolute; top: 10px; left: 14px; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.parler { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); border-radius: 999px; min-height: 36px; padding: 0 12px; font: inherit; font-size: .9rem; cursor: pointer; }
+.regles { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 10px 0 0; }
+.regle { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+.regle b { font-family: var(--f-display); font-weight: 400; font-size: 1.4rem; color: var(--tile); margin-right: 6px; }
+.lexique { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.lexique td { padding: 8px 6px; border-top: 1px solid var(--line); vertical-align: top; }
+.lexique td:first-child { font-weight: 600; }
+.lexique .prono { font-family: var(--f-mono); color: var(--cobalt); font-size: .85rem; }
+.prix { font-family: var(--f-display); font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.2; margin: 6px 0; }
+.etiquette { display: inline-block; font-size: .8rem; padding: 2px 10px; border-radius: 999px; background: var(--amber-soft); color: var(--amber); font-weight: 600; }
+
+/* Jeux */
+.jeu { max-width: 520px; margin: 0 auto; }
+.infos-jeu { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; font-size: .95rem; }
+.infos-jeu .valeur { font-family: var(--f-mono); font-weight: 600; }
+
+.sudoku { display: grid; grid-template-columns: repeat(9, 1fr); width: 100%; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--surface); touch-action: manipulation; }
+.sudoku button { border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); color: var(--cobalt);
+  font: inherit; font-size: clamp(1rem, 5.2vw, 1.5rem); padding: 0; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+.sudoku button.fixe { color: var(--ink); font-weight: 600; }
+.sudoku button.c3 { border-right: 2px solid var(--ink); }
+.sudoku button.l3 { border-bottom: 2px solid var(--ink); }
+.sudoku button.zone { background: var(--surface-2); }
+.sudoku button.meme { background: var(--cobalt-soft); }
+.sudoku button.actif { background: var(--cobalt); color: var(--cobalt-ink); }
+.sudoku button.erreur { color: var(--tile); background: var(--tile-soft); }
+.sudoku .notes { position: absolute; inset: 2px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); font-size: clamp(.45rem, 2vw, .62rem); color: var(--muted); line-height: 1; font-weight: 400; }
+.sudoku .notes span { display: flex; align-items: center; justify-content: center; }
+.pave { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; margin-top: 12px; }
+.pave button { min-height: 48px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 1.25rem; font-weight: 600; cursor: pointer; touch-action: manipulation; padding: 0; }
+.pave button .reste { display: block; font-size: .6rem; color: var(--muted); font-weight: 400; }
+.pave button.epuise { opacity: .35; }
+
+.p2048 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 8px; border-radius: 14px; background: var(--surface-2); aspect-ratio: 1; touch-action: none; user-select: none; -webkit-user-select: none; }
+.p2048 div { border-radius: 8px; background: var(--surface); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: clamp(1.1rem, 7vw, 2rem); font-family: var(--f-body); }
+.p2048 div.neuf { animation: apparait .16s ease-out; }
+@keyframes apparait { from { transform: scale(.6); } to { transform: scale(1); } }
+.p2048 .v2 { background: #e6edf9; color: #18233a; } .p2048 .v4 { background: #cfdcf3; color: #18233a; }
+.p2048 .v8 { background: #9fc0ea; color: #18233a; } .p2048 .v16 { background: #5d90d8; color: #fff; }
+.p2048 .v32 { background: #1f4fa3; color: #fff; } .p2048 .v64 { background: #138a83; color: #fff; }
+.p2048 .v128 { background: #2aa89f; color: #fff; font-size: clamp(1rem, 6vw, 1.7rem); } .p2048 .v256 { background: #e3b25a; color: #18233a; font-size: clamp(1rem, 6vw, 1.7rem); }
+.p2048 .v512 { background: #b26b12; color: #fff; font-size: clamp(1rem, 6vw, 1.7rem); } .p2048 .v1024 { background: #c2412d; color: #fff; font-size: clamp(.9rem, 5vw, 1.4rem); }
+.p2048 .v2048 { background: #8e2a1c; color: #fff; font-size: clamp(.9rem, 5vw, 1.4rem); } .p2048 .vmax { background: #18233a; color: #fff; font-size: clamp(.8rem, 4.5vw, 1.2rem); }
+
+.mines-cadre { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+.mines { display: grid; gap: 2px; margin: 0 auto; width: max-content; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+.mines button { width: var(--case, 32px); height: var(--case, 32px); padding: 0; border: 0; border-radius: 5px; background: var(--cobalt-soft);
+  color: var(--ink); font: inherit; font-weight: 700; font-size: calc(var(--case, 32px) * .5); cursor: pointer; -webkit-touch-callout: none; }
+.mines button.ouverte { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); cursor: default; }
+.mines button.mine { background: var(--tile); color: #fff; }
+.mines button.drapeau { background: var(--amber-soft); }
+.mines .n1 { color: #1f4fa3; } .mines .n2 { color: #138a83; } .mines .n3 { color: #c2412d; } .mines .n4 { color: #6b3fa0; }
+.mines .n5 { color: #8e2a1c; } .mines .n6 { color: #0f6b66; } .mines .n7 { color: #18233a; } .mines .n8 { color: #5b6577; }
+:root[data-theme="dark"] .mines .n1, :root[data-theme="dark"] .mines .n7 { color: #7fa6ef; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mines .n1, :root:not([data-theme="light"]) .mines .n7 { color: #7fa6ef; } }
+
+.message-jeu { text-align: center; font-weight: 600; min-height: 1.6em; margin: 10px 0; }
+.message-jeu.gagne { color: var(--turq); }
+.message-jeu.perdu { color: var(--tile); }
+
+/* Oreille */
+.gros-bouton { width: 100%; min-height: 64px; font-size: 1.1rem; }
+.astuce { font-size: .9rem; color: var(--muted); }
+.reponses { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 12px; }
+.reponses button { min-height: 50px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: .92rem; cursor: pointer; padding: 6px 8px; touch-action: manipulation; }
+.reponses button.bon { border-color: var(--turq); background: var(--turq-soft); font-weight: 600; }
+.reponses button.faux { border-color: var(--tile); background: var(--tile-soft); }
+.compteur { font-family: var(--f-mono); }
+.tap { width: 100%; min-height: 150px; border-radius: 18px; border: 2px dashed var(--cobalt); background: var(--cobalt-soft); color: var(--cobalt);
+  font: inherit; font-size: 1.3rem; font-weight: 700; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.tap:active { background: var(--cobalt); color: var(--cobalt-ink); }
+.bpm { font-family: var(--f-display); font-size: 3.2rem; line-height: 1; color: var(--cobalt); text-align: center; margin: 14px 0 4px; }
+.sections-morceau { width: 100%; border-collapse: collapse; font-size: .92rem; margin-top: 10px; }
+.sections-morceau td, .sections-morceau th { padding: 6px 4px; border-top: 1px solid var(--line); text-align: left; }
+.sections-morceau th { font-weight: 600; color: var(--muted); font-size: .8rem; }
+.sections-morceau input { width: 100%; min-height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; padding: 0 8px; }
+
+/* Étirements */
+.minuteur { text-align: center; }
+.minuteur .nom { font-family: var(--f-display); font-size: 1.6rem; margin: 6px 0; }
+.minuteur .temps { font-family: var(--f-mono); font-size: 3.4rem; line-height: 1; color: var(--cobalt); margin: 12px 0; }
+.minuteur .consigne { max-width: 460px; margin: 0 auto 14px; }
+.etapes { display: flex; gap: 4px; justify-content: center; margin: 10px 0; flex-wrap: wrap; }
+.etapes span { width: 22px; height: 6px; border-radius: 3px; background: var(--surface-2); }
+.etapes span.fait { background: var(--turq); }
+.etapes span.encours { background: var(--cobalt); }
+
+.pied { margin-top: 40px; font-size: .85rem; color: var(--muted); text-align: center; }
+
+@media (min-width: 720px) {
+  .entete { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+  .wrap { padding-block-start: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.sans-voix .parler { display: none; }
+
+</style>
+</head>
+<body>
+<main id="app" class="wrap"><noscript>Cette page a besoin de JavaScript.</noscript></main>
+<script>
+// Contenu du kit : vocabulaire turc, lieux à prononcer, questions des quiz, étirements.
+// Prononciation écrite à la française, comme dans le lexique du site du voyage.
+
+const TURC = [
+  // Politesse
+  { tr: "Merhaba", pr: "mèr-ha-ba", fr: "Bonjour (à toute heure)", cat: "Politesse" },
+  { tr: "Günaydın", pr: "gu-naï-deun", fr: "Bonjour (le matin)", cat: "Politesse" },
+  { tr: "İyi akşamlar", pr: "i-yi ak-cham-lar", fr: "Bonsoir", cat: "Politesse" },
+  { tr: "Teşekkürler", pr: "té-ché-ku-lèr", fr: "Merci", cat: "Politesse" },
+  { tr: "Teşekkür ederim", pr: "té-ché-kur é-dé-rim", fr: "Merci (plus poli)", cat: "Politesse" },
+  { tr: "Lütfen", pr: "lut-fèn", fr: "S'il vous plaît", cat: "Politesse" },
+  { tr: "Evet", pr: "é-vèt", fr: "Oui", cat: "Politesse" },
+  { tr: "Hayır", pr: "ha-yeur", fr: "Non", cat: "Politesse" },
+  { tr: "Tamam", pr: "ta-mam", fr: "D'accord", cat: "Politesse" },
+  { tr: "Pardon", pr: "par-don", fr: "Pardon (pour passer)", cat: "Politesse" },
+  { tr: "Özür dilerim", pr: "eu-zur di-lé-rim", fr: "Je suis désolé", cat: "Politesse" },
+  { tr: "Hoşça kal", pr: "hoch-tcha kal", fr: "Au revoir (dit par celui qui part)", cat: "Politesse" },
+  { tr: "Görüşürüz", pr: "gueu-ru-chu-ruz", fr: "À plus tard", cat: "Politesse" },
+  { tr: "Anlamıyorum", pr: "an-la-meu-yo-roum", fr: "Je ne comprends pas", cat: "Politesse" },
+  { tr: "İngilizce biliyor musunuz?", pr: "in-gui-liz-djé bi-li-yor mou-sou-nouz", fr: "Vous parlez anglais ?", cat: "Politesse" },
+  { tr: "Fransızım", pr: "fran-seu-zeum", fr: "Je suis français", cat: "Politesse" },
+  { tr: "Kolay gelsin", pr: "ko-laï guèl-sin", fr: "Bon courage (à quelqu'un qui travaille)", cat: "Politesse" },
+  // Restaurant
+  { tr: "Üç kişi", pr: "utch ki-chi", fr: "Trois personnes", cat: "Restaurant" },
+  { tr: "Menü, lütfen", pr: "mé-nu lut-fèn", fr: "La carte, s'il vous plaît", cat: "Restaurant" },
+  { tr: "Su", pr: "sou", fr: "Eau", cat: "Restaurant" },
+  { tr: "Bir çay", pr: "bir tchaï", fr: "Un thé", cat: "Restaurant" },
+  { tr: "Bira", pr: "bi-ra", fr: "Bière", cat: "Restaurant" },
+  { tr: "Hesap, lütfen", pr: "hé-sap lut-fèn", fr: "L'addition, s'il vous plaît", cat: "Restaurant" },
+  { tr: "Afiyet olsun", pr: "a-fi-yèt ol-soun", fr: "Bon appétit", cat: "Restaurant" },
+  { tr: "Şerefe!", pr: "ché-ré-fé", fr: "Santé !", cat: "Restaurant" },
+  { tr: "Çok lezzetli", pr: "tchok lèz-zèt-li", fr: "Délicieux", cat: "Restaurant" },
+  { tr: "Acı", pr: "a-djeu", fr: "Épicé, piquant", cat: "Restaurant" },
+  { tr: "Acısız, lütfen", pr: "a-djeu-seuz lut-fèn", fr: "Pas épicé, s'il vous plaît", cat: "Restaurant" },
+  { tr: "Kredi kartı", pr: "kré-di kar-teu", fr: "Carte bancaire", cat: "Restaurant" },
+  { tr: "Nakit", pr: "na-kit", fr: "Espèces", cat: "Restaurant" },
+  // Bazar
+  { tr: "Ne kadar?", pr: "né ka-dar", fr: "Combien ?", cat: "Bazar" },
+  { tr: "Çok pahalı", pr: "tchok pa-ha-leu", fr: "Trop cher", cat: "Bazar" },
+  { tr: "İndirim var mı?", pr: "in-di-rim var meu", fr: "Il y a une réduction ?", cat: "Bazar" },
+  { tr: "Son fiyat?", pr: "son fi-yat", fr: "C'est votre dernier prix ?", cat: "Bazar" },
+  { tr: "Sadece bakıyorum", pr: "sa-dé-djé ba-keu-yo-roum", fr: "Je regarde seulement", cat: "Bazar" },
+  { tr: "Bunu alıyorum", pr: "bou-nou a-leu-yo-roum", fr: "Je prends ça", cat: "Bazar" },
+  { tr: "Hayır, teşekkürler", pr: "ha-yeur té-ché-ku-lèr", fr: "Non merci", cat: "Bazar" },
+  { tr: "Çok güzel", pr: "tchok gu-zèl", fr: "Très beau, très bon", cat: "Bazar" },
+  // Se déplacer
+  { tr: "Nerede?", pr: "né-ré-dé", fr: "Où est… ?", cat: "Se déplacer" },
+  { tr: "Tuvalet nerede?", pr: "tou-va-lèt né-ré-dé", fr: "Où sont les toilettes ?", cat: "Se déplacer" },
+  { tr: "Sağ", pr: "saa", fr: "Droite", cat: "Se déplacer" },
+  { tr: "Sol", pr: "sol", fr: "Gauche", cat: "Se déplacer" },
+  { tr: "Düz", pr: "duz", fr: "Tout droit", cat: "Se déplacer" },
+  { tr: "Durak", pr: "dou-rak", fr: "Arrêt (bus, tram)", cat: "Se déplacer" },
+  { tr: "İskele", pr: "is-ké-lé", fr: "Embarcadère (ferry)", cat: "Se déplacer" },
+  { tr: "Havalimanı", pr: "ha-va-li-ma-neu", fr: "Aéroport", cat: "Se déplacer" },
+  { tr: "Giriş", pr: "gui-rich", fr: "Entrée", cat: "Se déplacer" },
+  { tr: "Çıkış", pr: "tcheu-keuch", fr: "Sortie", cat: "Se déplacer" },
+  { tr: "Açık", pr: "a-tcheuk", fr: "Ouvert", cat: "Se déplacer" },
+  { tr: "Kapalı", pr: "ka-pa-leu", fr: "Fermé", cat: "Se déplacer" },
+  { tr: "Cami", pr: "dja-mi", fr: "Mosquée", cat: "Se déplacer" },
+  { tr: "Çarşı", pr: "tchar-cheu", fr: "Marché, bazar", cat: "Se déplacer" },
+  { tr: "Köprü", pr: "keu-pru", fr: "Pont", cat: "Se déplacer" },
+  { tr: "Yardım edin!", pr: "yar-deum é-din", fr: "À l'aide !", cat: "Se déplacer" },
+  // Nombres
+  { tr: "Bir", pr: "bir", fr: "1", cat: "Nombres" },
+  { tr: "İki", pr: "i-ki", fr: "2", cat: "Nombres" },
+  { tr: "Üç", pr: "utch", fr: "3", cat: "Nombres" },
+  { tr: "Dört", pr: "deurt", fr: "4", cat: "Nombres" },
+  { tr: "Beş", pr: "bèch", fr: "5", cat: "Nombres" },
+  { tr: "Altı", pr: "al-teu", fr: "6", cat: "Nombres" },
+  { tr: "Yedi", pr: "yé-di", fr: "7", cat: "Nombres" },
+  { tr: "Sekiz", pr: "sé-kiz", fr: "8", cat: "Nombres" },
+  { tr: "Dokuz", pr: "do-kouz", fr: "9", cat: "Nombres" },
+  { tr: "On", pr: "on", fr: "10", cat: "Nombres" },
+  { tr: "Yirmi", pr: "yir-mi", fr: "20", cat: "Nombres" },
+  { tr: "Otuz", pr: "o-touz", fr: "30", cat: "Nombres" },
+  { tr: "Kırk", pr: "keurk", fr: "40", cat: "Nombres" },
+  { tr: "Elli", pr: "èl-li", fr: "50", cat: "Nombres" },
+  { tr: "Yüz", pr: "yuz", fr: "100", cat: "Nombres" },
+  { tr: "Bin", pr: "bin", fr: "1 000", cat: "Nombres" },
+  // À goûter
+  { tr: "Simit", pr: "si-mit", fr: "Pain en couronne au sésame", cat: "À goûter" },
+  { tr: "Balık ekmek", pr: "ba-leuk èk-mèk", fr: "Sandwich au poisson (Eminönü)", cat: "À goûter" },
+  { tr: "Döner", pr: "deu-nèr", fr: "Viande à la broche", cat: "À goûter" },
+  { tr: "Lahmacun", pr: "lah-ma-djoun", fr: "Galette fine à la viande hachée", cat: "À goûter" },
+  { tr: "Midye dolma", pr: "mid-yé dol-ma", fr: "Moules farcies au riz", cat: "À goûter" },
+  { tr: "Mercimek çorbası", pr: "mèr-dji-mèk tchor-ba-seu", fr: "Soupe de lentilles", cat: "À goûter" },
+  { tr: "Kumpir", pr: "koum-pir", fr: "Pomme de terre garnie (Ortaköy)", cat: "À goûter" },
+  { tr: "Kahvaltı", pr: "kah-val-teu", fr: "Petit-déjeuner turc", cat: "À goûter" },
+  { tr: "Ayran", pr: "aï-ran", fr: "Boisson au yaourt, salée", cat: "À goûter" },
+  { tr: "Türk kahvesi", pr: "turk kah-vé-si", fr: "Café turc", cat: "À goûter" },
+  { tr: "Lokum", pr: "lo-koum", fr: "Loukoum", cat: "À goûter" },
+  { tr: "Künefe", pr: "ku-né-fé", fr: "Dessert chaud au fromage et cheveux d'ange", cat: "À goûter" }
+];
+
+// Lire les arrêts et les quartiers : la bonne prononciation, deux pièges, et la règle qui joue.
+const LIEUX = [
+  { mot: "Sirkeci", bon: "sir-ké-dji", faux: ["sir-ké-si", "sir-ké-tchi"], astuce: "c se dit « dj ». C'est le quartier de votre hôtel." },
+  { mot: "Eminönü", bon: "é-mi-neu-nu", faux: ["é-mi-no-nou", "é-mi-neu-nou"], astuce: "ö se dit « eu », ü se dit « u » (comme dans « lune »)." },
+  { mot: "Karaköy", bon: "ka-ra-keuï", faux: ["ka-ra-koï", "ka-ra-kouï"], astuce: "ö = « eu », et y = « ï » après une voyelle." },
+  { mot: "Beşiktaş", bon: "bé-chik-tach", faux: ["bé-sik-tas", "bé-chik-tass"], astuce: "ş se dit « ch » : deux fois ici." },
+  { mot: "Kadıköy", bon: "ka-deu-keuï", faux: ["ka-di-koï", "ka-dji-keuï"], astuce: "ı (sans point) est un « eu » bref, différent de i." },
+  { mot: "Üsküdar", bon: "us-ku-dar", faux: ["ous-kou-dar", "uch-ku-dar"], astuce: "ü = « u » ; u sans tréma = « ou » ; s = toujours « ss »." },
+  { mot: "Çemberlitaş", bon: "tchèm-bèr-li-tach", faux: ["sèm-bèr-li-tas", "kèm-bèr-li-tach"], astuce: "ç = « tch », ş = « ch ». Arrêt du tram T1, près du Grand Bazar." },
+  { mot: "Beyazıt", bon: "bé-ya-zeut", faux: ["bé-ya-zit", "bèï-a-zi"], astuce: "ı = « eu » bref ; le t final se prononce." },
+  { mot: "Süleymaniye", bon: "su-lèï-ma-ni-yé", faux: ["sou-lèï-ma-ni-yé", "su-lé-ma-ni"], astuce: "ü = « u », ey = « èï », et le e final se prononce « é »." },
+  { mot: "Cihangir", bon: "dji-han-guir", faux: ["si-an-jir", "tchi-han-guir"], astuce: "c = « dj », g = toujours dur (« gu »), h = aspiré." },
+  { mot: "Kabataş", bon: "ka-ba-tach", faux: ["ka-ba-tass", "ka-ba-tatch"], astuce: "ş = « ch ». Terminus du tram T1." },
+  { mot: "Ayrılık Çeşmesi", bon: "aï-reu-leuk tchèch-mé-si", faux: ["aï-ri-lik sèch-mé-si", "èï-ri-lik kès-mé-si"], astuce: "Correspondance métro M4 ↔ Marmaray depuis l'aéroport SAW." },
+  { mot: "Topkapı", bon: "top-ka-peu", faux: ["top-ka-pi", "top-ka-pou"], astuce: "Le ı final est un « eu » bref." },
+  { mot: "Ortaköy", bon: "or-ta-keuï", faux: ["or-ta-koï", "or-ta-kouï"], astuce: "ö = « eu ». « Köy » veut dire « village »." },
+  { mot: "Dolmabahçe", bon: "dol-ma-bah-tché", faux: ["dol-ma-ba-ché", "dol-ma-bak-sé"], astuce: "ç = « tch », h = aspiré, e final = « é »." },
+  { mot: "Haydarpaşa", bon: "haï-dar-pa-cha", faux: ["haï-dar-pa-sa", "é-dar-pa-cha"], astuce: "ş = « ch ». La gare-château que l'on voit depuis le ferry." },
+  { mot: "Mısır Çarşısı", bon: "meu-seur tchar-cheu-seu", faux: ["mi-sir char-si-si", "mi-zir kar-si-zi"], astuce: "Le Bazar aux épices : trois ı, trois « eu »." },
+  { mot: "Sultanahmet", bon: "soul-ta-nah-mèt", faux: ["sul-ta-na-mé", "soul-ta-na-mé"], astuce: "u = « ou », h aspiré, t final prononcé." },
+  { mot: "Yeni Cami", bon: "yé-ni dja-mi", faux: ["jé-ni ka-mi", "yé-ni ka-mi"], astuce: "y = « y » de « yoyo », c = « dj ». La Nouvelle Mosquée d'Eminönü." },
+  { mot: "Kız Kulesi", bon: "keuz kou-lé-si", faux: ["kiz ku-lé-zi", "kiss kou-lèss"], astuce: "La tour de Léandre, sur son îlot face à Üsküdar." },
+  { mot: "Boğaziçi", bon: "bo-a-zi-tchi", faux: ["bog-a-zi-si", "bo-ga-zi-ki"], astuce: "ğ ne se prononce pas : il allonge la voyelle d'avant. C'est le Bosphore." },
+  { mot: "Haliç", bon: "ha-litch", faux: ["a-lik", "ha-lis"], astuce: "ç = « tch ». La Corne d'Or." }
+];
+
+// Chaque question : q, r (la bonne réponse en premier, mélangée à l'affichage), e (explication).
+const QUIZ = {
+  istanbul: {
+    titre: "Quiz Istanbul", icone: "🕌",
+    resume: "Histoire, monuments et infos pratiques du site du voyage.",
+    questions: [
+      { q: "Quels sont, dans l'ordre, les trois noms de la ville ?", r: ["Byzance, Constantinople, Istanbul", "Chalcédoine, Byzance, Istanbul", "Troie, Constantinople, Istanbul", "Byzance, Smyrne, Istanbul"], e: "Des colons grecs fondent Byzance vers 660 av. J.-C. ; Constantin en fait Constantinople en 330." },
+      { q: "Qui fait de la ville la capitale de l'Empire romain, en 330 ?", r: ["Constantin", "Justinien", "Mehmed II", "Soliman le Magnifique"], e: "Constantin lui donne son nom : Constantinople, la « ville de Constantin »." },
+      { q: "En quelle année Mehmed II prend-il la ville ?", r: ["1453", "1204", "1520", "1923"], e: "1453 marque le début de l'Istanbul ottomane. En 1204, ce sont les croisés qui la pillent." },
+      { q: "Que se passe-t-il en 1204 ?", r: ["Les croisés pillent la ville", "Mehmed II prend la ville", "Justinien inaugure Sainte-Sophie", "Les Génois construisent la tour de Galata"], e: "La quatrième croisade, détournée sur Constantinople. Les chevaux de bronze de l'Hippodrome partent alors pour Venise." },
+      { q: "Quelle est la capitale de la Turquie depuis 1923 ?", r: ["Ankara", "Istanbul", "Izmir", "Bursa"], e: "La République de Turquie, fondée en 1923, déplace la capitale à Ankara." },
+      { q: "En combien de temps Justinien fait-il construire Sainte-Sophie ?", r: ["Environ cinq ans", "Environ cinquante ans", "Un an", "Plus d'un siècle"], e: "De 532 à 537, après la révolte qui avait brûlé l'église précédente." },
+      { q: "Quel est le diamètre de la coupole de Sainte-Sophie ?", r: ["Environ 31 mètres", "Environ 11 mètres", "Environ 55 mètres", "Environ 80 mètres"], e: "Une coupole qui semble flotter au-dessus de ses fenêtres. Pendant près de mille ans, la plus grande église de la chrétienté." },
+      { q: "Qu'est Sainte-Sophie aujourd'hui ?", r: ["Une mosquée", "Un musée", "Une église", "Une bibliothèque"], e: "Mosquée en 1453, musée en 1934 sous Atatürk, à nouveau mosquée depuis 2020." },
+      { q: "Combien de minarets compte la Mosquée Bleue ?", r: ["Six", "Quatre", "Deux", "Huit"], e: "Un nombre rare qui fit scandale, selon la tradition, car seule la mosquée de La Mecque en avait autant." },
+      { q: "D'où vient le surnom de « Mosquée Bleue » ?", r: ["De ses faïences d'Iznik aux tons bleus", "De sa coupole peinte en bleu", "De ses vitraux bleus", "De la couleur de la mer qu'elle domine"], e: "Plus de 20 000 carreaux d'Iznik, à motifs de tulipes et d'œillets." },
+      { q: "Quel est le vrai nom de la Mosquée Bleue ?", r: ["Mosquée du Sultan Ahmet", "Yeni Cami", "Süleymaniye", "Büyük Mecidiye"], e: "Le sultan Ahmet Ier la fait bâtir de 1609 à 1616, face à Sainte-Sophie." },
+      { q: "Quelle révolte de 532 pousse Justinien à reconstruire la ville ?", r: ["La sédition Nika", "La révolte des janissaires", "La révolte des Génois", "Le siège des croisés"], e: "Les supporters des Bleus et des Verts, clubs rivaux de l'Hippodrome, s'unissent contre l'empereur." },
+      { q: "Où sont aujourd'hui les quatre chevaux de bronze de l'Hippodrome ?", r: ["À Venise, sur la basilique Saint-Marc", "Au Louvre", "Au palais de Topkapı", "À Rome, au Capitole"], e: "Les croisés les emportent en 1204." },
+      { q: "D'où vient l'obélisque de l'Hippodrome ?", r: ["D'Égypte (Karnak)", "De Grèce (Delphes)", "De Rome", "De Perse"], e: "L'obélisque de Thoutmosis III, vieux d'environ 3 500 ans, dressé ici en 390. C'est la colonne serpentine qui vient de Delphes." },
+      { q: "Combien de colonnes soutiennent la Citerne Basilique ?", r: ["336", "36", "136", "1 336"], e: "Un réservoir souterrain d'environ 140 m sur 70, grand comme un terrain de football." },
+      { q: "Qu'est-ce qui sert de socle à deux colonnes de la Citerne Basilique ?", r: ["Deux têtes de Méduse", "Deux lions de marbre", "Deux statues d'empereurs", "Deux sphinx égyptiens"], e: "L'une est posée de côté, l'autre à l'envers." },
+      { q: "Dans quel James Bond voit-on la Citerne Basilique ?", r: ["Bons baisers de Russie (1963)", "Goldfinger (1964)", "Dr. No (1962)", "Moonraker (1979)"], e: "Les bateaux de Bond glissent entre les colonnes." },
+      { q: "Qui redécouvre la Citerne Basilique vers 1545 ?", r: ["Un savant français, Pierre Gilles", "Le sultan Soliman", "Un archéologue anglais", "Un marchand vénitien"], e: "Il remarque que les habitants puisent de l'eau, et pêchent même des poissons, par des trous dans leur sol." },
+      { q: "Pendant combien de temps Topkapı est-il le palais des sultans ?", r: ["Près de 400 ans", "Environ 40 ans", "Environ 100 ans", "Plus de 1 000 ans"], e: "De Mehmed II jusqu'en 1856, quand Abdülmecid Ier part pour Dolmabahçe." },
+      { q: "Quel jour le palais de Topkapı est-il fermé ?", r: ["Le mardi", "Le lundi", "Le vendredi", "Le dimanche"], e: "Aucun souci pour votre visite du jeudi. Le Harem vaut le supplément." },
+      { q: "Combien de boutiques compte à peu près le Grand Bazar ?", r: ["Environ 4 000", "Environ 400", "Environ 40 000", "Environ 1 000"], e: "Une soixantaine de rues couvertes, autour du vieux bedesten de Mehmed II." },
+      { q: "Quel jour le Grand Bazar est-il fermé ?", r: ["Le dimanche", "Le vendredi", "Le lundi", "Jamais"], e: "Vous y passez le jeudi midi." },
+      { q: "Au bazar, à combien le site conseille-t-il de commencer à négocier ?", r: ["Vers la moitié du prix annoncé", "Vers 90 % du prix annoncé", "Au prix annoncé, sans négocier", "Au dixième du prix"], e: "Et restez souriants. Entraînez-vous dans « Au bazar » (onglet Turc)." },
+      { q: "Pourquoi le Bazar aux épices s'appelle-t-il Mısır Çarşısı ?", r: ["« Bazar égyptien » : les épices arrivaient d'Égypte", "« Bazar couvert » : il est sous une voûte", "« Bazar du sultan » : il appartenait au palais", "« Bazar du maïs » : on y vendait du grain"], e: "Selon l'explication la plus courante, une partie de son financement venait aussi d'Égypte." },
+      { q: "Qui est l'architecte de la mosquée Süleymaniye ?", r: ["Mimar Sinan", "Sedefkâr Mehmed Ağa", "Anthémios de Tralles", "La famille Balyan"], e: "Le plus grand architecte ottoman, pour Soliman le Magnifique (1550-1557). Mehmed Ağa, élève de Sinan, a fait la Mosquée Bleue." },
+      { q: "Que rappellent les quatre minarets de la Süleymaniye, selon la tradition ?", r: ["Soliman est le 4e sultan à régner depuis Istanbul", "Les quatre points cardinaux", "Les quatre épouses de Soliman", "Les quatre victoires de Soliman"], e: "Et leurs dix balcons, qu'il est le dixième sultan ottoman." },
+      { q: "Qui construit la tour de Galata, en 1348 ?", r: ["Les Génois", "Les Vénitiens", "Les Byzantins", "Les Ottomans"], e: "Galata était une colonie de marchands génois, avec ses remparts. Ils l'appelaient la tour du Christ." },
+      { q: "Selon la légende, comment Hezârfen Ahmed Çelebi quitte-t-il la tour de Galata ?", r: ["Avec des ailes, jusqu'à Üsküdar", "En ballon, jusqu'à Kadıköy", "En descendant à la corde", "En plongeant dans la Corne d'Or"], e: "Il aurait traversé le Bosphore en vol plané au XVIIe siècle." },
+      { q: "Que veut dire « İstiklal » ?", r: ["Indépendance", "Liberté", "République", "Grande rue"], e: "La « Grande Rue de Péra » prend ce nom en 1923, après la guerre d'indépendance." },
+      { q: "Qu'a de particulier le Tünel, au bout d'İstiklal ?", r: ["C'est le 2e plus vieux métro souterrain du monde", "C'est le plus long téléphérique d'Europe", "C'est le premier tramway électrique", "C'est un tunnel sous le Bosphore"], e: "Un petit funiculaire ouvert en 1875, après le métro de Londres." },
+      { q: "Que veut dire « Taksim » ?", r: ["Partage", "Victoire", "Grande place", "Marché"], e: "Un réservoir du XVIIIe siècle y partageait l'eau des aqueducs entre les quartiers." },
+      { q: "Quelle cité, plus vieille que Byzance, se trouvait à Kadıköy ?", r: ["Chalcédoine", "Troie", "Nicée", "Smyrne"], e: "Fondée vers 685 av. J.-C. Hérodote rapporte qu'un général perse trouva ses fondateurs « aveugles » d'avoir choisi cette rive." },
+      { q: "Quelle institution siège à Fener depuis 1601 ?", r: ["Le Patriarcat œcuménique orthodoxe", "Le grand rabbinat", "La nonciature du pape", "Le Conseil des ministres ottoman"], e: "L'équivalent du Vatican pour une partie des orthodoxes." },
+      { q: "Quel sultan accueille les Juifs séfarades chassés d'Espagne en 1492 ?", r: ["Bayezid II", "Mehmed II", "Soliman le Magnifique", "Ahmet Ier"], e: "Beaucoup s'installent à Balat." },
+      { q: "De quoi est faite l'église bulgare Saint-Étienne, à Balat ?", r: ["De fonte, préfabriquée à Vienne", "De bois, sans un seul clou", "De marbre de Carrare", "De verre et d'acier"], e: "Livrée par bateau à la fin du XIXe siècle." },
+      { q: "Quand le premier pont sur le Bosphore, près d'Ortaköy, a-t-il été inauguré ?", r: ["En 1973", "En 1923", "En 1953", "En 2003"], e: "Pour les 50 ans de la République." },
+      { q: "Quelle carte acheter dès l'aéroport pour les transports ?", r: ["L'Istanbulkart", "Le passe Navigo", "La carte Oyster", "Le Museum Pass"], e: "Elle sert pour le tram, le métro, le Marmaray et les ferries." },
+      { q: "Depuis l'aéroport Sabiha Gökçen (SAW), comment rejoindre Sirkeci ?", r: ["Métro M4, puis Marmaray", "Tram T1 direct", "Ferry depuis l'aéroport", "Bus Havaist direction Taksim"], e: "M4 jusqu'à Ayrılık Çeşmesi, puis Marmaray jusqu'à Sirkeci. Depuis IST : bus Havaist direction Sultanahmet." },
+      { q: "Quel est le décalage horaire avec la France en novembre ?", r: ["+2 h", "+1 h", "+3 h", "Aucun"], e: "Pensez à avancer vos montres à l'atterrissage." },
+      { q: "Quel numéro composer en cas d'urgence ?", r: ["112", "17", "911", "999"], e: "Le consulat général de France est sur İstiklal." },
+      { q: "Faut-il un adaptateur pour les prises électriques ?", r: ["Non, ce sont les mêmes qu'en France", "Oui, des prises anglaises", "Oui, des prises américaines", "Seulement pour les ordinateurs"], e: "Mêmes prises, même tension." },
+      { q: "Que dit-on au serveur pour demander l'addition ?", r: ["Hesap, lütfen", "Afiyet olsun", "Şerefe", "Kolay gelsin"], e: "Afiyet olsun = bon appétit, Şerefe = santé, Kolay gelsin = bon courage." }
+    ]
+  },
+  lol: {
+    titre: "Toplane et Gragas", icone: "🛡️",
+    resume: "Révision de tes notes League of Legends.",
+    questions: [
+      { q: "Quelles sont les trois priorités d'un débutant en toplane ?", r: ["Dernières frappes, ne pas mourir, regarder la mini-carte", "Tuer l'adversaire, voler la jungle, poser des balises", "Acheter vite, roamer en mid, prendre les dragons", "Pousser sans arrêt, plonger sous la tourelle, rester en lane"], e: "Le reste (macro, combos) vient après." },
+      { q: "Que fait le passif de Gragas (Tournée) ?", r: ["Lancer une compétence le soigne d'une part de ses PV max", "Ses attaques volent de la vie", "Il gagne de l'armure à chaque sort", "Il devient invisible dans les buissons"], e: "Recharge de 12 s au début, puis plus courte avec les niveaux." },
+      { q: "Comment rendre le Q (Fût roulant) plus puissant ?", r: ["Le laisser fermenter jusqu'à 2 s avant qu'il explose", "Le lancer de plus loin", "Le lancer sur un sbire", "Le relancer tout de suite"], e: "Jusqu'à +50 % de dégâts et de ralentissement. Il explose seul au bout de 4 s." },
+      { q: "Que peut faire Gragas pendant qu'il boit son W (Rage d'ivrogne) ?", r: ["Marcher, mais ni attaquer ni lancer un sort", "Tout faire normalement", "Rien : il est immobile", "Seulement lancer son E"], e: "La réduction des dégâts agit dès la première gorgée : bois avant l'échange, pas après." },
+      { q: "Sur quoi s'arrête la charge du E (Coup de bidon) ?", r: ["Sur le premier ennemi touché, sbire compris", "Seulement sur un champion", "Seulement contre un mur", "Sur rien : elle traverse tout"], e: "Vise un passage libre, sinon le premier sbire bloque la charge." },
+      { q: "Où viser le R (Fût explosif) pour ramener un ennemi vers toi ?", r: ["Derrière lui", "Devant lui", "Pile sur lui", "Sur toi"], e: "Un R devant la cible la repousse loin de toi et peut la sauver." },
+      { q: "En début de partie, quand lancer ton W ?", r: ["Dès que le soin du passif est prêt", "Seulement au niveau 6", "Quand ton mana est plein", "Jamais en lane"], e: "30 de mana pour un soin : ta façon la moins chère de rester en vie." },
+      { q: "Comment fuir un gank avec Gragas ?", r: ["E vers ta tourelle en évitant les sbires, Q derrière toi, R pour repousser", "Flash vers l'ennemi puis W", "Rester sous les sbires en buvant", "R sur toi-même"], e: "Le R entre toi et le jungler le repousse loin de toi." },
+      { q: "Qu'est-ce qu'une dernière frappe (last hit) ?", r: ["Le coup qui tue le sbire et rapporte son or", "Le dernier sort lancé avant de mourir", "Le coup final sur une tourelle", "Une attaque sur un champion à faible vie"], e: "Pas de dernière frappe, pas d'or : c'est la base de tout." },
+      { q: "Qu'est-ce que geler la vague (freeze) ?", r: ["La garder juste devant ta tourelle, hors de sa portée", "La pousser jusqu'à la tourelle ennemie", "Tuer tous les sbires d'un coup", "Rentrer à la base en laissant la vague"], e: "L'adversaire doit s'avancer pour farmer, à portée de ton jungler." },
+      { q: "Pour garder un gel, la vague ennemie doit être…", r: ["Un peu plus nombreuse que la tienne", "Moins nombreuse que la tienne", "Exactement égale à la tienne", "Détruite à chaque fois"], e: "Trois ou quatre sbires de plus, repère courant. Sinon ta vague avance." },
+      { q: "À quoi sert de pousser lentement (slow push) ?", r: ["Construire une grosse vague qui s'écrase sur la tourelle ennemie", "Garder la vague près de ta tourelle", "Éviter de prendre de l'or", "Faire venir le jungler ennemi"], e: "Idéal avant de rentrer à la base ou de bouger sur la carte." },
+      { q: "Quel est le meilleur moment pour rentrer à la base ?", r: ["Juste après avoir poussé ta vague sous la tourelle ennemie", "Quand la vague ennemie arrive sous ta tourelle", "En plein échange", "Dès que tu as un peu d'or"], e: "Tu perds moins de sbires pendant ton absence." },
+      { q: "Toutes les combien de secondes une vague sort-elle de la base en début de partie ?", r: ["30 secondes", "10 secondes", "60 secondes", "2 minutes"], e: "25 s à partir de 14:00, 20 s à partir de 30:00." },
+      { q: "Pourquoi ne pas laisser mourir le sbire canon sous ta tourelle ?", r: ["Il vaut bien plus d'or que les autres", "Il donne un buff de vitesse", "Il détruit ta tourelle", "Il compte double pour l'XP de l'adversaire"], e: "Le sbire canon arrive avec la 3e vague, puis toutes les trois vagues jusqu'à 14:00." },
+      { q: "Quelle difficulté Riot donne-t-il à Gragas ?", r: ["5 sur 10", "2 sur 10", "8 sur 10", "10 sur 10"], e: "Malphite est à 2, Riven à 8. Le R et le E-Flash demandent de l'entraînement." },
+      { q: "Ton adversaire de lane disparaît. Que fais-tu ?", r: ["Je préviens l'équipe avec un ping", "Je l'attends dans le buisson", "Je rentre à la base", "Rien, ce n'est pas mon problème"], e: "Il est peut-être parti aider son jungler ou un autre joueur." },
+      { q: "À quoi sert une balise (ward) ?", r: ["À voir une zone de la carte", "À bloquer un passage", "À soigner les alliés proches", "À rapporter de l'or"], e: "Une balise dans la rivière voit arriver le jungler adverse." }
+    ]
+  },
+  musique: {
+    titre: "Théorie et Logic Pro", icone: "🎹",
+    resume: "Intervalles, accords, tempo, mixage et raccourcis.",
+    questions: [
+      { q: "Combien de demi-tons dans une quinte juste ?", r: ["7", "5", "4", "8"], e: "Do → sol. La quarte juste en compte 5, la tierce majeure 4." },
+      { q: "Combien de demi-tons dans une tierce majeure ?", r: ["4", "3", "5", "2"], e: "Do → mi. La tierce mineure en compte 3 (do → mi bémol)." },
+      { q: "Un accord majeur, c'est la fondamentale plus…", r: ["une tierce majeure et une quinte juste", "une tierce mineure et une quinte juste", "une quarte et une quinte", "une tierce majeure et une quinte augmentée"], e: "Avec une tierce mineure, l'accord devient mineur." },
+      { q: "Quelles notes forment l'accord de do mineur ?", r: ["Do, mi bémol, sol", "Do, mi, sol", "Do, mi bémol, sol bémol", "Do, fa, la"], e: "Do, mi, sol est majeur ; do, mi bémol, sol bémol est diminué." },
+      { q: "Quelle est la gamme relative mineure de do majeur ?", r: ["La mineur", "Do mineur", "Mi mineur", "Sol mineur"], e: "Mêmes notes, aucune altération : la, si, do, ré, mi, fa, sol." },
+      { q: "Quel tempo pour une techno classique ?", r: ["125 à 140 BPM", "85 à 95 BPM", "150 à 165 BPM", "170 à 175 BPM"], e: "La hard techno monte à 145-160, la schranz à 150-165." },
+      { q: "Quel tempo pour un boom bap ?", r: ["85 à 95 BPM", "125 à 135 BPM", "150 à 160 BPM", "60 à 65 BPM"], e: "La trap tourne vers 130-150 BPM, souvent pensée en demi-tempo." },
+      { q: "À 120 BPM, combien dure une mesure en 4/4 ?", r: ["2 secondes", "1 seconde", "4 secondes", "0,5 seconde"], e: "60 / 120 = 0,5 s par temps, × 4 temps." },
+      { q: "Que veut dire « four on the floor » ?", r: ["Un kick sur chacun des quatre temps", "Quatre pistes de batterie", "Un break de quatre mesures", "Quatre accords en boucle"], e: "La base de la house et de la techno." },
+      { q: "À quoi sert un sidechain du kick vers la basse ?", r: ["Baisser la basse à chaque kick pour qu'ils ne se masquent pas", "Doubler le kick avec la basse", "Monter la basse à chaque kick", "Accorder la basse sur le kick"], e: "Le fameux « pompage ». Dans Logic : Compressor sur la basse, menu Side Chain → piste du kick." },
+      { q: "Un filtre passe-bas (low-pass)…", r: ["Coupe les aigus et laisse passer les graves", "Coupe les graves et laisse passer les aigus", "Monte le volume des graves", "Ralentit le tempo"], e: "Le filtre qui s'ouvre lentement sur une montée techno, c'est souvent lui." },
+      { q: "Que veut dire ADSR ?", r: ["Attack, Decay, Sustain, Release", "Audio, Delay, Stereo, Reverb", "Amplitude, Distorsion, Saturation, Résonance", "Arpège, Drum, Synth, Rythme"], e: "L'enveloppe : comment le son démarre, retombe, tient et s'éteint." },
+      { q: "Où se trouve surtout l'énergie d'un kick ?", r: ["Dans les graves, vers 50-100 Hz", "Dans les aigus, vers 8-10 kHz", "Dans les médiums, vers 1-2 kHz", "Au-delà de 15 kHz"], e: "Le « clic » d'attaque, lui, se situe plus haut, vers 2-5 kHz." },
+      { q: "Combien de mesures dure souvent une phrase en techno ?", r: ["16 ou 32", "7", "13", "3"], e: "Les changements tombent sur des multiples de 8 mesures : le DJ s'y retrouve." },
+      { q: "Dans Logic Pro, quelle touche quantifie la sélection ?", r: ["Q", "K", "C", "X"], e: "K = métronome, C = boucle (cycle), X = table de mixage." },
+      { q: "Dans Logic Pro, que fait ⌘ T ?", r: ["Couper la région à la tête de lecture", "Ajouter une piste", "Ouvrir le tempo", "Transposer"], e: "⌘ J joint les régions, ⌘ R les répète." },
+      { q: "Dans le réglage de swing de Logic, 50 % signifie…", r: ["Un rythme droit, sans swing", "Le swing maximal", "La moitié des notes supprimées", "Un tempo divisé par deux"], e: "60-65 % donne un groove chaloupé." },
+      { q: "Qu'est-ce qu'un breakdown ?", r: ["Un passage où le kick s'arrête avant de revenir", "Une erreur de rendu audio", "Un solo de basse", "La fin du morceau"], e: "Il crée la tension avant le retour du kick." }
+    ]
+  },
+  support: {
+    titre: "Support informatique", icone: "🖥️",
+    resume: "Commandes Windows, Active Directory et Microsoft 365.",
+    questions: [
+      { q: "Quelle commande vide le cache DNS d'un poste ?", r: ["ipconfig /flushdns", "ipconfig /release", "nslookup /clear", "netstat -ano"], e: "/release et /renew rendent et redemandent l'adresse IP." },
+      { q: "Comment forcer l'application des stratégies de groupe ?", r: ["gpupdate /force", "gpresult /r", "sfc /scannow", "net use"], e: "gpresult /r affiche les stratégies appliquées." },
+      { q: "Quelle commande affiche les GPO appliquées à la session ?", r: ["gpresult /r", "gpupdate /force", "whoami /groups", "msinfo32"], e: "whoami /groups montre, lui, les groupes de la session." },
+      { q: "Que tape-t-on dans Win + R pour ouvrir les cartes réseau ?", r: ["ncpa.cpl", "devmgmt.msc", "appwiz.cpl", "sysdm.cpl"], e: "devmgmt.msc = périphériques, appwiz.cpl = programmes, sysdm.cpl = nom du poste et domaine." },
+      { q: "Quelle console ouvre l'observateur d'événements ?", r: ["eventvwr.msc", "services.msc", "compmgmt.msc", "tpm.msc"], e: "Les journaux Système et Application sont les premiers à lire." },
+      { q: "Quelle commande Win + R montre le BIOS et l'état du Secure Boot ?", r: ["msinfo32", "tpm.msc", "lusrmgr.msc", "eventvwr.msc"], e: "tpm.msc donne l'état de la puce TPM." },
+      { q: "Les impressions sont bloquées dans la file. Que redémarre-t-on ?", r: ["Le spouleur : net stop spooler puis net start spooler", "Le service DNS", "L'explorateur Windows", "Le pare-feu"], e: "Au besoin, on vide aussi la file d'attente avant de relancer." },
+      { q: "Quelle commande répare les fichiers système de Windows ?", r: ["sfc /scannow", "chkdsk /f", "gpupdate /force", "ipconfig /renew"], e: "Si elle échoue : DISM /Online /Cleanup-Image /RestoreHealth, puis à nouveau sfc." },
+      { q: "En PowerShell, comment trouver les comptes AD verrouillés ?", r: ["Search-ADAccount -LockedOut", "Get-ADUser -Locked", "Unlock-ADAccount", "Get-LockedUser"], e: "Puis Unlock-ADAccount jdupont pour déverrouiller." },
+      { q: "Quelle cmdlet déverrouille un compte AD ?", r: ["Unlock-ADAccount", "Set-ADUser -Unlock", "Enable-ADAccount", "Reset-ADPassword"], e: "Enable-ADAccount réactive un compte désactivé, ce n'est pas la même chose." },
+      { q: "Le poste perd sa relation d'approbation avec le domaine. Que tenter ?", r: ["Test-ComputerSecureChannel -Repair", "gpupdate /force", "ipconfig /flushdns", "sfc /scannow"], e: "Avec -Credential DOMAINE\\admin, sans sortir le poste du domaine." },
+      { q: "Comment se connecter à Exchange Online en PowerShell ?", r: ["Connect-ExchangeOnline", "Connect-MgGraph", "Connect-AzureAD", "Enter-PSSession exchange"], e: "Connect-MgGraph sert pour Entra ID (Microsoft Graph)." },
+      { q: "Compte compromis : quelle cmdlet révèle un transfert caché ?", r: ["Get-InboxRule", "Get-MailboxPermission", "Get-EXOMailboxStatistics", "Get-MgUser"], e: "Les pirates créent souvent des règles qui transfèrent ou suppriment les messages." },
+      { q: "Compte compromis : comment couper toutes ses sessions ouvertes ?", r: ["Revoke-MgUserSignInSession", "Remove-MgUser", "Disable-InboxRule", "Get-MgUser"], e: "Avec le changement de mot de passe et la vérification de la MFA." },
+      { q: "Comment lancer Outlook sans ses compléments ?", r: ["outlook.exe /safe", "outlook.exe /resetnavpane", "outlook.exe /cleanviews", "outlook.exe /nocache"], e: "/resetnavpane réinitialise le volet de gauche." },
+      { q: "Comment tester qu'un port 443 est joignable ?", r: ["Test-NetConnection serveur -Port 443", "ping serveur -p 443", "tracert serveur:443", "nslookup serveur 443"], e: "ping ne teste pas un port, seulement la réponse ICMP." },
+      { q: "Quelle commande liste les connexions avec le PID du programme ?", r: ["netstat -ano", "ipconfig /all", "tasklist /net", "arp -a"], e: "Le PID se retrouve ensuite dans le gestionnaire des tâches." },
+      { q: "Comment voir les sessions ouvertes sur un serveur RDS ?", r: ["query user /server:SRV", "net use /server:SRV", "whoami /server:SRV", "gpresult /server:SRV"], e: "Puis logoff ID /server:SRV pour fermer une session bloquée." },
+      { q: "Comment obtenir le numéro de série d'un PC en PowerShell ?", r: ["Get-CimInstance Win32_BIOS | Select SerialNumber", "Get-Serial", "Get-ComputerInfo -Serial", "msinfo32 /serial"], e: "Pratique à distance, ou quand l'étiquette est illisible." },
+      { q: "Un utilisateur appelle : quelle est la première étape du dépannage ?", r: ["Qualifier le problème : quoi, depuis quand, qu'est-ce qui a changé", "Réinstaller le poste", "Redémarrer le serveur", "Escalader au N3"], e: "Bien décrire le problème évite la moitié des fausses pistes." }
+    ]
+  }
+};
+
+// Étirements assis : doux, sans forcer, à faire siège droit.
+const ETIREMENTS = [
+  { nom: "Pompe des mollets", duree: 45, consigne: "Talons au sol, lève les pointes de pied, puis pose-les et lève les talons. Alterne, sans t'arrêter." },
+  { nom: "Cercles de chevilles", duree: 30, consigne: "Un pied décollé du sol, dessine de grands cercles avec la pointe. Change de sens, puis de pied, à mi-temps." },
+  { nom: "Épaules", duree: 30, consigne: "Monte les épaules vers les oreilles, puis fais-les rouler vers l'arrière et vers le bas. Lentement." },
+  { nom: "Menton rentré", duree: 30, consigne: "Regard droit devant, recule le menton (comme pour un double menton), tiens 5 s, relâche. Recommence." },
+  { nom: "Dos rond, dos creux", duree: 45, consigne: "Mains sur les genoux. Expire en arrondissant le dos, inspire en ouvrant la poitrine. Petits mouvements, sans douleur." },
+  { nom: "Bascule du bassin", duree: 30, consigne: "Assis au fond du siège, bascule doucement le bassin d'avant en arrière, comme pour creuser puis aplatir le bas du dos." },
+  { nom: "Rotation du haut du dos", duree: 40, consigne: "Bassin face à l'avant, tourne doucement les épaules d'un côté, respire, reviens, puis l'autre côté. Change à mi-temps." },
+  { nom: "Fessiers, en douceur", duree: 60, consigne: "Pose la cheville sur le genou opposé, dos droit, penche-toi à peine. Si le genou ou la hanche tire, pose le pied plus bas sur le tibia, ou passe. Change à mi-temps." },
+  { nom: "Respiration", duree: 45, consigne: "Inspire 4 secondes par le nez, expire 6 secondes par la bouche. Épaules relâchées." }
+];
+
+// Ce soir, avant de partir : ce qui ne se fera plus une fois en l'air.
+const CE_SOIR = [
+  { id: "page", titre: "Ouvrir cette page en ligne et attendre « Prête hors ligne »", detail: "Sur iPhone, ajoute-la ensuite à l'écran d'accueil (Partager → Sur l'écran d'accueil) et ouvre-la une fois depuis l'icône, tant que tu as du réseau : l'icône garde sa propre copie." },
+  { id: "carte", titre: "Télécharger la carte d'Istanbul", detail: "Plans (iPhone) : ta photo à côté de la recherche → Cartes hors ligne. Ou Google Maps : ta photo → Cartes hors connexion. La carte du site du voyage, elle, ne marche pas sans réseau." },
+  { id: "trad", titre: "Télécharger le turc dans une appli de traduction", detail: "Google Traduction : télécharger « turc » pour l'utiliser hors connexion. Pratique avec l'appareil photo, pour les menus." },
+  { id: "musique", titre: "Télécharger de la musique et des podcasts", detail: "Une playlist techno et un ou deux albums de rap pour l'écoute active (onglet Musique). Les podcasts se téléchargent gratuitement : cherche « Constantinople » ou « Byzance »." },
+  { id: "video", titre: "Télécharger un film ou quelques épisodes", detail: "Netflix, Prime Video, Disney+ ou Canal+ : bouton de téléchargement dans l'appli, avec l'abonnement." },
+  { id: "coffre", titre: "Synchroniser Obsidian", detail: "Pour relire tes notes en vol (LoL, musique, muscu) : Git: Pull dans Obsidian." },
+  { id: "batterie", titre: "Charger téléphone, écouteurs et batterie externe", detail: "Le jeu d'oreille musicale se joue au casque." },
+  { id: "esim", titre: "Vérifier le forfait en Turquie (hors UE)", detail: "Ou installer l'eSIM maintenant : voir « Argent et téléphone » sur le site du voyage." }
+];
+
+// Programme des trois heures : chaque ligne ouvre une activité.
+const PROGRAMME = [
+  { h: "0:00", titre: "Décollage", texte: "Musique téléchargée, mode avion. Rien à faire pendant la montée.", vue: null },
+  { h: "0:20", titre: "Turc de survie", texte: "Les règles de prononciation, puis 20 fiches.", vue: "turc" },
+  { h: "0:45", titre: "Au bazar", texte: "Comprendre un prix en turc avant de négocier.", vue: "bazar" },
+  { h: "1:00", titre: "Quiz Istanbul", texte: "À plusieurs si vous êtes assis côte à côte.", vue: "quiz/istanbul" },
+  { h: "1:20", titre: "Pause étirements", texte: "6 minutes assis, puis un verre d'eau.", vue: "etirements" },
+  { h: "1:30", titre: "Jeux", texte: "Sudoku, 2048 ou démineur.", vue: "jeux" },
+  { h: "2:10", titre: "Oreille musicale", texte: "Intervalles, accords et tempo, au casque.", vue: "oreille" },
+  { h: "2:30", titre: "Révisions", texte: "LoL, théorie musicale, support informatique.", vue: "revisions" },
+  { h: "2:50", titre: "Avant l'atterrissage", texte: "Relire le trajet jusqu'à l'hôtel et avancer sa montre de 2 h.", vue: "arrivee" }
+];
+
+// Noyau : petits outils, mémoire locale, navigation par #ancre, voix turque, moteur de quiz, mode hors ligne.
+const KIT = { vues: {}, nettoyages: [] };
+
+function h(tag, props, ...enfants) {
+  const el = document.createElement(tag);
+  if (props) for (const [k, v] of Object.entries(props)) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "text") el.textContent = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const e of enfants.flat(Infinity)) {
+    if (e == null || e === false) continue;
+    el.append(e.nodeType ? e : String(e));
+  }
+  return el;
+}
+
+function melange(liste) {
+  const a = liste.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+const auHasard = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+const deuxChiffres = n => String(n).padStart(2, "0");
+const duree = s => `${Math.floor(s / 60)}:${deuxChiffres(Math.floor(s % 60))}`;
+
+// La mémoire du navigateur peut être absente (navigation privée, aperçu) : on continue sans.
+const memoire = {
+  lire(cle, defaut) {
+    try { const v = localStorage.getItem("kitvol:" + cle); return v == null ? defaut : JSON.parse(v); }
+    catch (e) { return defaut; }
+  },
+  ecrire(cle, valeur) {
+    try { localStorage.setItem("kitvol:" + cle, JSON.stringify(valeur)); } catch (e) { /* sans mémoire */ }
+  }
+};
+
+// Records : on garde le meilleur, au sens de mieux(nouveau, ancien).
+function noterRecord(cle, valeur, mieux) {
+  const ancien = memoire.lire("record:" + cle, null);
+  if (ancien == null || mieux(valeur, ancien)) { memoire.ecrire("record:" + cle, valeur); return true; }
+  return false;
+}
+const lireRecord = cle => memoire.lire("record:" + cle, null);
+
+// Navigation
+function aller(vue) { location.hash = vue ? "#" + vue : "#accueil"; }
+function rendre() {
+  KIT.nettoyages.splice(0).forEach(f => { try { f(); } catch (e) { /* rien */ } });
+  const [nom, ...params] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const vue = KIT.vues[nom] || KIT.vues.accueil;
+  const racine = document.getElementById("app");
+  racine.replaceChildren(h("div", { class: "view" }, vue(...params)));
+  window.scrollTo(0, 0);
+}
+function barre(titre, retour) {
+  return h("div", { class: "barre" },
+    h("button", { class: "retour", type: "button", onclick: () => aller(retour), "aria-label": "Retour" }, "← Retour"),
+    h("h2", null, titre));
+}
+function segment(options, valeur, choisir) {
+  const boutons = options.map(([v, libelle]) => h("button", {
+    type: "button", "aria-pressed": String(v === valeur),
+    onclick: () => { boutons.forEach(b => b.setAttribute("aria-pressed", "false")); boutons[options.findIndex(o => o[0] === v)].setAttribute("aria-pressed", "true"); choisir(v); }
+  }, libelle));
+  return h("div", { class: "segment", role: "group" }, boutons);
+}
+
+// Voix turque de l'appareil (présente sur iPhone) : seulement les voix locales, qui marchent sans réseau.
+const voix = { turque: null };
+function chercherVoix() {
+  if (!("speechSynthesis" in window)) return;
+  const v = speechSynthesis.getVoices().filter(x => /^tr/i.test(x.lang) && x.localService !== false);
+  voix.turque = v[0] || null;
+  document.documentElement.classList.toggle("sans-voix", !voix.turque);
+}
+function parler(texte) {
+  if (!voix.turque) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(texte);
+  u.voice = voix.turque; u.lang = voix.turque.lang; u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+const boutonParler = texte => h("button", { class: "parler", type: "button", onclick: e => { e.stopPropagation(); parler(texte); }, "aria-label": "Écouter " + texte }, "🔊 Écouter");
+
+// Moteur de quiz : seul, ou à plusieurs en se passant le téléphone.
+KIT.quiz = function ({ cle, titre, retour, intro, max, fabriquer }) {
+  const zone = h("div", { class: "quiz" });
+  const reglages = memoire.lire("reglages-quiz", { n: 10, plusieurs: false, noms: ["Joueur 1", "Joueur 2"] });
+  depart();
+  return h("div", null, barre(titre, retour), zone);
+
+  function depart() {
+    const rec = lireRecord(cle);
+    const tailles = [10, 20].filter(n => n < max).map(n => [n, String(n)]).concat([[max, `Toutes (${max})`]]);
+    if (!tailles.some(t => t[0] === reglages.n)) reglages.n = tailles[0][0];
+    const listeNoms = h("div", { class: "joueurs" });
+    const majNoms = () => {
+      listeNoms.replaceChildren(...reglages.noms.map((nom, i) => h("input", {
+        class: "champ", value: nom, maxlength: "20", "aria-label": `Nom du joueur ${i + 1}`,
+        oninput: e => { reglages.noms[i] = e.target.value; }
+      })), h("div", { class: "rangee" },
+        reglages.noms.length < 4 && h("button", { class: "btn petit discret", type: "button", onclick: () => { reglages.noms.push(`Joueur ${reglages.noms.length + 1}`); majNoms(); } }, "+ Un joueur"),
+        reglages.noms.length > 2 && h("button", { class: "btn petit discret", type: "button", onclick: () => { reglages.noms.pop(); majNoms(); } }, "− Un joueur")));
+      listeNoms.hidden = !reglages.plusieurs;
+    };
+    majNoms();
+    zone.replaceChildren(
+      h("div", { class: "bloc" },
+        h("p", null, intro),
+        rec && h("p", { class: "muted" }, `Ton record : ${rec.score} / ${rec.total}`),
+        h("h3", null, "Nombre de questions"),
+        segment(tailles, reglages.n, v => { reglages.n = v; }),
+        h("h3", { style: "margin-top:16px" }, "Joueurs"),
+        segment([[false, "Seul"], [true, "À plusieurs"]], reglages.plusieurs, v => { reglages.plusieurs = v; majNoms(); }),
+        listeNoms),
+      h("button", { class: "btn gros-bouton", type: "button", onclick: commencer }, "Commencer"));
+  }
+
+  function commencer() {
+    reglages.noms = reglages.noms.map((n, i) => n.trim() || `Joueur ${i + 1}`);
+    memoire.ecrire("reglages-quiz", reglages);
+    const joueurs = reglages.plusieurs ? reglages.noms.slice() : ["Toi"];
+    let n = Math.min(reglages.n, max);
+    if (joueurs.length > 1) n = Math.max(joueurs.length, n - (n % joueurs.length));
+    jouer(fabriquer(n), joueurs);
+  }
+
+  function jouer(questions, joueurs) {
+    const scores = joueurs.map(() => 0);
+    const erreurs = [];
+    let i = 0;
+    poser();
+
+    function poser() {
+      const q = questions[i];
+      const joueur = i % joueurs.length;
+      const bonne = q.r[0];
+      const suite = h("div");
+      const choix = melange(q.r).map(texte => h("button", { type: "button", onclick: e => repondre(e.currentTarget, texte) }, texte));
+      zone.replaceChildren(
+        h("div", { class: "progression", "aria-hidden": "true" }, h("span", { style: `width:${(i / questions.length) * 100}%` })),
+        h("p", { class: "muted", style: "margin:0 0 4px" }, `Question ${i + 1} sur ${questions.length}`),
+        joueurs.length > 1 ? h("p", { class: "tour" }, `À toi, ${joueurs[joueur]}`) : "",
+        h("p", { class: "question" }, q.q),
+        h("div", { class: "choix" }, choix),
+        suite);
+
+      function repondre(bouton, texte) {
+        choix.forEach(b => { b.disabled = true; if (b.textContent === bonne) b.classList.add("bon"); });
+        const juste = texte === bonne;
+        if (juste) scores[joueur]++;
+        else { bouton.classList.add("faux"); erreurs.push({ q: q.q, bonne, joueur: joueurs[joueur] }); }
+        const derniere = i === questions.length - 1;
+        const suivant = h("button", { class: "btn", type: "button", style: "margin-top:12px", onclick: () => { i++; derniere ? fin() : poser(); } }, derniere ? "Voir le score" : "Suivante →");
+        suite.replaceChildren(
+          h("div", { class: "explication", role: "status" },
+            h("strong", null, juste ? "Bonne réponse" : `Réponse : ${bonne}`),
+            q.e, q.parler && voix.turque && h("div", { style: "margin-top:8px" }, boutonParler(q.parler))),
+          suivant);
+        suivant.focus({ preventScroll: true });
+        suite.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    }
+
+    function fin() {
+      const total = questions.length / joueurs.length;
+      let entete;
+      if (joueurs.length === 1) {
+        const s = scores[0];
+        const nouveau = noterRecord(cle, { score: s, total }, (a, b) => a.score / a.total > b.score / b.total || (a.score / a.total === b.score / b.total && a.total > b.total));
+        const mot = s === total ? "Parfait !" : s / total >= 0.8 ? "Très bien" : s / total >= 0.5 ? "Pas mal" : "À retravailler";
+        entete = h("div", { class: "score-final" },
+          h("div", { class: "grand" }, `${s} / ${total}`), h("p", null, mot + (nouveau ? " · nouveau record" : "")));
+      } else {
+        const classement = joueurs.map((nom, k) => ({ nom, s: scores[k] })).sort((a, b) => b.s - a.s);
+        const egalite = classement[0].s === classement[1].s;
+        entete = h("div", null,
+          h("div", { class: "score-final" }, h("p", { class: "question" }, egalite ? "Égalité en tête !" : `Bravo, ${classement[0].nom} !`)),
+          h("table", { class: "tableau-scores" }, h("tbody", null, classement.map(c => h("tr", null, h("td", null, c.nom), h("td", null, `${c.s} / ${total}`))))));
+      }
+      zone.replaceChildren(
+        h("div", { class: "bloc" }, entete),
+        erreurs.length === 0 ? "" : h("div", { class: "bloc" }, h("h3", null, "À revoir"),
+          h("ul", { class: "erreurs" }, erreurs.map(er => h("li", null, er.q, h("br"), h("strong", null, er.bonne), joueurs.length > 1 ? ` (${er.joueur})` : "")))),
+        h("div", { class: "rangee" },
+          h("button", { class: "btn", type: "button", onclick: commencer }, "Rejouer"),
+          h("button", { class: "btn fantome", type: "button", onclick: depart }, "Réglages"),
+          h("button", { class: "btn fantome", type: "button", onclick: () => aller(retour) }, "Retour")));
+    }
+  }
+};
+
+// Mode hors ligne : un service worker garde la page sur l'appareil (site en ligne seulement).
+KIT.horsLigne = { texte: "Vérification du mode hors ligne…", pret: false, abonnes: new Set() };
+function majHorsLigne(texte, pret) {
+  Object.assign(KIT.horsLigne, { texte, pret });
+  KIT.horsLigne.abonnes.forEach(f => f());
+}
+function preparerHorsLigne() {
+  if (location.protocol === "file:") return majHorsLigne("Fichier sur l'appareil : marche sans réseau", true);
+  if (window.KIT_VARIANTE === "artifact") return majHorsLigne("Version en ligne : garde l'onglet ouvert", false);
+  const indisponible = () => majHorsLigne("Mode hors ligne indisponible : garde l'onglet ouvert", false);
+  try {
+    if (!("serviceWorker" in navigator)) return majHorsLigne("Ce navigateur ne garde pas la page hors ligne", false);
+    navigator.serviceWorker.register("sw.js").catch(indisponible);
+    navigator.serviceWorker.ready.then(() => majHorsLigne("Prête hors ligne ✓", true));
+  } catch (e) { indisponible(); }  // page affichée dans un cadre qui interdit les service workers
+}
+function pastilleHorsLigne() {
+  const texte = h("span");
+  const el = h("span", { class: "etat-hors-ligne", role: "status" }, h("span", { class: "point" }), texte);
+  const maj = () => { texte.textContent = KIT.horsLigne.texte; el.classList.toggle("pret", KIT.horsLigne.pret); };
+  maj();
+  KIT.horsLigne.abonnes.add(maj);
+  KIT.nettoyages.push(() => KIT.horsLigne.abonnes.delete(maj));
+  return el;
+}
+
+// Thème : automatique, clair ou sombre (pratique en cabine, lumières éteintes).
+function appliquerTheme(t) {
+  if (t === "clair") document.documentElement.dataset.theme = "light";
+  else if (t === "sombre") document.documentElement.dataset.theme = "dark";
+  else delete document.documentElement.dataset.theme;
+}
+
+KIT.demarrer = function () {
+  appliquerTheme(memoire.lire("theme", "auto"));
+  if ("speechSynthesis" in window) { chercherVoix(); speechSynthesis.addEventListener?.("voiceschanged", chercherVoix); }
+  else document.documentElement.classList.add("sans-voix");
+  window.addEventListener("hashchange", rendre);
+  rendre();
+  preparerHorsLigne();
+};
+
+// Vues : accueil, turc (fiches, quiz, prononciation, bazar), quiz thématiques, étirements, arrivée.
+
+const carte = (vue, icone, titre, meta, record) => h("button", { class: "carte carte-lien", type: "button", onclick: () => aller(vue) },
+  h("span", { class: "icone", "aria-hidden": "true" }, icone), h("h3", null, titre), h("span", { class: "meta" }, meta),
+  record && h("span", { class: "record" }, record));
+const texteRecord = cle => { const r = lireRecord(cle); return r ? `Record : ${r.score} / ${r.total}` : null; };
+
+KIT.vues.accueil = function () {
+  const coches = memoire.lire("ce-soir", {});
+  const toutFait = CE_SOIR.every(c => coches[c.id]);
+  const theme = memoire.lire("theme", "auto");
+  return h("div", null,
+    h("header", { class: "entete" },
+      h("div", null,
+        h("div", { class: "sur-titre" }, "Mercredi 11 novembre · vol pour Istanbul"),
+        h("h1", null, "Kit de vol"),
+        h("p", { class: "muted", style: "margin:6px 0 0" }, "Trois heures sans réseau : de quoi apprendre, jouer et arriver prêt.")),
+      pastilleHorsLigne()),
+    h("details", { class: "bloc", open: !toutFait },
+      h("summary", null, h("h3", null, "Ce soir, avant de partir"), h("span", { class: "muted" }, `${CE_SOIR.filter(c => coches[c.id]).length} / ${CE_SOIR.length}`)),
+      h("ul", { class: "coches" }, CE_SOIR.map(c => (c.id !== "page" ? c
+        : location.protocol === "file:" ? { ...c, titre: "Garder ce fichier sur l'ordinateur qui voyage", detail: "Il s'ouvre dans le navigateur, sans réseau. Pose-le sur le bureau pour le retrouver vite." }
+        : window.KIT_VARIANTE === "artifact" ? { ...c, titre: "Prévoir la version hors ligne", detail: "Cette page-ci a besoin du réseau. Dans l'avion : le fichier kit-de-vol.html sur l'ordinateur, la note « Kit de vol (Istanbul) » d'Obsidian sur le téléphone, ou cet onglet laissé ouvert." }
+        : c)).map(c => h("li", null, h("label", null,
+        h("input", { type: "checkbox", checked: !!coches[c.id], onchange: e => { coches[c.id] = e.target.checked; memoire.ecrire("ce-soir", coches); e.target.closest("details").querySelector("summary .muted").textContent = `${CE_SOIR.filter(x => coches[x.id]).length} / ${CE_SOIR.length}`; } }),
+        h("span", null, c.titre, h("span", { class: "detail" }, c.detail))))))),
+    h("div", { class: "section" }, h("h2", null, "Programme des trois heures")),
+    h("div", { class: "bloc" }, h("ol", { class: "programme" }, PROGRAMME.map(p => h("li", null,
+      h("span", { class: "heure" }, p.h),
+      h("div", null, p.vue ? h("button", { type: "button", onclick: () => aller(p.vue) }, p.titre) : h("strong", null, p.titre), h("div", { class: "muted" }, p.texte)))))),
+    h("div", { class: "section" }, h("h2", null, "Activités")),
+    h("div", { class: "grille" },
+      carte("turc", "🇹🇷", "Turc de survie", `Prononciation, ${TURC.length} fiches, quiz`, texteRecord("turc")),
+      carte("bazar", "🪙", "Au bazar", "Comprendre et dire un prix en turc", texteRecord("bazar")),
+      carte("quiz/istanbul", "🕌", "Quiz Istanbul", `${QUIZ.istanbul.questions.length} questions, seul ou à plusieurs`, texteRecord("quiz-istanbul")),
+      carte("jeux", "🎲", "Jeux", "Sudoku, 2048, démineur"),
+      carte("oreille", "🎧", "Oreille musicale", "Intervalles, accords, tempo, écoute active"),
+      carte("revisions", "📚", "Révisions", "Toplane et Gragas, théorie musicale, support informatique"),
+      carte("etirements", "🧘", "Pause étirements", `${Math.round(ETIREMENTS.reduce((s, e) => s + e.duree, 0) / 60)} minutes, assis`),
+      carte("arrivee", "🛬", "À l'arrivée", "Aéroport → hôtel, premier après-midi")),
+    h("footer", { class: "pied" },
+      h("p", null, segment([["auto", "Thème auto"], ["clair", "Clair"], ["sombre", "Sombre"]], theme, t => { memoire.ecrire("theme", t); appliquerTheme(t); })),
+      h("p", null, "Les scores et les cases cochées restent sur cet appareil.")));
+};
+
+// Turc
+const REGLES = [
+  ["c", "« dj » : cami = dja-mi"], ["ç", "« tch » : çay = tchaï"], ["ş", "« ch » : şiş = chich"],
+  ["ğ", "muet, allonge la voyelle : dağ = daa"], ["ı", "« eu » bref : ılık = eu-leuk"], ["ö", "« eu » : köy = keuï"],
+  ["ü", "« u » : üç = utch"], ["u", "« ou » : su = sou"], ["e", "« é » ou « è » : evet = é-vèt"],
+  ["g", "toujours dur : gel = guèl"], ["s", "toujours « ss » : simit = si-mit"], ["h", "soufflé : hesap = hé-sap"]
+];
+const CATEGORIES = [...new Set(TURC.map(m => m.cat))];
+
+KIT.vues.turc = function () {
+  let filtre = "Tout";
+  const corps = h("tbody");
+  const remplir = () => corps.replaceChildren(...TURC.filter(m => filtre === "Tout" || m.cat === filtre).map(m => h("tr", null,
+    h("td", null, m.tr, h("div", { class: "prono" }, m.pr)), h("td", null, m.fr), h("td", null, boutonParler(m.tr)))));
+  remplir();
+  return h("div", null, barre("Turc de survie", ""),
+    h("div", { class: "bloc" },
+      h("h3", null, "Lire le turc en une minute"),
+      h("p", null, "Le turc se lit comme il s'écrit : une lettre, un son. Le i majuscule garde son point (İ), et ı sans point est une autre voyelle. Les lettres qui changent tout :"),
+      h("div", { class: "regles" }, REGLES.map(([l, t]) => h("div", { class: "regle" }, h("b", null, l), t))),
+      h("p", { class: "astuce", style: "margin:10px 0 0" }, voix.turque ? "Ton appareil a une voix turque : les boutons 🔊 la font parler, même sans réseau." : "Pas de voix turque sur cet appareil : la prononciation est écrite à la française.")),
+    h("div", { class: "grille" },
+      carte("fiches", "🃏", "Fiches", `${TURC.length} mots et phrases, par thème`, null),
+      carte("quiz-turc", "✅", "Quiz de vocabulaire", "Turc → français et inversement", texteRecord("turc")),
+      carte("prononciation", "🚋", "Lire les arrêts", `${LIEUX.length} quartiers et stations à prononcer`, texteRecord("prononciation")),
+      carte("bazar", "🪙", "Au bazar", "Les prix en turc", texteRecord("bazar"))),
+    h("details", { class: "bloc", style: "margin-top:12px" },
+      h("summary", null, h("h3", null, "Lexique complet")),
+      h("div", { style: "margin:12px 0 8px; overflow-x:auto" }, segment([["Tout", "Tout"], ...CATEGORIES.map(c => [c, c])], filtre, v => { filtre = v; remplir(); })),
+      h("table", { class: "lexique" }, corps)));
+};
+
+KIT.vues.fiches = function () {
+  let cat = "Tout", sens = "tr", file = [], sues = 0, total = 0, retournee = false;
+  const zone = h("div");
+  const nouvelleSerie = () => { file = melange(TURC.filter(m => cat === "Tout" || m.cat === cat)); total = file.length; sues = 0; retournee = false; dessiner(); };
+  function dessiner() {
+    if (!file.length) {
+      zone.replaceChildren(h("div", { class: "bloc", style: "text-align:center" },
+        h("p", { class: "question" }, `Les ${total} fiches sont sues !`),
+        h("button", { class: "btn", type: "button", onclick: nouvelleSerie }, "Recommencer")));
+      return;
+    }
+    const m = file[0];
+    const face = sens === "tr"
+      ? [h("div", { class: "mot" }, m.tr), retournee ? [h("div", { class: "prono" }, m.pr), h("div", { class: "sens" }, m.fr)] : h("div", { class: "indice" }, "Touche pour voir le sens")]
+      : [h("div", { class: "mot" }, m.fr), retournee ? [h("div", { class: "sens" }, m.tr), h("div", { class: "prono" }, m.pr)] : h("div", { class: "indice" }, "Comment le dire en turc ? Touche pour voir")];
+    zone.replaceChildren(
+      h("p", { class: "muted" }, `${sues} sue${sues > 1 ? "s" : ""} sur ${total} · encore ${file.length} dans la pile`),
+      h("div", { class: "carte fiche", role: "button", tabindex: "0", onclick: () => { retournee = !retournee; dessiner(); }, onkeydown: e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); retournee = !retournee; dessiner(); } } },
+        h("span", { class: "cat" }, m.cat), face, (retournee || sens === "tr") && h("div", { style: "margin-top:6px" }, boutonParler(m.tr))),
+      h("div", { class: "rangee centre", style: "margin-top:12px" },
+        h("button", { class: "btn fantome", type: "button", onclick: () => { file.splice(Math.min(file.length, 4), 0, file.shift()); retournee = false; dessiner(); } }, "↺ À revoir"),
+        h("button", { class: "btn", type: "button", onclick: () => { file.shift(); sues++; retournee = false; dessiner(); } }, "✓ Je savais")));
+  }
+  nouvelleSerie();
+  return h("div", null, barre("Fiches", "turc"),
+    h("div", { class: "rangee", style: "margin-bottom:10px" },
+      segment([["tr", "Turc → français"], ["fr", "Français → turc"]], sens, v => { sens = v; retournee = false; dessiner(); })),
+    h("div", { style: "overflow-x:auto; margin-bottom:12px" }, segment([["Tout", "Tout"], ...CATEGORIES.map(c => [c, c])], cat, v => { cat = v; nouvelleSerie(); })),
+    zone);
+};
+
+KIT.vues["quiz-turc"] = () => KIT.quiz({
+  cle: "turc", titre: "Quiz de vocabulaire", retour: "turc", max: 30,
+  intro: "Une moitié turc → français, l'autre français → turc. Les pièges viennent du même thème.",
+  fabriquer: n => melange(TURC).slice(0, n).map((m, k) => {
+    const voisins = melange(TURC.filter(x => x.cat === m.cat && x.fr !== m.fr && x.tr !== m.tr));
+    const autres = voisins.length >= 3 ? voisins : voisins.concat(melange(TURC.filter(x => x.cat !== m.cat)));
+    const pieges = autres.slice(0, 3);
+    return k % 2 === 0
+      ? { q: `Que veut dire « ${m.tr} » ?`, r: [m.fr, ...pieges.map(x => x.fr)], e: `${m.tr} (${m.pr}) = ${m.fr}.`, parler: m.tr }
+      : { q: `Comment dit-on « ${m.fr} » ?`, r: [m.tr, ...pieges.map(x => x.tr)], e: `${m.tr} se prononce ${m.pr}.`, parler: m.tr };
+  })
+});
+
+KIT.vues.prononciation = () => KIT.quiz({
+  cle: "prononciation", titre: "Lire les arrêts", retour: "turc", max: LIEUX.length,
+  intro: "Les noms que vous lirez sur les panneaux du tram, du Marmaray et des ferries. Choisis la bonne prononciation.",
+  fabriquer: n => melange(LIEUX).slice(0, n).map(l => ({ q: `Comment se prononce « ${l.mot} » ?`, r: [l.bon, ...l.faux], e: l.astuce, parler: l.mot }))
+});
+
+// Au bazar : les nombres turcs
+const UNITES = ["", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"];
+const DIZAINES = ["", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"];
+const PRONO_NOMBRES = { bir: "bir", iki: "i-ki", "üç": "utch", "dört": "deurt", "beş": "bèch", "altı": "al-teu", yedi: "yé-di", sekiz: "sé-kiz", dokuz: "do-kouz", on: "on", yirmi: "yir-mi", otuz: "o-touz", "kırk": "keurk", elli: "èl-li", "altmış": "alt-meuch", "yetmiş": "yèt-mich", seksen: "sèk-sèn", doksan: "dok-san", "yüz": "yuz", bin: "bin", lira: "li-ra" };
+function centaines(c) { return c === 1 ? "yüz" : UNITES[c] + " yüz"; }
+function moinsDeMille(n) {
+  const c = Math.floor(n / 100), d = Math.floor((n % 100) / 10), u = n % 10;
+  return [c && centaines(c), d && DIZAINES[d], u && UNITES[u]].filter(Boolean).join(" ");
+}
+function enTurc(n) {
+  const m = Math.floor(n / 1000), r = n % 1000;
+  return [m && (m === 1 ? "bin" : moinsDeMille(m) + " bin"), r && moinsDeMille(r)].filter(Boolean).join(" ") || "sıfır";
+}
+const prononcer = phrase => phrase.split(" ").map(m => PRONO_NOMBRES[m] || m).join(" ");
+const enChiffres = n => n.toLocaleString("fr-FR");
+function decomposer(n) {
+  const m = Math.floor(n / 1000), c = Math.floor((n % 1000) / 100), d = Math.floor((n % 100) / 10), u = n % 10;
+  return [m && `${m === 1 ? "bin" : moinsDeMille(m) + " bin"} = ${enChiffres(m * 1000)}`, c && `${centaines(c)} = ${c * 100}`, d && `${DIZAINES[d]} = ${d * 10}`, u && `${UNITES[u]} = ${u}`].filter(Boolean).join(" + ");
+}
+const ARTICLES = [
+  { nom: "Un verre de thé", min: 20, max: 60, pas: 5 }, { nom: "Un simit", min: 15, max: 40, pas: 5 },
+  { nom: "Un balık ekmek", min: 150, max: 300, pas: 10 }, { nom: "Un aimant de frigo", min: 50, max: 200, pas: 10 },
+  { nom: "Un sachet d'épices", min: 100, max: 450, pas: 25 }, { nom: "Une boîte de loukoums", min: 200, max: 900, pas: 50 },
+  { nom: "Une écharpe", min: 250, max: 1200, pas: 50 }, { nom: "Un service à thé", min: 900, max: 4500, pas: 100 },
+  { nom: "Une lampe en mosaïque", min: 800, max: 3500, pas: 50 }, { nom: "Un petit tapis", min: 4000, max: 30000, pas: 500 }
+];
+const prixAuHasard = a => auHasard(a.min / a.pas, a.max / a.pas) * a.pas;
+
+KIT.vues.bazar = function () {
+  let mode = "comprendre";
+  const zone = h("div", { class: "quiz" });
+  const TOURS = 10;
+  function partie() {
+    let tour = 0, score = 0;
+    suivant();
+    function suivant() {
+      if (tour === TOURS) return fin();
+      const article = ARTICLES[auHasard(0, ARTICLES.length - 1)];
+      const prix = prixAuHasard(article);
+      const dit = enTurc(prix) + " lira";
+      const retour = h("div");
+      const tete = [h("div", { class: "progression", "aria-hidden": "true" }, h("span", { style: `width:${(tour / TOURS) * 100}%` })),
+        h("p", { class: "muted", style: "margin:0 0 6px" }, `Prix ${tour + 1} sur ${TOURS}`), h("span", { class: "etiquette" }, article.nom)];
+      const moitie = Math.max(article.pas, Math.round(prix / 2 / article.pas) * article.pas);
+      const conseil = h("p", { style: "margin:8px 0 0" }, "Propose la moitié : « ", h("strong", null, enTurc(moitie) + " lira"), ` » (${enChiffres(moitie)}).`);
+      const boutonSuivant = () => h("button", { class: "btn", type: "button", style: "margin-top:12px", onclick: () => { tour++; suivant(); } }, tour === TOURS - 1 ? "Voir le score" : "Prix suivant →");
+      if (mode === "comprendre") {
+        const champ = h("input", { class: "champ", inputmode: "numeric", autocomplete: "off", placeholder: "Le prix en chiffres", "aria-label": "Prix en chiffres" });
+        const formulaire = h("form", { class: "rangee", style: "flex-wrap:nowrap; margin-top:12px", onsubmit: e => {
+          e.preventDefault();
+          const lu = parseInt(champ.value.replace(/\D/g, ""), 10);
+          if (Number.isNaN(lu)) { champ.focus(); return; }
+          const juste = lu === prix;
+          if (juste) score++;
+          champ.disabled = true; formulaire.querySelector("button").disabled = true;
+          const fin = boutonSuivant();
+          retour.replaceChildren(h("div", { class: "explication", role: "status" },
+            h("strong", null, juste ? `Oui : ${enChiffres(prix)} lira` : `Non : c'était ${enChiffres(prix)} lira`), decomposer(prix) + ".", conseil), fin);
+          fin.focus({ preventScroll: true });
+        } }, champ, h("button", { class: "btn", type: "submit" }, "Valider"));
+        zone.replaceChildren(...tete,
+          h("p", { style: "margin:12px 0 0" }, "Le vendeur annonce :"),
+          h("div", { class: "prix" }, `« ${dit} »`),
+          h("div", { class: "rangee" }, h("span", { class: "mono muted" }, prononcer(dit)), boutonParler(dit)),
+          formulaire, retour);
+        setTimeout(() => champ.focus({ preventScroll: true }), 50);
+      } else {
+        const variantes = [prix + 10, prix - 10, prix + 100, prix - 100, prix + 50, prix - 50, prix + 1000, prix - 1000, Number(String(prix).split("").reverse().join(""))]
+          .filter(v => v > 0 && v !== prix && v < 100000);
+        const pieges = melange([...new Set(variantes)]).slice(0, 3);
+        const choix = melange([prix, ...pieges]).map(v => h("button", { type: "button", onclick: e => {
+          const juste = v === prix;
+          if (juste) score++;
+          choix.forEach(b => { b.disabled = true; if (b.dataset.v === String(prix)) b.classList.add("bon"); });
+          if (!juste) e.currentTarget.classList.add("faux");
+          const fin = boutonSuivant();
+          retour.replaceChildren(h("div", { class: "explication", role: "status" },
+            h("strong", null, juste ? "Exact" : `Il fallait dire : ${dit}`), `${prononcer(dit)}. ${decomposer(prix)}.`,
+            voix.turque && h("div", { style: "margin-top:8px" }, boutonParler(dit))), fin);
+          fin.focus({ preventScroll: true });
+        }, "data-v": String(v) }, enTurc(v) + " lira"));
+        zone.replaceChildren(...tete,
+          h("p", { style: "margin:12px 0 0" }, "Tu veux payer :"),
+          h("div", { class: "prix" }, `${enChiffres(prix)} lira`),
+          h("p", { class: "muted" }, "Que dis-tu au vendeur ?"),
+          h("div", { class: "choix" }, choix), retour);
+      }
+    }
+    function fin() {
+      const nouveau = noterRecord("bazar", { score, total: TOURS }, (a, b) => a.score > b.score);
+      zone.replaceChildren(h("div", { class: "bloc score-final" },
+        h("div", { class: "grand" }, `${score} / ${TOURS}`),
+        h("p", null, (score === TOURS ? "Prêt pour le Grand Bazar." : score >= 7 ? "Bien : encore un tour pour les grands nombres ?" : "Relis la règle ci-dessous et rejoue.") + (nouveau ? " · nouveau record" : "")),
+        h("button", { class: "btn", type: "button", onclick: partie }, "Rejouer")));
+    }
+  }
+  partie();
+  return h("div", null, barre("Au bazar", "turc"),
+    h("div", { class: "bloc" },
+      h("p", null, "Les nombres turcs s'additionnent dans l'ordre : ", h("strong", null, "iki yüz elli"), " = deux cents cinquante = 250. On ne dit pas « un cent » ni « un mille » : ", h("strong", null, "yüz"), " = 100, ", h("strong", null, "bin"), " = 1 000, ", h("strong", null, "iki bin beş yüz"), " = 2 500."),
+      h("p", { class: "astuce", style: "margin:0" }, "Les prix sont des exemples pour s'entraîner, pas des repères de ce qu'il faut payer."),
+      h("div", { style: "margin-top:12px" }, segment([["comprendre", "Comprendre un prix"], ["dire", "Dire un prix"]], mode, v => { mode = v; partie(); }))),
+    zone);
+};
+
+KIT.vues.quiz = function (cle) {
+  const b = QUIZ[cle];
+  if (!b) return KIT.vues.accueil();
+  return KIT.quiz({ cle: "quiz-" + cle, titre: b.titre, retour: cle === "istanbul" ? "" : "revisions", intro: b.resume, max: b.questions.length, fabriquer: n => melange(b.questions).slice(0, n) });
+};
+
+KIT.vues.revisions = () => h("div", null, barre("Révisions", ""),
+  h("p", { class: "muted" }, "Trois quiz de révision, seul ou à plusieurs. Chaque réponse est expliquée."),
+  h("div", { class: "grille" }, ["lol", "musique", "support"].map(c => carte("quiz/" + c, QUIZ[c].icone, QUIZ[c].titre, `${QUIZ[c].questions.length} questions · ${QUIZ[c].resume}`, texteRecord("quiz-" + c)))));
+
+// Étirements assis, avec minuteur
+KIT.vues.etirements = function () {
+  const total = ETIREMENTS.reduce((s, e) => s + e.duree, 0);
+  const zone = h("div", { class: "minuteur" });
+  let bip = memoire.lire("bip", false);
+  depart();
+  return h("div", null, barre("Pause étirements", ""), zone);
+
+  function depart() {
+    zone.replaceChildren(h("div", { class: "bloc", style: "text-align:left" },
+      h("p", null, `Environ ${Math.round(total / 60)} minutes, assis, sans gêner ton voisin. Arrête un mouvement qui fait mal.`),
+      h("ol", null, ETIREMENTS.map(e => h("li", null, `${e.nom} `, h("span", { class: "muted" }, `(${e.duree} s)`)))),
+      h("p", { class: "astuce" }, "Quand le signal de ceinture est éteint, lève-toi et marche un peu dans l'allée. Et bois de l'eau : l'air de la cabine est sec."),
+      h("label", { class: "rangee", style: "gap:10px" }, h("input", { type: "checkbox", checked: bip, onchange: e => { bip = e.target.checked; memoire.ecrire("bip", bip); } }), "Petit bip à chaque changement (au casque)")),
+    h("button", { class: "btn gros-bouton", type: "button", onclick: seance }, "Commencer"));
+  }
+
+  function seance() {
+    let i = 0, fin = 0, enPause = false, restePause = 0;
+    const nom = h("div", { class: "nom" }), temps = h("div", { class: "temps", "aria-live": "off" }), consigne = h("p", { class: "consigne" });
+    const etapes = h("div", { class: "etapes", "aria-hidden": "true" }, ETIREMENTS.map(() => h("span")));
+    const pause = h("button", { class: "btn fantome", type: "button", onclick: () => {
+      enPause = !enPause;
+      if (enPause) restePause = fin - Date.now(); else fin = Date.now() + restePause;
+      pause.textContent = enPause ? "Reprendre" : "Pause";
+    } }, "Pause");
+    zone.replaceChildren(h("p", { class: "muted", style: "margin:0" }, "Exercice"), nom, temps, consigne, etapes,
+      h("div", { class: "rangee centre" }, pause,
+        h("button", { class: "btn", type: "button", onclick: () => passer(i + 1) }, "Suivant →"),
+        h("button", { class: "btn discret", type: "button", onclick: depart }, "Arrêter")));
+    passer(0);
+    const minuteur = setInterval(() => {
+      if (enPause) return;
+      const reste = Math.max(0, Math.ceil((fin - Date.now()) / 1000));
+      temps.textContent = duree(reste);
+      if (reste === 0) passer(i + 1);
+    }, 200);
+    KIT.nettoyages.push(() => clearInterval(minuteur));
+    const arreter = () => clearInterval(minuteur);
+
+    function passer(k) {
+      if (k >= ETIREMENTS.length) { arreter(); return termine(); }
+      i = k;
+      const e = ETIREMENTS[i];
+      fin = Date.now() + e.duree * 1000; enPause = false; pause.textContent = "Pause";
+      nom.textContent = e.nom; consigne.textContent = e.consigne; temps.textContent = duree(e.duree);
+      [...etapes.children].forEach((s, j) => { s.className = j < i ? "fait" : j === i ? "encours" : ""; });
+      if (bip && KIT.bip) KIT.bip();
+    }
+    function termine() {
+      zone.replaceChildren(h("div", { class: "bloc" },
+        h("p", { class: "question" }, "Séance terminée"),
+        h("p", null, "Un verre d'eau, et si le signal est éteint, quelques pas dans l'allée."),
+        h("button", { class: "btn", type: "button", onclick: () => aller("") }, "Retour au programme")));
+      if (bip && KIT.bip) KIT.bip(true);
+    }
+  }
+};
+
+// À l'arrivée : repris du site du voyage pour l'avoir sans réseau
+KIT.vues.arrivee = () => h("div", null, barre("À l'arrivée", ""),
+  h("div", { class: "bloc" }, h("h3", null, "En sortant de l'avion"),
+    h("ul", null,
+      h("li", null, "Avance ta montre de ", h("strong", null, "2 heures"), " (le téléphone le fait seul en retrouvant le réseau)."),
+      h("li", null, "Achète l'", h("strong", null, "Istanbulkart"), " dès l'aéroport : tram, métro, Marmaray et ferries."),
+      h("li", null, "Urgences : ", h("strong", null, "112"), ". Consulat général de France sur İstiklal."))),
+  h("div", { class: "bloc" }, h("h3", null, "Aéroport → hôtel Raymond Old City (Sirkeci)"),
+    h("ul", null,
+      h("li", null, h("strong", null, "Depuis IST"), " (1 h à 1 h 30) : bus Havaist direction Sultanahmet."),
+      h("li", null, h("strong", null, "Depuis SAW"), " : métro M4 jusqu'à Ayrılık Çeşmesi, puis Marmaray jusqu'à Sirkeci, à deux pas de l'hôtel."))),
+  h("div", { class: "bloc" }, h("h3", null, "Mercredi 11 · Sultanahmet"),
+    h("ol", { class: "programme large" },
+      [["Après-midi", "Sainte-Sophie", "Environ 25 € pour les visiteurs étrangers, galerie du haut seulement. Moins de monde en fin de journée."],
+       ["Après-midi", "Mosquée Bleue et Hippodrome", "Gratuite, fermée pendant les prières, tenue couvrante. L'obélisque égyptien est juste à côté."],
+       ["Fin d'aprèm", "Citerne Basilique", "Souterraine, avec les deux têtes de Méduse. Parfait quand la nuit tombe vers 17 h."],
+       ["Soir", "Karaköy", "Évitez les restaurants à rabatteurs de Sultanahmet. Tram T1, 10 minutes jusqu'à Karaköy."]]
+        .map(([moment, lieu, texte]) => h("li", null, h("span", { class: "heure" }, moment), h("div", null, h("strong", null, lieu), h("div", { class: "muted" }, texte)))))),
+  h("div", { class: "bloc" }, h("h3", null, "Les mots du premier jour"),
+    h("table", { class: "lexique" }, h("tbody", null, ["Havalimanı", "Çıkış", "Nerede?", "Merhaba", "Teşekkürler", "Üç kişi", "Hesap, lütfen"]
+      .map(t => TURC.find(m => m.tr === t)).filter(Boolean)
+      .map(m => h("tr", null, h("td", null, m.tr, h("div", { class: "prono" }, m.pr)), h("td", null, m.fr), h("td", null, boutonParler(m.tr))))))),
+  h("p", { class: "astuce" }, "Repris du site du voyage le 10 novembre. Horaires et tarifs changent souvent : vérifiez-les sur place. ",
+    h("a", { href: "https://hugo230795.github.io/Istanbul/" }, "Le site complet"), " (carte, restaurants, jours suivants) demande du réseau."));
+
+// Jeux : sudoku (grilles à solution unique), 2048, démineur. Parties en cours gardées sur l'appareil.
+
+KIT.vues.jeux = function () {
+  const temps = cle => { const r = lireRecord(cle); return r ? duree(r) : null; };
+  const meilleurSudoku = ["facile", "moyen", "difficile"].map(n => temps("sudoku-" + n) && `${n} ${temps("sudoku-" + n)}`).filter(Boolean).join(" · ");
+  const meilleurMines = ["facile", "moyen", "difficile"].map(n => temps("mines-" + n) && `${n} ${temps("mines-" + n)}`).filter(Boolean).join(" · ");
+  const r2048 = lireRecord("2048");
+  return h("div", null, barre("Jeux", ""),
+    h("div", { class: "grille" },
+      carte("sudoku", "🔢", "Sudoku", "Trois niveaux, notes au crayon, indices", meilleurSudoku && "Records : " + meilleurSudoku),
+      carte("2048", "🧮", "2048", "Fais glisser les tuiles pour atteindre 2048", r2048 && `Record : ${r2048} points`),
+      carte("demineur", "💣", "Démineur", "Appui long ou mode drapeau sur téléphone", meilleurMines && "Records : " + meilleurMines)));
+};
+
+// ---------- Sudoku ----------
+function candidatsSudoku(g, i) {
+  const r = Math.floor(i / 9), c = i % 9, br = r - (r % 3), bc = c - (c % 3);
+  let pris = 0;
+  for (let k = 0; k < 9; k++) { pris |= 1 << g[r * 9 + k]; pris |= 1 << g[k * 9 + c]; }
+  for (let dr = 0; dr < 3; dr++) for (let dc = 0; dc < 3; dc++) pris |= 1 << g[(br + dr) * 9 + bc + dc];
+  return ~pris & 0x3fe;
+}
+const nbBits = m => { let n = 0; while (m) { m &= m - 1; n++; } return n; };
+function caseLaPlusContrainte(g) {
+  let meilleure = -1, masque = 0, nb = 10;
+  for (let i = 0; i < 81; i++) if (!g[i]) {
+    const m = candidatsSudoku(g, i), n = nbBits(m);
+    if (n < nb) { meilleure = i; masque = m; nb = n; if (n <= 1) break; }
+  }
+  return [meilleure, masque];
+}
+function remplirSudoku(g) {
+  const [i, masque] = caseLaPlusContrainte(g);
+  if (i < 0) return true;
+  for (const d of melange([1, 2, 3, 4, 5, 6, 7, 8, 9])) if (masque & (1 << d)) { g[i] = d; if (remplirSudoku(g)) return true; }
+  g[i] = 0;
+  return false;
+}
+function compterSolutions(g, limite) {
+  const [i, masque] = caseLaPlusContrainte(g);
+  if (i < 0) return 1;
+  let total = 0;
+  for (let d = 1; d <= 9 && total < limite; d++) if (masque & (1 << d)) { g[i] = d; total += compterSolutions(g, limite - total); }
+  g[i] = 0;
+  return total;
+}
+function genererSudoku(indicesVoulus) {
+  const solution = new Array(81).fill(0);
+  remplirSudoku(solution);
+  const g = solution.slice();
+  let restants = 81;
+  for (const i of melange([...Array(81).keys()])) {
+    if (restants <= indicesVoulus) break;
+    const v = g[i]; g[i] = 0;
+    if (compterSolutions(g.slice(), 2) === 1) restants--; else g[i] = v;
+  }
+  return { depart: g, solution };
+}
+const NIVEAUX_SUDOKU = { facile: 38, moyen: 31, difficile: 25 };
+
+KIT.vues.sudoku = function () {
+  let p = memoire.lire("sudoku", null);
+  let sel = -1, modeNotes = false, montrerErreurs = false, debutSession = Date.now();
+  const grille = h("div", { class: "sudoku", role: "grid", "aria-label": "Grille de sudoku" });
+  const pave = h("div", { class: "pave" });
+  const chrono = h("span", { class: "valeur" });
+  const message = h("p", { class: "message-jeu", role: "status" });
+  const boutonNotes = h("button", { class: "btn petit discret", type: "button", "aria-pressed": "false", onclick: () => { modeNotes = !modeNotes; boutonNotes.setAttribute("aria-pressed", String(modeNotes)); boutonNotes.textContent = modeNotes ? "✏️ Notes : oui" : "✏️ Notes : non"; } }, "✏️ Notes : non");
+  const boutonErreurs = h("button", { class: "btn petit discret", type: "button", onclick: () => { montrerErreurs = !montrerErreurs; boutonErreurs.textContent = montrerErreurs ? "Masquer les erreurs" : "Montrer les erreurs"; dessiner(); } }, "Montrer les erreurs");
+  let niveau = p ? p.niveau : "facile";
+  const etiquetteNiveau = h("span", { class: "muted" });
+  const cases = [];
+  for (let i = 0; i < 81; i++) {
+    const b = h("button", { type: "button", class: (i % 9 === 2 || i % 9 === 5 ? "c3 " : "") + (Math.floor(i / 9) === 2 || Math.floor(i / 9) === 5 ? "l3" : ""), onclick: () => { sel = i; dessiner(); } });
+    cases.push(b); grille.append(b);
+  }
+  for (let d = 1; d <= 9; d++) pave.append(h("button", { type: "button", onclick: () => saisir(d) }, String(d), h("span", { class: "reste" })));
+
+  function nouvelle() {
+    const { depart, solution } = genererSudoku(NIVEAUX_SUDOKU[niveau]);
+    p = { niveau, depart, solution, valeurs: depart.slice(), notes: new Array(81).fill(0), ecoule: 0, indices: 0, fini: false };
+    sel = -1; debutSession = Date.now(); message.textContent = ""; message.className = "message-jeu";
+    sauver(); dessiner();
+  }
+  function ecoule() { return p.ecoule + (p.fini ? 0 : (Date.now() - debutSession) / 1000); }
+  function sauver() { memoire.ecrire("sudoku", { ...p, ecoule: ecoule() }); }
+  function saisir(d) {
+    if (!p || p.fini || sel < 0 || p.depart[sel]) return;
+    if (modeNotes && !p.valeurs[sel]) p.notes[sel] ^= 1 << d;
+    else {
+      p.valeurs[sel] = p.valeurs[sel] === d ? 0 : d; p.notes[sel] = 0;
+      if (p.valeurs[sel]) { // retire ce chiffre des notes de la ligne, de la colonne et du carré
+        const r = Math.floor(sel / 9), c = sel % 9;
+        for (let i = 0; i < 81; i++) {
+          const ri = Math.floor(i / 9), ci = i % 9;
+          if (ri === r || ci === c || (Math.floor(ri / 3) === Math.floor(r / 3) && Math.floor(ci / 3) === Math.floor(c / 3))) p.notes[i] &= ~(1 << d);
+        }
+      }
+    }
+    verifierFin(); sauver(); dessiner();
+  }
+  function effacer() { if (!p || p.fini || sel < 0 || p.depart[sel]) return; p.valeurs[sel] = 0; p.notes[sel] = 0; sauver(); dessiner(); }
+  function indice() {
+    if (!p || p.fini) return;
+    let i = sel >= 0 && p.valeurs[sel] !== p.solution[sel] ? sel : -1;
+    if (i < 0) { const vides = [...Array(81).keys()].filter(k => p.valeurs[k] !== p.solution[k]); if (!vides.length) return; i = vides[auHasard(0, vides.length - 1)]; }
+    p.valeurs[i] = p.solution[i]; p.notes[i] = 0; p.indices++; sel = i;
+    verifierFin(); sauver(); dessiner();
+  }
+  function verifierFin() {
+    if (p.valeurs.every((v, i) => v === p.solution[i])) {
+      p.ecoule = ecoule(); p.fini = true;
+      const record = p.indices === 0 && noterRecord("sudoku-" + p.niveau, Math.round(p.ecoule), (a, b) => a < b);
+      message.className = "message-jeu gagne";
+      message.textContent = `Grille ${p.niveau} terminée en ${duree(p.ecoule)}` + (p.indices ? ` avec ${p.indices} indice${p.indices > 1 ? "s" : ""}` : "") + (record ? " · nouveau record" : "");
+    }
+  }
+  function dessiner() {
+    if (!p) return;
+    etiquetteNiveau.textContent = `Grille ${p.niveau}`;
+    const vs = sel >= 0 ? p.valeurs[sel] : 0;
+    const rs = Math.floor(sel / 9), cs = sel % 9;
+    cases.forEach((b, i) => {
+      const v = p.valeurs[i], r = Math.floor(i / 9), c = i % 9;
+      b.classList.toggle("fixe", !!p.depart[i]);
+      b.classList.toggle("actif", i === sel);
+      b.classList.toggle("zone", sel >= 0 && i !== sel && (r === rs || c === cs || (Math.floor(r / 3) === Math.floor(rs / 3) && Math.floor(c / 3) === Math.floor(cs / 3))));
+      b.classList.toggle("meme", i !== sel && vs > 0 && v === vs);
+      b.classList.toggle("erreur", montrerErreurs && v > 0 && v !== p.solution[i]);
+      b.setAttribute("aria-label", `Ligne ${r + 1}, colonne ${c + 1} : ${v || "vide"}`);
+      if (v) b.textContent = String(v);
+      else if (p.notes[i]) b.replaceChildren(h("span", { class: "notes" }, [1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => h("span", null, p.notes[i] & (1 << d) ? String(d) : ""))));
+      else b.textContent = "";
+    });
+    [...pave.children].forEach((b, k) => {
+      const reste = 9 - p.valeurs.filter(v => v === k + 1).length;
+      b.lastChild.textContent = reste > 0 ? String(reste) : "";
+      b.classList.toggle("epuise", reste <= 0);
+    });
+  }
+  const clavier = e => {
+    if (e.target.tagName === "INPUT") return;
+    if (/^[1-9]$/.test(e.key)) saisir(Number(e.key));
+    else if (["Backspace", "Delete", "0"].includes(e.key)) effacer();
+    else if (e.key.startsWith("Arrow")) {
+      e.preventDefault();
+      if (sel < 0) sel = 0;
+      else sel = { ArrowLeft: sel % 9 ? sel - 1 : sel, ArrowRight: sel % 9 < 8 ? sel + 1 : sel, ArrowUp: sel >= 9 ? sel - 9 : sel, ArrowDown: sel < 72 ? sel + 9 : sel }[e.key];
+      dessiner();
+    } else if (e.key === "n") boutonNotes.click();
+  };
+  document.addEventListener("keydown", clavier);
+  const tic = setInterval(() => { if (p) chrono.textContent = duree(ecoule()); }, 500);
+  const pageCachee = () => { if (document.hidden && p) { p.ecoule = ecoule(); debutSession = Date.now(); sauver(); } else debutSession = Date.now(); };
+  document.addEventListener("visibilitychange", pageCachee);
+  KIT.nettoyages.push(() => { document.removeEventListener("keydown", clavier); document.removeEventListener("visibilitychange", pageCachee); clearInterval(tic); if (p && !p.fini) sauver(); });
+
+  if (!p) nouvelle();
+  else { if (p.fini) verifierFin(); dessiner(); }
+  return h("div", null, barre("Sudoku", "jeux"),
+    h("div", { class: "jeu" },
+      h("div", { class: "infos-jeu" },
+        segment([["facile", "Facile"], ["moyen", "Moyen"], ["difficile", "Difficile"]], niveau, v => { niveau = v; }),
+        h("button", { class: "btn petit", type: "button", onclick: nouvelle }, "Nouvelle grille")),
+      h("div", { class: "infos-jeu" }, h("span", null, "Temps ", chrono), etiquetteNiveau),
+      grille, pave,
+      h("div", { class: "rangee centre", style: "margin-top:10px" }, boutonNotes,
+        h("button", { class: "btn petit discret", type: "button", onclick: effacer }, "Effacer"),
+        h("button", { class: "btn petit discret", type: "button", onclick: indice }, "Indice"), boutonErreurs),
+      message));
+};
+
+// ---------- 2048 ----------
+KIT.vues["2048"] = function () {
+  let p = memoire.lire("2048-partie", null), precedent = null, neuve = -1;
+  const plateau = h("div", { class: "p2048", role: "grid", "aria-label": "Plateau de 2048" });
+  const tuiles = [...Array(16)].map(() => h("div"));
+  plateau.append(...tuiles);
+  const score = h("span", { class: "valeur" }), record = h("span", { class: "valeur" });
+  const message = h("p", { class: "message-jeu", role: "status" });
+  const annuler = h("button", { class: "btn petit discret", type: "button", onclick: () => { if (precedent) { p = precedent; precedent = null; neuve = -1; sauver(); dessiner(); } } }, "Annuler un coup");
+
+  function ajouterTuile(c) {
+    const vides = [...c.keys()].filter(i => !c[i]);
+    if (!vides.length) return -1;
+    const i = vides[auHasard(0, vides.length - 1)];
+    c[i] = Math.random() < 0.9 ? 2 : 4;
+    return i;
+  }
+  function nouvelle() {
+    const c = new Array(16).fill(0);
+    ajouterTuile(c); neuve = ajouterTuile(c);
+    p = { cases: c, score: 0, gagne: false, fini: false }; precedent = null;
+    sauver(); dessiner();
+  }
+  // Une ligne de 4 cases, lue dans le sens du mouvement : on tasse et on fusionne une fois par paire.
+  function tasser(ligne) {
+    const v = ligne.filter(x => x), sortie = [];
+    let gain = 0;
+    for (let i = 0; i < v.length; i++) {
+      if (v[i] === v[i + 1]) { sortie.push(v[i] * 2); gain += v[i] * 2; i++; } else sortie.push(v[i]);
+    }
+    while (sortie.length < 4) sortie.push(0);
+    return [sortie, gain];
+  }
+  const indicesLigne = (dir, k) => [0, 1, 2, 3].map(j => ({ gauche: k * 4 + j, droite: k * 4 + 3 - j, haut: j * 4 + k, bas: (3 - j) * 4 + k })[dir]);
+  function glisser(dir) {
+    if (!p || p.fini) return;
+    const c = p.cases.slice();
+    let bouge = false, gain = 0;
+    for (let k = 0; k < 4; k++) {
+      const idx = indicesLigne(dir, k);
+      const [sortie, g] = tasser(idx.map(i => c[i]));
+      idx.forEach((i, j) => { if (c[i] !== sortie[j]) bouge = true; c[i] = sortie[j]; });
+      gain += g;
+    }
+    if (!bouge) return;
+    precedent = JSON.parse(JSON.stringify(p));
+    p.cases = c; p.score += gain; neuve = ajouterTuile(c);
+    noterRecord("2048", p.score, (a, b) => a > b);
+    if (!p.gagne && c.includes(2048)) { p.gagne = true; message.className = "message-jeu gagne"; message.textContent = "2048 ! Tu peux continuer."; }
+    if (!coupPossible(c)) { p.fini = true; message.className = "message-jeu perdu"; message.textContent = `Plus de coup possible : ${p.score} points.`; }
+    sauver(); dessiner();
+  }
+  function coupPossible(c) {
+    if (c.includes(0)) return true;
+    for (let i = 0; i < 16; i++) { if (i % 4 < 3 && c[i] === c[i + 1]) return true; if (i < 12 && c[i] === c[i + 4]) return true; }
+    return false;
+  }
+  function sauver() { memoire.ecrire("2048-partie", p); }
+  function dessiner() {
+    tuiles.forEach((t, i) => {
+      const v = p.cases[i];
+      t.textContent = v ? String(v) : "";
+      t.className = v ? (v > 2048 ? "vmax" : "v" + v) + (i === neuve ? " neuf" : "") : "";
+    });
+    score.textContent = String(p.score);
+    record.textContent = String(Math.max(lireRecord("2048") || 0, p.score));
+    annuler.disabled = !precedent;
+    if (!p.fini && !p.gagne) { message.textContent = ""; message.className = "message-jeu"; }
+    else if (p.fini) { message.className = "message-jeu perdu"; message.textContent = `Plus de coup possible : ${p.score} points.`; }
+  }
+  let depart = null;
+  plateau.addEventListener("pointerdown", e => { depart = [e.clientX, e.clientY]; });
+  plateau.addEventListener("pointerup", e => {
+    if (!depart) return;
+    const dx = e.clientX - depart[0], dy = e.clientY - depart[1];
+    depart = null;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+    glisser(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "droite" : "gauche") : (dy > 0 ? "bas" : "haut"));
+  });
+  plateau.addEventListener("pointercancel", () => { depart = null; });
+  const clavier = e => {
+    const dir = { ArrowLeft: "gauche", ArrowRight: "droite", ArrowUp: "haut", ArrowDown: "bas" }[e.key];
+    if (dir) { e.preventDefault(); glisser(dir); }
+  };
+  document.addEventListener("keydown", clavier);
+  KIT.nettoyages.push(() => document.removeEventListener("keydown", clavier));
+
+  if (!p) nouvelle(); else dessiner();
+  return h("div", null, barre("2048", "jeux"),
+    h("div", { class: "jeu" },
+      h("div", { class: "infos-jeu" }, h("span", null, "Score ", score), h("span", null, "Record ", record)),
+      plateau, message,
+      h("div", { class: "rangee centre" }, annuler, h("button", { class: "btn petit", type: "button", onclick: nouvelle }, "Nouvelle partie")),
+      h("p", { class: "astuce", style: "text-align:center; margin-top:10px" }, "Fais glisser ton doigt sur le plateau, ou utilise les flèches du clavier. Astuce : garde ta plus grosse tuile dans un coin.")));
+};
+
+// ---------- Démineur ----------
+const NIVEAUX_MINES = { facile: { l: 9, c: 9, m: 10 }, moyen: { l: 12, c: 12, m: 24 }, difficile: { l: 16, c: 16, m: 40 } };
+KIT.vues.demineur = function () {
+  let niveau = memoire.lire("mines-niveau", "facile");
+  let p, modeDrapeau = false, appuiLong = null, ignorerClic = false, dernierAppuiLong = 0, tic = null;
+  const cadre = h("div", { class: "mines-cadre" });
+  const restantes = h("span", { class: "valeur" }), chrono = h("span", { class: "valeur" });
+  const message = h("p", { class: "message-jeu", role: "status" });
+  const boutonDrapeau = h("button", { class: "btn petit discret", type: "button", "aria-pressed": "false", onclick: () => { modeDrapeau = !modeDrapeau; boutonDrapeau.setAttribute("aria-pressed", String(modeDrapeau)); boutonDrapeau.textContent = modeDrapeau ? "🚩 Mode drapeau : oui" : "🚩 Mode drapeau : non"; } }, "🚩 Mode drapeau : non");
+
+  const voisins = i => {
+    const r = Math.floor(i / p.c), c = i % p.c, v = [];
+    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+      if (!dr && !dc) continue;
+      const rr = r + dr, cc = c + dc;
+      if (rr >= 0 && rr < p.l && cc >= 0 && cc < p.c) v.push(rr * p.c + cc);
+    }
+    return v;
+  };
+  function nouvelle() {
+    const n = NIVEAUX_MINES[niveau];
+    p = { ...n, mines: [], ouvertes: new Array(n.l * n.c).fill(false), drapeaux: new Array(n.l * n.c).fill(false), place: false, fini: false, debut: 0, fin: 0 };
+    message.textContent = ""; message.className = "message-jeu";
+    construire();
+  }
+  function placerMines(premiere) {
+    const interdites = new Set([premiere, ...voisins(premiere)]);
+    const possibles = melange([...Array(p.l * p.c).keys()].filter(i => !interdites.has(i)));
+    p.mines = new Array(p.l * p.c).fill(false);
+    possibles.slice(0, p.m).forEach(i => { p.mines[i] = true; });
+    p.place = true; p.debut = Date.now();
+  }
+  const autour = i => voisins(i).filter(v => p.mines[v]).length;
+  function ouvrir(i) {
+    if (p.fini || p.drapeaux[i]) return;
+    if (!p.place) placerMines(i);
+    if (p.ouvertes[i]) { // ouvrir les voisines si le bon nombre de drapeaux est posé
+      const n = autour(i);
+      if (n && voisins(i).filter(v => p.drapeaux[v]).length === n) voisins(i).forEach(v => { if (!p.ouvertes[v] && !p.drapeaux[v]) decouvrir(v); });
+    } else decouvrir(i);
+    verifier(); dessiner();
+  }
+  function decouvrir(i) {
+    if (p.mines[i]) { p.ouvertes[i] = true; perdre(i); return; }
+    const pile = [i];
+    while (pile.length) {
+      const k = pile.pop();
+      if (p.ouvertes[k] || p.drapeaux[k]) continue;
+      p.ouvertes[k] = true;
+      if (autour(k) === 0) voisins(k).forEach(v => { if (!p.ouvertes[v]) pile.push(v); });
+    }
+  }
+  function perdre() {
+    p.fini = true; p.fin = Date.now();
+    p.mines.forEach((m, k) => { if (m) p.ouvertes[k] = true; });
+    message.className = "message-jeu perdu"; message.textContent = "Boum. Nouvelle partie ?";
+  }
+  function verifier() {
+    if (p.fini) return;
+    if (p.ouvertes.every((o, k) => o || p.mines[k])) {
+      p.fini = true; p.fin = Date.now();
+      const t = Math.round((p.fin - p.debut) / 1000);
+      const record = noterRecord("mines-" + niveau, t, (a, b) => a < b);
+      message.className = "message-jeu gagne"; message.textContent = `Déminé en ${duree(t)}` + (record ? " · nouveau record" : "");
+    }
+  }
+  function drapeau(i) {
+    if (p.fini || p.ouvertes[i]) return;
+    p.drapeaux[i] = !p.drapeaux[i];
+    dessiner();
+  }
+  let cases = [];
+  function construire() {
+    const largeur = Math.min(cadre.clientWidth || window.innerWidth - 32, 520);
+    const taille = Math.max(24, Math.min(40, Math.floor((largeur - (p.c - 1) * 2) / p.c)));
+    const plateau = h("div", { class: "mines", role: "grid", "aria-label": "Démineur", style: `grid-template-columns:repeat(${p.c}, var(--case)); --case:${taille}px` });
+    cases = [...Array(p.l * p.c).keys()].map(i => {
+      const b = h("button", { type: "button" });
+      b.addEventListener("click", () => { if (ignorerClic) { ignorerClic = false; return; } modeDrapeau ? drapeau(i) : ouvrir(i); });
+      // Android déclenche aussi « contextmenu » sur un appui long : on ne pose pas le drapeau deux fois.
+      b.addEventListener("contextmenu", e => { e.preventDefault(); if (Date.now() - dernierAppuiLong > 800) drapeau(i); });
+      b.addEventListener("pointerdown", e => {
+        ignorerClic = false; clearTimeout(appuiLong);
+        if (e.pointerType === "mouse") return;
+        appuiLong = setTimeout(() => { ignorerClic = true; dernierAppuiLong = Date.now(); drapeau(i); if (navigator.vibrate) navigator.vibrate(30); }, 450);
+      });
+      ["pointerup", "pointerleave", "pointercancel"].forEach(t => b.addEventListener(t, () => clearTimeout(appuiLong)));
+      return b;
+    });
+    plateau.append(...cases);
+    cadre.replaceChildren(plateau);
+    dessiner();
+  }
+  function dessiner() {
+    cases.forEach((b, i) => {
+      const ouverte = p.ouvertes[i];
+      b.className = ouverte ? "ouverte" : p.drapeaux[i] ? "drapeau" : "";
+      if (ouverte && p.mines[i]) { b.classList.add("mine"); b.textContent = "✱"; }
+      else if (ouverte) { const n = autour(i); b.textContent = n ? String(n) : ""; if (n) b.classList.add("n" + n); }
+      else b.textContent = p.drapeaux[i] ? "🚩" : "";
+      b.setAttribute("aria-label", ouverte ? (p.mines[i] ? "mine" : `${autour(i)} mines autour`) : p.drapeaux[i] ? "drapeau" : "case fermée");
+    });
+    restantes.textContent = String(p.m - p.drapeaux.filter(Boolean).length);
+  }
+  tic = setInterval(() => { if (p) chrono.textContent = duree(p.place ? ((p.fini ? p.fin : Date.now()) - p.debut) / 1000 : 0); }, 500);
+  KIT.nettoyages.push(() => { clearInterval(tic); clearTimeout(appuiLong); });
+
+  const vue = h("div", null, barre("Démineur", "jeux"),
+    h("div", { class: "jeu" },
+      h("div", { class: "infos-jeu" },
+        segment([["facile", "Facile"], ["moyen", "Moyen"], ["difficile", "Difficile"]], niveau, v => { niveau = v; memoire.ecrire("mines-niveau", v); nouvelle(); }),
+        h("button", { class: "btn petit", type: "button", onclick: nouvelle }, "Nouvelle partie")),
+      h("div", { class: "infos-jeu" }, h("span", null, "Mines ", restantes), h("span", null, "Temps ", chrono)),
+      cadre, message,
+      h("div", { class: "rangee centre" }, boutonDrapeau),
+      h("p", { class: "astuce", style: "text-align:center; margin-top:10px" }, "Touche une case pour l'ouvrir. Appui long (ou clic droit) pour un drapeau. Touche un chiffre entouré de ses drapeaux pour ouvrir ses voisines.")));
+  requestAnimationFrame(() => nouvelle());
+  return vue;
+};
+
+// Oreille musicale : sons fabriqués par le navigateur (Web Audio), donc sans fichier ni réseau.
+
+let contexteAudio = null;
+KIT.audio = function () {
+  if (!contexteAudio) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    contexteAudio = new AC();
+    // iPhone : jouer même si le bouton silencieux est activé (Safari 16.4 et plus).
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) { /* ancien Safari */ }
+  }
+  if (contexteAudio.state === "suspended") contexteAudio.resume();
+  return contexteAudio;
+};
+function etatAudio() { return contexteAudio ? contexteAudio.state : "aucun"; }
+const frequence = midi => 440 * Math.pow(2, (midi - 69) / 12);
+// Une note de « piano électrique » simple : trois harmoniques, attaque rapide, extinction lente.
+function jouerNote(midi, debut = 0, longueur = 1.3, volume = 0.22) {
+  const c = KIT.audio(); if (!c) return;
+  const t = c.currentTime + 0.05 + debut, f = frequence(midi);
+  const env = c.createGain();
+  env.gain.setValueAtTime(0.0001, t);
+  env.gain.exponentialRampToValueAtTime(volume, t + 0.012);
+  env.gain.exponentialRampToValueAtTime(volume * 0.35, t + 0.3);
+  env.gain.exponentialRampToValueAtTime(0.0001, t + longueur);
+  const filtre = c.createBiquadFilter();
+  filtre.type = "lowpass"; filtre.frequency.value = Math.min(9000, f * 7);
+  filtre.connect(env); env.connect(c.destination);
+  [[1, "triangle", 1], [2, "sine", 0.3], [3, "sine", 0.1]].forEach(([mult, type, amp]) => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.value = f * mult; g.gain.value = amp;
+    o.connect(g); g.connect(filtre);
+    o.start(t); o.stop(t + longueur + 0.05);
+  });
+}
+function jouerKick(t, c) {
+  const o = c.createOscillator(), g = c.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.13);
+  g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.38);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.4);
+  return o;
+}
+let bruit = null;
+function jouerCharley(t, c) {
+  if (!bruit) {
+    bruit = c.createBuffer(1, c.sampleRate * 0.1, c.sampleRate);
+    const d = bruit.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+  s.buffer = bruit; f.type = "highpass"; f.frequency.value = 7000;
+  g.gain.setValueAtTime(0.25, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+  s.connect(f); f.connect(g); g.connect(c.destination); s.start(t); s.stop(t + 0.06);
+  return s;
+}
+KIT.bip = function (fin) {
+  const c = KIT.audio(); if (!c) return;
+  const t = c.currentTime + 0.02, o = c.createOscillator(), g = c.createGain();
+  o.frequency.value = fin ? 660 : 880;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.08, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.2);
+};
+
+const INTERVALLES = [
+  { n: 1, nom: "Seconde mineure", repere: "Les Dents de la mer" },
+  { n: 2, nom: "Seconde majeure", repere: "Frère Jacques (« Frè-re »)" },
+  { n: 3, nom: "Tierce mineure", repere: "Greensleeves (deux premières notes)" },
+  { n: 4, nom: "Tierce majeure", repere: "Oh When the Saints" },
+  { n: 5, nom: "Quarte juste", repere: "La Marseillaise (« Allons enfants »)" },
+  { n: 6, nom: "Triton", repere: "Le générique des Simpson" },
+  { n: 7, nom: "Quinte juste", repere: "Ah ! vous dirai-je, maman ; Star Wars" },
+  { n: 8, nom: "Sixte mineure", repere: "comme la sixte majeure, en plus sombre : compare les deux" },
+  { n: 9, nom: "Sixte majeure", repere: "My Bonnie Lies over the Ocean" },
+  { n: 10, nom: "Septième mineure", repere: "Le thème original de Star Trek" },
+  { n: 11, nom: "Septième majeure", repere: "Un demi-ton sous l'octave : très tendu" },
+  { n: 12, nom: "Octave", repere: "Over the Rainbow (« Some-where »)" }
+];
+const NIVEAUX_INTERVALLES = { facile: [4, 7, 12], moyen: [3, 4, 5, 7, 9, 10, 12], complet: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] };
+const ACCORDS = [
+  { nom: "Majeur", notes: [0, 4, 7], texte: "tierce majeure + quinte juste : stable, lumineux" },
+  { nom: "Mineur", notes: [0, 3, 7], texte: "tierce mineure + quinte juste : plus sombre" },
+  { nom: "Diminué", notes: [0, 3, 6], texte: "deux tierces mineures : tendu, instable" },
+  { nom: "Augmenté", notes: [0, 4, 8], texte: "deux tierces majeures : flottant, irréel" },
+  { nom: "7e de dominante", notes: [0, 4, 7, 10], texte: "majeur + septième mineure : appelle une résolution (blues, funk)" },
+  { nom: "7e majeure", notes: [0, 4, 7, 11], texte: "majeur + septième majeure : doux, jazzy, lo-fi" },
+  { nom: "Mineur 7", notes: [0, 3, 7, 10], texte: "mineur + septième mineure : soul, house, deep" }
+];
+
+KIT.vues.oreille = () => h("div", null, barre("Oreille musicale", ""),
+  h("p", { class: "muted" }, "Au casque de préférence. Sur iPhone, si tu n'entends rien, monte le volume et vérifie le bouton silencieux."),
+  h("div", { class: "grille" },
+    carte("intervalles", "🎼", "Intervalles", "Reconnaître l'écart entre deux notes", serieRecord("intervalles")),
+    carte("accords", "🎹", "Accords", "Majeur, mineur, diminué, septièmes…", serieRecord("accords")),
+    carte("tempo", "🥁", "Devine le tempo", "Boom bap, techno, schranz : à l'oreille", serieRecord("tempo")),
+    carte("ecoute", "🎧", "Écoute active", "Tap tempo et plan d'un morceau téléchargé", null)));
+function serieRecord(cle) { const r = lireRecord("serie-" + cle); return r ? `Meilleure série : ${r}` : null; }
+
+// Partie d'entraînement générique : une question sonore, des réponses en boutons, une série de bonnes réponses.
+function entrainement({ cle, zone, reglages, tirer, jouer, reponses, expliquer }) {
+  let question = null, bonnes = 0, total = 0, serie = 0, repondu = false;
+  const compteur = h("p", { class: "compteur muted", style: "text-align:center" });
+  const grille = h("div", { class: "reponses" });
+  const retour = h("div", { role: "status" });
+  const ecouter = h("button", { class: "btn gros-bouton", type: "button", onclick: () => (question ? jouer(question) : nouvelle()) }, "▶ Écouter");
+  const suivant = h("button", { class: "btn fantome", type: "button", hidden: true, onclick: () => nouvelle() }, "Suivant →");
+  function maj() { compteur.textContent = total ? `${bonnes} / ${total} · série en cours : ${serie}` : "Appuie sur Écouter pour commencer"; }
+  function dessinerReponses() {
+    grille.replaceChildren(...reponses().map(r => h("button", { type: "button", "data-valeur": String(r.valeur), disabled: !question, onclick: e => repondre(e.currentTarget, r) }, r.libelle)));
+  }
+  function nouvelle() {
+    question = tirer(); repondu = false; suivant.hidden = true; retour.replaceChildren();
+    dessinerReponses();
+    ecouter.textContent = "↻ Réécouter";
+    jouer(question);
+  }
+  function repondre(bouton, r) {
+    if (!question || repondu) return;
+    repondu = true; total++;
+    const juste = r.valeur === question.valeur;
+    [...grille.children].forEach(b => { b.disabled = true; if (b.dataset.valeur === String(question.valeur)) b.classList.add("bon"); });
+    if (juste) { bonnes++; serie++; noterRecord("serie-" + cle, serie, (a, b) => a > b); }
+    else { serie = 0; bouton.classList.add("faux"); }
+    retour.replaceChildren(h("div", { class: "explication" }, h("strong", null, juste ? "Bien entendu" : "Pas tout à fait"), expliquer(question)));
+    suivant.hidden = false; suivant.focus({ preventScroll: true });
+    maj();
+  }
+  maj(); dessinerReponses();
+  zone.replaceChildren(reglages, ecouter, grille, retour, h("div", { class: "rangee centre", style: "margin-top:10px" }, suivant), compteur);
+  return { reinitialiser: () => { question = null; ecouter.textContent = "▶ Écouter"; retour.replaceChildren(); suivant.hidden = true; dessinerReponses(); } };
+}
+
+KIT.vues.intervalles = function () {
+  let niveau = memoire.lire("intervalles-niveau", "facile"), sens = memoire.lire("intervalles-sens", "montant");
+  const zone = h("div", { class: "jeu" });
+  let partie;
+  const reglages = h("div", { class: "bloc" },
+    h("div", { class: "rangee" }, segment([["facile", "Facile"], ["moyen", "Moyen"], ["complet", "Tous"]], niveau, v => { niveau = v; memoire.ecrire("intervalles-niveau", v); partie.reinitialiser(); })),
+    h("div", { class: "rangee", style: "margin-top:8px" }, segment([["montant", "Montant"], ["descendant", "Descendant"], ["ensemble", "Ensemble"]], sens, v => { sens = v; memoire.ecrire("intervalles-sens", v); })),
+    h("p", { class: "astuce", style: "margin:8px 0 0" }, "Facile : tierce majeure, quinte, octave. Chante la première note dans ta tête, puis cherche la chanson qui commence pareil."));
+  partie = entrainement({
+    cle: "intervalles", zone, reglages,
+    tirer: () => ({ valeur: melange(NIVEAUX_INTERVALLES[niveau])[0], base: auHasard(53, 67) }),
+    jouer: q => {
+      const haute = q.base + q.valeur;
+      if (sens === "ensemble") { jouerNote(q.base, 0, 1.6); jouerNote(haute, 0, 1.6); }
+      else if (sens === "descendant") { jouerNote(haute, 0); jouerNote(q.base, 0.7); }
+      else { jouerNote(q.base, 0); jouerNote(haute, 0.7); }
+    },
+    reponses: () => INTERVALLES.filter(i => NIVEAUX_INTERVALLES[niveau].includes(i.n)).map(i => ({ valeur: i.n, libelle: i.nom })),
+    expliquer: q => { const i = INTERVALLES.find(x => x.n === q.valeur); return `${i.nom} : ${i.n} demi-ton${i.n > 1 ? "s" : ""}. Repère : ${i.repere}.`; }
+  });
+  return h("div", null, barre("Intervalles", "oreille"), zone);
+};
+
+KIT.vues.accords = function () {
+  let niveau = memoire.lire("accords-niveau", "triades");
+  const zone = h("div", { class: "jeu" });
+  let partie;
+  const liste = () => niveau === "triades" ? ACCORDS.slice(0, 4) : ACCORDS;
+  const reglages = h("div", { class: "bloc" },
+    segment([["triades", "Accords de 3 notes"], ["septiemes", "Avec les septièmes"]], niveau, v => { niveau = v; memoire.ecrire("accords-niveau", v); partie.reinitialiser(); }),
+    h("p", { class: "astuce", style: "margin:8px 0 0" }, "L'accord est joué note par note, puis plaqué. Commence par trancher : majeur (clair) ou mineur (sombre) ?"));
+  partie = entrainement({
+    cle: "accords", zone, reglages,
+    tirer: () => ({ valeur: melange(liste())[0].nom, base: auHasard(50, 62) }),
+    jouer: q => {
+      const a = ACCORDS.find(x => x.nom === q.valeur);
+      a.notes.forEach((n, k) => jouerNote(q.base + n, k * 0.35, 1));
+      const plaque = a.notes.length * 0.35 + 0.25;
+      a.notes.forEach(n => jouerNote(q.base + n, plaque, 1.8, 0.16));
+    },
+    reponses: () => liste().map(a => ({ valeur: a.nom, libelle: a.nom })),
+    expliquer: q => { const a = ACCORDS.find(x => x.nom === q.valeur); return `${a.nom} : ${a.texte}.`; }
+  });
+  return h("div", null, barre("Accords", "oreille"), zone);
+};
+
+const TEMPOS = [
+  { bpm: 72, style: "trap en demi-tempo (ressenti)" }, { bpm: 88, style: "boom bap" }, { bpm: 95, style: "boom bap rapide" },
+  { bpm: 110, style: "house lente, afro" }, { bpm: 122, style: "house" }, { bpm: 128, style: "techno, tech house" },
+  { bpm: 135, style: "techno rapide" }, { bpm: 142, style: "trap (compté en entier), techno dure" },
+  { bpm: 150, style: "hard techno, schranz classique" }, { bpm: 160, style: "schranz actuelle" }
+];
+KIT.vues.tempo = function () {
+  const zone = h("div", { class: "jeu" });
+  let boucle = null;
+  const arreter = () => { if (boucle) { boucle.forEach(n => { try { n.stop(); } catch (e) { /* déjà fini */ } }); boucle = null; } };
+  KIT.nettoyages.push(arreter);
+  const reglages = h("div", { class: "bloc" }, h("p", { style: "margin:0" }, "Quatre mesures de kick et de charleston. À quel tempo ? Compte les kicks sur 15 secondes et multiplie par 4, ou fie-toi à ton corps."));
+  let choixCourants = [];
+  entrainement({
+    cle: "tempo", zone, reglages,
+    tirer: () => {
+      const cible = melange(TEMPOS)[0];
+      const autres = melange(TEMPOS.filter(t => Math.abs(t.bpm - cible.bpm) >= 12));
+      const pris = [cible];
+      for (const t of autres) { if (pris.length === 4) break; if (pris.every(x => Math.abs(x.bpm - t.bpm) >= 12)) pris.push(t); }
+      choixCourants = pris.sort((a, b) => a.bpm - b.bpm);
+      return { valeur: cible.bpm };
+    },
+    jouer: q => {
+      const c = KIT.audio(); if (!c) return;
+      arreter();
+      const temps = 60 / q.valeur, t0 = c.currentTime + 0.08;
+      boucle = [];
+      for (let k = 0; k < 16; k++) boucle.push(jouerKick(t0 + k * temps, c), jouerCharley(t0 + k * temps + temps / 2, c));
+    },
+    reponses: () => (choixCourants.length ? choixCourants : TEMPOS.slice(0, 4)).map(t => ({ valeur: t.bpm, libelle: `${t.bpm} BPM` })),
+    expliquer: q => { const t = TEMPOS.find(x => x.bpm === q.valeur); return `${t.bpm} BPM : ${t.style}. Une mesure dure ${(240 / t.bpm).toFixed(2).replace(".", ",")} s.`; }
+  });
+  return h("div", null, barre("Devine le tempo", "oreille"), zone);
+};
+
+// Écoute active : tempo tapé au doigt et plan du morceau, pendant que la musique joue dans une autre appli.
+KIT.vues.ecoute = function () {
+  const sauve = memoire.lire("ecoute", { titre: "", bpm: 0, sections: [] });
+  let frappes = [], bpm = sauve.bpm, debut = null, sections = sauve.sections;
+  const affBpm = h("div", { class: "bpm" }, bpm ? String(bpm) : "—");
+  const affMesure = h("p", { class: "muted", style: "text-align:center" });
+  const corps = h("tbody");
+  const chronoDebut = h("span", { class: "valeur" }, "0:00");
+  const titre = h("input", { class: "champ", value: sauve.titre, placeholder: "Titre du morceau", "aria-label": "Titre du morceau", oninput: sauver });
+  function sauver() { memoire.ecrire("ecoute", { titre: titre.value, bpm, sections }); }
+  function majMesure() {
+    affBpm.textContent = bpm ? String(bpm) : "—";
+    affMesure.textContent = bpm ? `1 mesure = ${(240 / bpm).toFixed(2).replace(".", ",")} s · 8 mesures = ${Math.round(1920 / bpm)} s · 16 mesures = ${Math.round(3840 / bpm)} s` : "Tape au moins quatre fois, sur le kick.";
+  }
+  const tap = h("button", { class: "tap", type: "button", onpointerdown: e => {
+    e.preventDefault();
+    const t = performance.now();
+    if (frappes.length && t - frappes[frappes.length - 1] > 2000) frappes = [];
+    frappes.push(t); frappes = frappes.slice(-12);
+    if (frappes.length >= 4) { bpm = Math.round(60000 / ((frappes[frappes.length - 1] - frappes[0]) / (frappes.length - 1))); sauver(); dessinerSections(); }
+    majMesure();
+  } }, "TAP");
+  const NOMS = ["Intro", "Montée", "Breakdown", "Drop", "Couplet", "Refrain", "Pont", "Outro"];
+  function dessinerSections() {
+    corps.replaceChildren(...sections.map((s, k) => {
+      const fin = k + 1 < sections.length ? sections[k + 1].t : null;
+      const longueur = fin == null ? null : fin - s.t;
+      return h("tr", null,
+        h("td", { class: "mono" }, duree(s.t)),
+        h("td", null, h("input", { value: s.nom, list: "noms-sections", "aria-label": "Nom de la section", oninput: e => { s.nom = e.target.value; sauver(); } })),
+        h("td", { class: "mono" }, longueur == null ? "…" : `${Math.round(longueur)} s`),
+        h("td", { class: "mono" }, longueur == null || !bpm ? "" : `≈ ${Math.round(longueur / (240 / bpm))} mes.`));
+    }));
+  }
+  const marquer = h("button", { class: "btn", type: "button", onclick: () => {
+    if (debut == null) return;
+    const t = (Date.now() - debut) / 1000;
+    sections.push({ t, nom: NOMS[Math.min(sections.length, NOMS.length - 1)] }); sauver(); dessinerSections();
+  }, disabled: true }, "＋ Nouvelle section");
+  const lancer = h("button", { class: "btn fantome", type: "button", onclick: () => {
+    debut = Date.now(); sections = [{ t: 0, nom: "Intro" }]; marquer.disabled = false; lancer.textContent = "↺ Recommencer au début"; sauver(); dessinerSections();
+  } }, "▶ Le morceau démarre");
+  const tic = setInterval(() => { if (debut != null) chronoDebut.textContent = duree((Date.now() - debut) / 1000); }, 300);
+  KIT.nettoyages.push(() => clearInterval(tic));
+  majMesure(); dessinerSections();
+  return h("div", null, barre("Écoute active", "oreille"),
+    h("div", { class: "jeu" },
+      h("div", { class: "bloc" },
+        h("p", { style: "margin:0" }, "Lance un morceau dans ton appli de musique (téléchargé avant le vol). Tape le tempo sur le kick, puis appuie sur « Le morceau démarre » au début, et sur « Nouvelle section » à chaque changement : entrée d'un élément, breakdown, retour du kick. Tu verras combien de mesures dure chaque partie, comme dans tes notes d'arrangement.")),
+      titre, tap, affBpm, affMesure,
+      h("div", { class: "infos-jeu" }, h("span", null, "Depuis le début ", chronoDebut), lancer),
+      marquer,
+      h("datalist", { id: "noms-sections" }, NOMS.map(n => h("option", { value: n }))),
+      h("table", { class: "sections-morceau" }, h("thead", null, h("tr", null, h("th", null, "Début"), h("th", null, "Section"), h("th", null, "Durée"), h("th", null, "Mesures"))), corps),
+      h("p", { class: "astuce", style: "margin-top:10px" }, "Repère : en techno, les changements tombent presque toujours toutes les 8, 16 ou 32 mesures. Si tu trouves 15 ou 17, c'est sans doute ton appui qui a glissé.")));
+};
+
+KIT.demarrer();
+</script>
+</body>
+</html>

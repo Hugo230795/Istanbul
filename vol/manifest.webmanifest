@@ -1,0 +1,15 @@
+{
+  "name": "Kit de vol · Istanbul",
+  "short_name": "Kit de vol",
+  "description": "Trois heures de vol sans réseau : turc de survie, quiz Istanbul, jeux, oreille musicale, révisions et étirements.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1f4fa3",
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
