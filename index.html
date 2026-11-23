@@ -1,975 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Plan de visite d'Istanbul pour trois amis, du 11 au 14 novembre 2026.">
-<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Istanbul, 11–14 novembre</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Une invitation t'attend…</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-/* Layout : en-tête sobre, puis un jour par bloc avec une frise horaire à gauche ; infos pratiques en grille à la fin */
-:root {
-  --bg: #f5f7fa;
-  --surface: #ffffff;
-  --ink: #18233a;
-  --muted: #5b6577;
-  --line: #dde3ec;
-  --cobalt: #1f4fa3;     /* bleu d'Iznik */
-  --tile: #c2412d;       /* rouge des faïences */
-  --turq: #138a83;
-  --cobalt-soft: #e6edf9;
-  --tile-soft: #fbebe7;
-  --amber: #b26b12;
-  --water: #d7e4f3;
-  --water-ink: #4f6f9c;
-  --land: #f7f4ee;
-  --shore: #b9c8db;
-  --f-display: "Young Serif", Georgia, serif;
-  --f-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, monospace;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f1522; --surface: #172033; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
-  --cobalt: #7fa6ef; --tile: #f08a74; --turq: #4cc4bb; --cobalt-soft: #1c2a47; --tile-soft: #3a2220;
-  --amber: #e3b25a; --water: #142540; --water-ink: #7f9cc8; --land: #1d2535; --shore: #34425e;
-  color-scheme: dark;
-} }
-:root[data-theme="dark"] {
-  --bg: #0f1522; --surface: #172033; --ink: #e8ecf4; --muted: #9aa5b8; --line: #283349;
-  --cobalt: #7fa6ef; --tile: #f08a74; --turq: #4cc4bb; --cobalt-soft: #1c2a47; --tile-soft: #3a2220;
-  --amber: #e3b25a; --water: #142540; --water-ink: #7f9cc8; --land: #1d2535; --shore: #34425e;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-body {
-  background: var(--bg); color: var(--ink);
-  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 40px 64px;
-}
-.wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px; }
-h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.15; }
-h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); }
-h2 { font-size: 1.7rem; }
-h3 { font-size: 1.1rem; font-family: var(--f-body); font-weight: 600; }
-p { margin: 0; }
-.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tile); }
-header { display: flex; flex-direction: column; gap: 14px; }
-.lede { color: var(--muted); max-width: 62ch; }
-.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.chip { font-size: .85rem; padding: 4px 12px; border-radius: 999px; background: var(--cobalt-soft); color: var(--cobalt); font-weight: 500; }
-.chip.warn { background: var(--tile-soft); color: var(--tile); }
-nav { display: flex; flex-wrap: wrap; gap: 8px; }
-nav a {
-  text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface);
-  padding: 8px 14px; border-radius: 10px; font-size: .9rem; display: flex; gap: 8px; align-items: baseline;
-}
-nav a span { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); }
-nav a:hover, nav a:focus-visible { border-color: var(--cobalt); outline: none; }
+  :root { --rouge:#b3001b; --rouge-fonce:#4a0010; --or:#e8c26a; --or-clair:#ffe7a3; --creme:#fff6e5; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { min-height:100%; }
+  body {
+    font-family:'Playfair Display', Georgia, serif; color:var(--creme);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,200,120,.18), transparent 60%),
+      repeating-linear-gradient(90deg, #5c0014 0 22px, #3d000d 22px 44px);
+    overflow-x:hidden;
+  }
+  /* rideaux */
+  .rideau { position:fixed; top:0; bottom:0; width:50.5vw; z-index:20;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.0) 80%, rgba(0,0,0,.45)),
+      repeating-linear-gradient(90deg, #8a0018 0 3vw, #c4142e 3vw 5vw, #8a0018 5vw 8vw);
+    box-shadow: inset 0 -30px 60px rgba(0,0,0,.5);
+    transition: transform 2.2s cubic-bezier(.7,0,.2,1); }
+  .rideau.g { left:0; border-right:4px solid var(--or); }
+  .rideau.d { right:0; border-left:4px solid var(--or); }
+  body.ouvert .rideau.g { transform:translateX(-102%); }
+  body.ouvert .rideau.d { transform:translateX(102%); }
+  .lambrequin { position:fixed; top:0; left:0; right:0; height:56px; z-index:25;
+    background: radial-gradient(circle at 50% 0, #c4142e 34px, transparent 35px) 0 0/80px 56px repeat-x, #8a0018;
+    border-bottom:3px solid var(--or); box-shadow:0 6px 18px rgba(0,0,0,.6); }
+  .lambrequin::after { content:''; position:absolute; left:0; right:0; bottom:-14px; height:14px;
+    background: radial-gradient(circle at 50% 0, var(--or) 5px, transparent 6px) 0 0/40px 14px repeat-x; }
 
-.day { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px; }
-.day-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 14px; border-bottom: 2px solid var(--cobalt); }
-.day-head .sub { color: var(--muted); }
-.timeline { display: flex; flex-direction: column; }
-.slot { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding-block: 14px; border-bottom: 1px solid var(--line); }
-.slot:last-child { border-bottom: 0; }
-.when { font-family: var(--f-mono); font-size: .8rem; color: var(--cobalt); padding-top: 3px; }
-.what { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.what p { color: var(--muted); }
-.what strong { color: var(--ink); font-weight: 600; }
-.note {
-  font-size: .9rem; padding: 10px 14px; border-radius: 8px;
-  background: var(--tile-soft); color: var(--ink);
-}
-.note b { color: var(--tile); }
+  /* écran d'accueil */
+  .accueil { position:fixed; inset:0; z-index:30; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; gap:1.4rem; padding:2rem;
+    transition: opacity .8s; }
+  body.ouvert .accueil { opacity:0; pointer-events:none; }
+  .accueil p { font-style:italic; font-size:1.25rem; text-shadow:0 2px 8px #000; }
+  .bouton { font-family:'Limelight', serif; font-size:1.3rem; letter-spacing:.08em; color:var(--rouge-fonce);
+    background:linear-gradient(180deg, var(--or-clair), var(--or) 55%, #b98a2e); border:0; border-radius:999px;
+    padding:1rem 2.2rem; cursor:pointer; box-shadow:0 0 0 3px #3d000d, 0 0 0 5px var(--or), 0 10px 30px rgba(0,0,0,.6);
+    animation:pulse 1.8s ease-in-out infinite; }
+  .bouton:focus-visible { outline:3px solid #fff; outline-offset:6px; }
+  @keyframes pulse { 50% { transform:scale(1.06); } }
 
-.practical { display: flex; flex-direction: column; gap: 20px; }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
-.card p, .card li { color: var(--muted); font-size: .95rem; }
-.card ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
-.food { display: flex; flex-wrap: wrap; gap: 8px; }
-.food span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: .88rem; background: var(--surface); }
-.food em { font-style: normal; color: var(--muted); }
-footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+  /* moulin */
+  .moulin { width:120px; height:120px; position:relative; margin:0 auto; }
+  .ailes { position:absolute; inset:0; animation:tourne 7s linear infinite; }
+  .ailes span { position:absolute; left:50%; top:50%; width:16px; height:58px; margin-left:-8px;
+    transform-origin:50% 0; background:repeating-linear-gradient(0deg, var(--or) 0 3px, transparent 3px 9px);
+    border:2px solid var(--or); border-radius:2px; }
+  .ailes span:nth-child(1){transform:rotate(0)} .ailes span:nth-child(2){transform:rotate(90deg)}
+  .ailes span:nth-child(3){transform:rotate(180deg)} .ailes span:nth-child(4){transform:rotate(270deg)}
+  .moulin::after { content:''; position:absolute; left:50%; top:50%; width:14px; height:14px; margin:-7px;
+    border-radius:50%; background:var(--or-clair); box-shadow:0 0 14px var(--or); }
+  @keyframes tourne { to { transform:rotate(360deg); } }
 
-.map-sec { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
-.map-wrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--water); }
-#map { height: 560px; max-height: 75vh; width: 100%; background: var(--water); font-family: var(--f-body); }
-.map-fallback { padding: 24px; color: var(--muted); }
-.mk { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: #fff; font-family: var(--f-mono); font-size: 11px; font-weight: 500; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); box-sizing: border-box; transition: transform .15s; }
-.mk-food { position: relative; display: grid; place-items: center; width: 22px; height: 22px; }
-.mk-food::before { content: ""; position: absolute; width: 15px; height: 15px; background: var(--ink); border: 2px solid var(--surface); border-radius: 3px; transform: rotate(45deg); box-shadow: 0 1px 4px rgba(0,0,0,.35); }
-.mk-food b { position: relative; color: var(--bg); font-family: var(--f-mono); font-size: 10px; font-weight: 500; }
-.mk-hotel { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); font-size: 13px; border: 2.5px solid var(--surface); box-shadow: 0 1px 5px rgba(0,0,0,.4); box-sizing: border-box; }
-.leaflet-marker-icon.on .mk, .leaflet-marker-icon:focus-visible .mk { transform: scale(1.3); }
-.leaflet-marker-icon.on .mk-food::before { border-color: var(--tile); }
-.leaflet-tooltip.mk-lbl { background: transparent; border: 0; box-shadow: none; padding: 0; font-weight: 600; font-size: 12px; color: var(--ink); text-shadow: 0 0 3px var(--bg), 0 0 3px var(--bg), 0 0 3px var(--bg); display: none; }
-.leaflet-tooltip.mk-lbl::before { display: none; }
-.leaflet-tooltip.mk-lbl.hotel { display: block; }
-#map.show-labels .leaflet-tooltip.mk-lbl { display: block; }
-.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
-.leaflet-popup-content { margin: 12px 14px; font-size: .9rem; line-height: 1.45; display: flex; flex-direction: column; gap: 3px; }
-.leaflet-popup-content p { margin: 2px 0 4px; color: var(--muted); }
-.leaflet-popup-content a { color: var(--cobalt); }
-.pp-day { font-family: var(--f-mono); font-size: .72rem; color: var(--tile); }
-.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
-.leaflet-bar a { background: var(--surface); color: var(--ink); border-color: var(--line); }
-.leaflet-control-attribution { font-size: 10px; }
-.filters .sep { width: 1px; background: var(--line); margin: 0 4px; }
-.locate-msg { font-size: .85rem; color: var(--tile); }
-.map-key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .82rem; color: var(--muted); }
-.map-key span { display: inline-flex; align-items: center; gap: 6px; }
-.map-key i { display: inline-block; width: 22px; height: 0; border-top: 4px solid var(--cobalt); }
-.map-key i.ferry { border-top: 3px dashed var(--turq); }
-.map-key i.funi { border-top: 3px dotted var(--muted); }
-@media (max-width: 600px) { #map { height: 440px; } }
-.legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
-.legend h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.legend h3 i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-.legend ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-.legend li { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: baseline; padding: 4px 6px; border-radius: 6px; font-size: .93rem; }
-.legend li.on { background: var(--cobalt-soft); }
-.legend .num { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-.legend button { all: unset; cursor: pointer; min-width: 0; }
-.legend button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 3px; }
-.legend a { font-size: .8rem; color: var(--cobalt); white-space: nowrap; }
-.map-hint { font-size: .85rem; color: var(--muted); }
-.hotel-card { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
-.hotel-card > div { min-width: 0; }
-.hotel-card p { color: var(--muted); font-size: .92rem; }
-.hotel-card a { font-size: .85rem; color: var(--cobalt); white-space: nowrap; }
-.hbadge { width: 30px; height: 30px; border-radius: 7px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); display: grid; place-items: center; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; }
-.filters button { font: inherit; font-size: .9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
-.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.filters button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
-.food-title { margin-top: 12px; }
-.food-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.tier h3 { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
-.price { font-family: var(--f-mono); font-size: .85rem; color: var(--tile); font-weight: 500; }
-.tier ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.tier li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 10px 6px; border-radius: 8px; }
-.tier li.on { background: var(--cobalt-soft); }
-.badge { width: 20px; height: 20px; margin-top: 2px; border-radius: 5px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); font-size: .7rem; display: grid; place-items: center; }
-.r-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.r-body button { all: unset; cursor: pointer; font-weight: 600; }
-.r-body button:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 3px; }
-.r-body p { color: var(--muted); font-size: .9rem; }
-.when-eat { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .04em; color: var(--turq); }
-.r-body a { font-size: .8rem; color: var(--cobalt); }
-.exp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.card label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; color: var(--muted); font-weight: 500; }
-.card input, .card select {
-  font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg);
-  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0;
-}
-.card input:focus-visible, .card select:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 1px; border-color: var(--cobalt); }
-.rate-l { flex: 1 1 100% !important; flex-direction: row !important; align-items: center; flex-wrap: wrap; gap: 8px !important; }
-.rate-l input { width: 7em; font-size: 1rem !important; }
-.hint { font-size: .82rem; color: var(--muted); }
-.conv { flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 12px; }
-.conv label { flex: 1 1 160px; }
-.conv input { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
-.conv-eq { font-size: 1.4rem; color: var(--muted); padding-bottom: 8px; }
-.conv-hint { flex-basis: 100%; }
-.tips ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
-.tips li { color: var(--muted); font-size: .93rem; }
-.tips li strong { color: var(--ink); font-weight: 600; }
-.tips li::marker { color: var(--tile); font-family: var(--f-mono); font-size: .85rem; }
-/* Frise : verticale par défaut (téléphone), horizontale sur une seule rangée sur grand écran */
-.eras { list-style: none; margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 14px; border-left: 2px solid var(--cobalt); margin-left: 5px; }
-.eras li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; position: relative; }
-.eras li::before { content: ""; position: absolute; top: .35em; left: -25px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--cobalt); }
-.eras b { font-family: var(--f-mono); font-size: .8rem; font-weight: 500; color: var(--cobalt); font-variant-numeric: tabular-nums; }
-.eras span { font-size: .88rem; color: var(--muted); min-width: 0; }
-@media (min-width: 820px) {
-  .eras { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; padding: 0; margin-left: 0; border-left: 0; border-top: 2px solid var(--cobalt); }
-  .eras li { display: flex; flex-direction: column; gap: 2px; padding-top: 12px; }
-  .eras li::before { top: -6px; left: 0; }
-}
-.hist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.hist article { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 16px; }
-.hist article:target { border-color: var(--tile); box-shadow: 0 0 0 2px var(--tile-soft); }
-.hist header { display: flex; flex-direction: column; gap: 2px; }
-.hist h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; }
-.hist p { color: var(--muted); font-size: .94rem; max-width: 65ch; }
-.hist p.look { color: var(--ink); background: var(--cobalt-soft); border-radius: 8px; padding: 10px 12px; font-size: .9rem; }
-.hist p.look b { color: var(--cobalt); }
-.hist .to-map { align-self: flex-start; font-size: .85rem; }
-.pp-links { display: flex; gap: 14px; flex-wrap: wrap; }
-@media (max-width: 760px) { .hist { grid-template-columns: 1fr; } }
-.linkish { all: unset; cursor: pointer; color: var(--cobalt); text-decoration: underline; }
-.linkish:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
-.lex { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-.lex div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
-.lex b { font-family: var(--f-display); font-weight: 400; font-size: 1.15rem; color: var(--cobalt); }
-.lex i { font-family: var(--f-mono); font-style: normal; font-size: .78rem; color: var(--tile); }
-.lex span { font-size: .9rem; color: var(--muted); }
-.pack { list-style: none; margin: 0; padding: 0 !important; display: flex; flex-direction: column; gap: 2px !important; }
-.pack label { flex-direction: row; align-items: center; gap: 10px; color: var(--ink); font-size: .95rem; font-weight: 400; padding: 4px 0; cursor: pointer; }
-.pack input { width: 18px; height: 18px; padding: 0; accent-color: var(--cobalt); flex: none; }
-.pack input:checked + span { text-decoration: line-through; color: var(--muted); }
-.facts-list { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: .92rem; }
-.facts-list dt { font-weight: 600; }
-.facts-list dd { margin: 0; color: var(--muted); min-width: 0; }
-.facts-list a, .lex a { color: var(--cobalt); }
-@media (max-width: 760px) { .food-list, .exp-grid { grid-template-columns: 1fr; } }
-@media (max-width: 420px) { .facts-list { grid-template-columns: 1fr; gap: 2px; } .facts-list dd { margin-bottom: 8px; } }
-@media (max-width: 600px) { .legend { grid-template-columns: 1fr; } .hotel-card { grid-template-columns: auto 1fr; } .hotel-card a { grid-column: 2; } }
+  /* scène */
+  main { position:relative; z-index:5; max-width:980px; margin:0 auto; padding:90px 1.2rem 4rem;
+    display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); gap:2.5rem; align-items:center; }
+  .cadre { position:relative; padding:14px; max-width:420px; width:100%; justify-self:center; border-radius:200px 200px 14px 14px;
+    background:linear-gradient(145deg, var(--or-clair), #a87a24 40%, var(--or) 70%, #7a5516);
+    box-shadow:0 25px 60px rgba(0,0,0,.7), 0 0 60px rgba(232,194,106,.25); }
+  .cadre img { display:block; width:100%; border-radius:188px 188px 6px 6px; height:auto; aspect-ratio:3/4; object-fit:cover; object-position:50% 30%; }
+  .ampoules { position:absolute; inset:2px; border-radius:200px 200px 14px 14px; pointer-events:none;
+    border:6px dotted var(--or-clair); filter:drop-shadow(0 0 4px #fff3c0); animation:clignote 1.2s steps(2) infinite; }
+  @keyframes clignote { 50% { border-color:#fff; } }
 
-@media (max-width: 600px) {
-  .slot { grid-template-columns: 1fr; gap: 4px; }
-  .grid { grid-template-columns: 1fr; }
-  body { padding-block: 24px 48px; }
-}
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  .billet { text-align:center; }
+  .sur-titre { font-style:italic; font-size:1.15rem; color:var(--or-clair); letter-spacing:.04em; }
+  h1 { font-family:'Limelight', serif; font-weight:400; font-size:clamp(2.6rem, 8vw, 4.6rem); line-height:1;
+    color:#ff2a3d; margin:.4rem 0 .6rem;
+    text-shadow:0 0 6px #ff6b78, 0 0 18px #ff0022, 0 0 40px #b3001b, 0 3px 0 #3d000d; animation:neon 4s infinite; }
+  @keyframes neon { 0%,92%,100%{opacity:1} 93%{opacity:.4} 95%{opacity:1} 96%{opacity:.6} }
+  .lede { font-size:1.2rem; line-height:1.55; margin:0 auto 1.6rem; max-width:30rem; }
+  .lede strong { color:var(--or-clair); }
+
+  .ticket { position:relative; margin:0 auto; max-width:30rem; color:var(--rouge-fonce);
+    background:linear-gradient(180deg, #fff9ec, #f3e1b8); border-radius:10px; padding:1.4rem 1.4rem 1.2rem;
+    box-shadow:0 15px 40px rgba(0,0,0,.6); border:2px solid var(--or);
+    -webkit-mask: radial-gradient(circle at 0 50%, transparent 14px, #000 15px) left/51% 100% no-repeat,
+                  radial-gradient(circle at 100% 50%, transparent 14px, #000 15px) right/51% 100% no-repeat; }
+  .ticket h2 { font-family:'Limelight', serif; font-weight:400; font-size:1.5rem; color:var(--rouge); margin-bottom:.8rem; letter-spacing:.06em; }
+  .ticket dl { display:grid; grid-template-columns:auto 1fr; gap:.45rem 1rem; text-align:left; font-size:1rem; }
+  .ticket dt { font-weight:700; text-transform:uppercase; font-size:.75rem; letter-spacing:.12em; color:#8a0018; padding-top:.2rem; }
+  .ticket .admit { margin-top:1rem; padding-top:.8rem; border-top:2px dashed #c9a24f; font-family:'Limelight', serif;
+    font-size:1.1rem; letter-spacing:.3em; color:var(--rouge); }
+  .signature { margin-top:1.8rem; font-style:italic; font-size:1.15rem; color:var(--or-clair); }
+
+  .bis { margin-top:1.6rem; background:none; border:1px solid var(--or); color:var(--or-clair); font:inherit;
+    font-style:italic; padding:.5rem 1.2rem; border-radius:999px; cursor:pointer; }
+  .bis:hover { background:rgba(232,194,106,.15); }
+
+  /* plumes et paillettes */
+  .plume { position:fixed; top:-60px; z-index:40; pointer-events:none; font-size:28px; will-change:transform;
+    animation:tombe linear forwards; }
+  @keyframes tombe { to { transform:translate(var(--dx), 115vh) rotate(var(--r)); } }
+
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity 1s, transform 1s; }
+  body.ouvert .reveal { opacity:1; transform:none; }
+  body.ouvert .reveal.t2 { transition-delay:1.6s; } body.ouvert .reveal.t1 { transition-delay:1.1s; }
+
+  @media (max-width:760px) {
+    main { grid-template-columns:1fr; gap:1.8rem; padding-top:80px; }
+    .cadre { max-width:340px; margin:0 auto; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    *, *::before, *::after { animation:none !important; transition-duration:.01s !important; }
+  }
 </style>
-
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Voyage à trois · mer. 11 → sam. 14 nov. 2026</div>
-    <h1>Istanbul en quatre jours</h1>
-    <p class="lede">Un plan à pied, en tram et en ferry, rive européenne puis rive asiatique. Les premier et dernier jours restent légers pour laisser de la place aux vols.</p>
-    <div class="facts">
-      <span class="chip warn" id="countdown">Départ le mercredi 11 novembre</span>
-      <span class="chip">12–17 °C, pluie possible</span>
-      <span class="chip">Coucher du soleil ≈ 16h50</span>
-      <span class="chip">Hôtel : Raymond Old City, Sirkeci</span>
-      <span class="chip">Payer en livres turques</span>
-      <span class="chip warn">Vendredi midi : mosquées fermées</span>
-    </div>
-  </header>
+  <div class="lambrequin" aria-hidden="true"></div>
+  <div class="rideau g" aria-hidden="true"></div>
+  <div class="rideau d" aria-hidden="true"></div>
 
-  <nav aria-label="Jours">
-    <a href="#carte">Carte</a>
-    <a href="#histoire">Histoire</a>
-    <a href="#j1">Sultanahmet <span>mer. 11</span></a>
-    <a href="#j2">Palais et bazars <span>jeu. 12</span></a>
-    <a href="#j3">Rive asiatique <span>ven. 13</span></a>
-    <a href="#j4">Balat et départ <span>sam. 14</span></a>
-    <a href="#pratique">Infos pratiques</a>
-    <a href="#argent-tel">Argent et téléphone</a>
-    <a href="#convertir">Convertisseur</a>
-    <a href="#lexique">Lexique</a>
-    <a href="#valise">Valise</a>
-  </nav>
-
-  <section class="map-sec" id="carte">
-    <div class="day-head">
-      <div class="eyebrow">Les lieux du séjour</div>
-      <h2>Carte</h2>
-      <p class="sub">Ronds numérotés : les visites, une couleur par jour. Losanges : les restaurants. Zoomez pour voir les noms, touchez un point pour sa fiche et son lien Google Maps.</p>
-    </div>
-    <div class="hotel-card">
-      <span class="hbadge">H</span>
-      <div><strong>Raymond Hotel Old City</strong><p>Ebussuud Cd. 22, Sirkeci. Entre la gare de Sirkeci (Marmaray) et l'arrêt de tram Gülhane (T1) : Sultanahmet, Eminönü et le ferry sont à pied.</p></div>
-      <a id="hotel-link" href="https://www.google.com/maps/search/?api=1&amp;query=Raymond%20Hotel%20Old%20City%20Istanbul" target="_blank" rel="noopener">Itinéraire ↗</a>
-    </div>
-    <div class="filters" role="group" aria-label="Afficher sur la carte">
-      <button type="button" data-f="all" aria-pressed="true">Tout</button>
-      <button type="button" data-f="visit" aria-pressed="false">Visites</button>
-      <button type="button" data-f="food" aria-pressed="false">Restaurants</button>
-      <span class="sep" aria-hidden="true"></span>
-      <button type="button" data-v="hotel">Autour de l'hôtel</button>
-      <button type="button" data-v="europe">Rive européenne</button>
-      <button type="button" data-v="kadikoy">Kadıköy</button>
-      <button type="button" data-v="tout">Tout le séjour</button>
-      <button type="button" id="locate">Me localiser</button>
-    </div>
-    <p class="locate-msg" id="locate-msg" aria-live="polite"></p>
-    <div class="map-wrap"><div id="map" role="region" aria-label="Carte d'Istanbul avec les lieux du séjour"></div></div>
-    <div class="map-key">
-      <span><i></i>Tram T1</span>
-      <span><i class="ferry"></i>Ferries vers Kadıköy</span>
-      <span><i class="funi"></i>Funiculaire Kabataş → Taksim</span>
-      <span>Tracés approximatifs, d'après les arrêts.</span>
-    </div>
-    <div class="legend" id="legend"></div>
-    <h2 class="food-title">Où manger</h2>
-    <p class="sub">Du sandwich à quelques euros au dîner gastronomique. Les lettres correspondent aux losanges de la carte.</p>
-    <div class="food-list" id="food-list"></div>
+  <section class="accueil" id="accueil">
+    <div class="moulin" aria-hidden="true"><div class="ailes"><span></span><span></span><span></span><span></span></div></div>
+    <p>Mesdames et messieurs, ce soir la vedette n'est pas celle que vous croyez…</p>
+    <button class="bouton" id="lever">Lever le rideau</button>
   </section>
 
-  <section class="practical" id="histoire">
-    <div class="day-head">
-      <div class="eyebrow">2 700 ans en quatre jours</div>
-      <h2>Histoire des monuments</h2>
-      <p class="sub">De quoi savoir ce que vous regardez. Istanbul a porté trois noms (Byzance, Constantinople, Istanbul) et a été la capitale de deux empires, byzantin puis ottoman, pendant plus de 1 500 ans.</p>
+  <main>
+    <div class="cadre reveal t1">
+      <img src="photo.jpg" alt="La vedette du soir, en costume de plumes rouges, blanches et noires, sur la scène d'un cabaret" width="1792" height="2390">
+      <div class="ampoules" aria-hidden="true"></div>
     </div>
 
-    <ol class="eras" aria-label="Repères chronologiques">
-      <li><b>≈ 660 av. J.-C.</b><span>Des colons grecs fondent Byzance.</span></li>
-      <li><b>330</b><span>Constantin en fait la capitale de l'Empire romain : Constantinople.</span></li>
-      <li><b>532–565</b><span>Justinien : Sainte-Sophie, la Citerne Basilique.</span></li>
-      <li><b>1204</b><span>Les croisés pillent la ville.</span></li>
-      <li><b>1453</b><span>Mehmed II prend la ville : début de l'Istanbul ottomane.</span></li>
-      <li><b>1520–1566</b><span>Soliman le Magnifique et l'architecte Sinan.</span></li>
-      <li><b>1923</b><span>République de Turquie, capitale déplacée à Ankara.</span></li>
-    </ol>
+    <div class="billet reveal t2">
+      <p class="sur-titre">Ce soir, la vedette, c'est toi</p>
+      <h1>Moulin Rouge</h1>
+      <p class="lede">Ton cadeau : <strong>une soirée au Moulin Rouge</strong>, à Paris.
+        Les plumes, les paillettes, le french cancan… Il ne manquait plus que toi sur l'affiche.</p>
 
-    <div class="hist">
-      <article id="h-sophie" data-place="Sainte-Sophie">
-        <header><h3>Sainte-Sophie</h3><span class="when-eat">532–537 · Justinien</span></header>
-        <p>L'empereur Justinien la fait construire en cinq ans seulement, après une révolte qui avait brûlé l'église précédente. Ses architectes, Anthémios de Tralles et Isidore de Milet, posent une coupole d'environ 31 mètres de diamètre qui semble flotter au-dessus des fenêtres. Pendant près de mille ans, c'est la plus grande église de la chrétienté.</p>
-        <p>En 1453, Mehmed II entre dans la ville et la transforme en mosquée : on ajoute des minarets, et les mosaïques sont peu à peu recouvertes. Atatürk en fait un musée en 1934. Elle redevient une mosquée en 2020.</p>
-        <p class="look"><b>À regarder :</b> la mosaïque de la Déisis (le Christ entre Marie et Jean-Baptiste) dans la galerie, et les immenses médaillons calligraphiés du XIX<sup>e</sup> siècle.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-bleue" data-place="Mosquée Bleue">
-        <header><h3>Mosquée Bleue</h3><span class="when-eat">1609–1616 · Ahmet I<sup>er</sup></span></header>
-        <p>Son vrai nom est mosquée du Sultan Ahmet. Le jeune sultan Ahmet I<sup>er</sup> la fait bâtir juste en face de Sainte-Sophie, sur une partie de l'ancien Grand Palais des empereurs byzantins, pour montrer que l'architecture ottomane peut rivaliser avec elle. L'architecte, Sedefkâr Mehmed Ağa, était un élève de Sinan.</p>
-        <p>Elle a six minarets, un nombre rare qui fit scandale à l'époque, selon la tradition, parce que seule la mosquée de La Mecque en avait autant. Ahmet I<sup>er</sup> meurt en 1617, à 27 ans, un an après la fin des travaux. Il est enterré dans le tombeau voisin.</p>
-        <p class="look"><b>À regarder :</b> plus de 20 000 carreaux de faïence d'Iznik, aux motifs de tulipes et d'œillets, dont les tons bleus ont donné son surnom à la mosquée.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-hippodrome" data-place="Hippodrome">
-        <header><h3>Hippodrome</h3><span class="when-eat">III<sup>e</sup>–IV<sup>e</sup> siècle · Constantin</span></header>
-        <p>C'était le stade de Constantinople : des courses de chars devant des dizaines de milliers de spectateurs, avec deux grands clubs rivaux, les Bleus et les Verts. En 532, leurs supporters s'unissent contre Justinien : c'est la sédition Nika. L'armée la réprime dans l'Hippodrome, et l'on parle d'environ 30 000 morts. La ville est en ruines, et c'est pour la reconstruire que Justinien lance Sainte-Sophie.</p>
-        <p>Il ne reste que la « spina », l'axe central autour duquel tournaient les chars, et ses monuments. Les quatre chevaux de bronze qui la décoraient ont été emportés par les croisés en 1204. On peut toujours les voir à Venise, sur la basilique Saint-Marc.</p>
-        <p class="look"><b>À regarder :</b> l'obélisque égyptien de Thoutmosis III, vieux d'environ 3 500 ans, rapporté de Karnak et dressé ici en 390 ; la colonne serpentine, venue de Delphes, qui célébrait une victoire grecque sur les Perses en 479 av. J.-C. ; et la fontaine offerte par l'empereur allemand Guillaume II.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-citerne" data-place="Citerne Basilique">
-        <header><h3>Citerne Basilique</h3><span class="when-eat">532 · Justinien</span></header>
-        <p>C'est un réservoir d'eau souterrain construit sous une grande basilique, d'où son nom. Il est aussi grand qu'un terrain de football, environ 140 mètres sur 70, et ses voûtes reposent sur 336 colonnes. Il alimentait le Grand Palais des empereurs, puis le palais de Topkapı.</p>
-        <p>Les Ottomans finissent par l'oublier. Vers 1545, un savant français, Pierre Gilles, remarque que les habitants du quartier puisent de l'eau et pêchent des poissons par des trous dans leur sol, et c'est ainsi qu'il la redécouvre. On la voit dans le film de James Bond <i>Bons baisers de Russie</i> (1963).</p>
-        <p class="look"><b>À regarder :</b> les deux têtes de Méduse, réutilisées comme socles de colonnes, l'une posée de côté et l'autre à l'envers, et la « colonne qui pleure », couverte de motifs en forme de larmes.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-topkapi" data-place="Palais de Topkapı">
-        <header><h3>Palais de Topkapı</h3><span class="when-eat">1459–1478 · Mehmed II</span></header>
-        <p>Juste après la conquête, Mehmed II fait construire son palais sur la pointe de la vieille ville, entre la Corne d'Or, le Bosphore et la mer de Marmara. Pendant près de 400 ans, c'est à la fois la maison du sultan et le siège du gouvernement de l'Empire ottoman. Jusqu'à 4 000 personnes y vivaient.</p>
-        <p>En 1856, le sultan Abdülmecid I<sup>er</sup> part pour le palais de Dolmabahçe, plus européen. Topkapı devient un musée en 1924, au début de la République.</p>
-        <p class="look"><b>À regarder :</b> le Harem, où vivaient la mère du sultan, ses épouses et ses enfants ; le Trésor, avec la dague de Topkapı et le diamant du Marchand de cuillères ; et les reliques sacrées, dont un manteau attribué au Prophète.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-bazar" data-place="Grand Bazar">
-        <header><h3>Grand Bazar</h3><span class="when-eat">1455–1461 · Mehmed II</span></header>
-        <p>Tout part d'une halle en pierre, le « bedesten », que Mehmed II fait construire pour mettre à l'abri les marchandises de valeur. Les boutiques s'installent tout autour, puis on couvre les rues. Le bazar grandit ainsi sous Soliman et devient l'un des plus grands marchés couverts du monde : une soixantaine de rues et environ 4 000 boutiques.</p>
-        <p>Il a souvent été frappé par des incendies et des tremblements de terre, notamment en 1766 et en 1894, et à chaque fois reconstruit. Les métiers restaient regroupés par rue, et beaucoup de rues portent encore le nom de ceux qui y travaillaient : bijoutiers, fabricants de bonnets, tisserands…</p>
-        <p class="look"><b>À regarder :</b> le vieux bedesten (Cevahir Bedesteni), au centre, et les « han », des cours d'ateliers cachées autour du bazar. Celle de Büyük Valide Han a un toit d'où l'on voit toute la ville.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-epices" data-place="Bazar aux épices">
-        <header><h3>Bazar aux épices</h3><span class="when-eat">vers 1660 · Turhan Sultan</span></header>
-        <p>Il fait partie du complexe de la Nouvelle Mosquée (Yeni Cami), commencée en 1597 par Safiye Sultan, la mère d'un sultan. Les travaux s'arrêtent à sa mort et ne reprennent qu'un demi-siècle plus tard, avec une autre sultane mère, Turhan Hatice. Les loyers des boutiques servaient à financer l'entretien de la mosquée.</p>
-        <p>En turc, on l'appelle Mısır Çarşısı, le « bazar égyptien », car les épices arrivaient d'Égypte, et une partie de son financement aussi, selon l'explication la plus courante.</p>
-        <p class="look"><b>À regarder :</b> la Nouvelle Mosquée, juste à côté, et derrière elle le petit marché aux plantes et aux oiseaux.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-suleymaniye" data-place="Mosquée Süleymaniye">
-        <header><h3>Mosquée Süleymaniye</h3><span class="when-eat">1550–1557 · Soliman et Sinan</span></header>
-        <p>C'est le chef-d'œuvre de Mimar Sinan, le plus grand architecte ottoman, pour le sultan Soliman le Magnifique, à l'apogée de l'empire. La mosquée était entourée de tout un quartier d'utilité publique : écoles coraniques, hôpital, cuisine qui nourrissait les pauvres, hammam et caravansérail.</p>
-        <p>Selon la tradition, ses quatre minarets rappellent que Soliman est le quatrième sultan à régner depuis Istanbul, et leurs dix balcons qu'il est le dixième sultan ottoman.</p>
-        <p class="look"><b>À regarder :</b> les tombeaux de Soliman et de sa femme Hürrem (Roxelane) dans le jardin. Sinan est enterré tout près, au coin de la rue, dans un tombeau modeste qu'il a lui-même dessiné.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-galata" data-place="Tour de Galata">
-        <header><h3>Tour de Galata</h3><span class="when-eat">1348 · les Génois</span></header>
-        <p>De l'autre côté de la Corne d'Or, Galata était une colonie de marchands génois, avec ses propres remparts. En 1348, ils construisent cette tour d'environ 67 mètres au point le plus haut de leur enceinte. Ils l'appellent la tour du Christ.</p>
-        <p>Les Ottomans s'en servent ensuite comme prison, puis comme tour de guet contre les incendies, très fréquents dans une ville en bois. Une légende raconte qu'au XVII<sup>e</sup> siècle, Hezârfen Ahmed Çelebi s'en serait élancé avec des ailes pour atterrir de l'autre côté du Bosphore, à Üsküdar.</p>
-        <p class="look"><b>À regarder :</b> le panorama depuis le balcon du haut, et les petites rues en pente qui descendent vers Karaköy.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-istiklal" data-place="Rue İstiklal">
-        <header><h3>Rue İstiklal</h3><span class="when-eat">XIX<sup>e</sup> siècle · Péra</span></header>
-        <p>Au XIX<sup>e</sup> siècle, c'est la « Grande Rue de Péra », le quartier européen de la ville, avec les ambassades, les passages couverts, les cafés et les théâtres. On y parlait grec, arménien, italien et français autant que turc. Elle prend le nom d'İstiklal, « indépendance », en 1923, pour célébrer la victoire de la guerre d'indépendance.</p>
-        <p>À son extrémité sud, le Tünel, un petit funiculaire ouvert en 1875, est le deuxième plus vieux métro souterrain du monde après celui de Londres.</p>
-        <p class="look"><b>À regarder :</b> le tramway rouge, le passage aux Fleurs (Çiçek Pasajı), le lycée de Galatasaray et le Palais de France, l'ancienne ambassade de France.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-taksim" data-place="Place Taksim">
-        <header><h3>Place Taksim</h3><span class="when-eat">1732 · le réservoir</span></header>
-        <p>« Taksim » veut dire « partage » : ici se trouvait le réservoir de pierre, construit au XVIII<sup>e</sup> siècle, qui répartissait vers les quartiers l'eau des aqueducs venant du nord. Le petit bâtiment existe toujours, à l'angle de la place.</p>
-        <p>Au centre, le monument de la République (1928) montre Atatürk et les fondateurs de la Turquie moderne. La place est aussi le lieu des grands rassemblements, comme les manifestations du parc Gezi en 2013.</p>
-        <p class="look"><b>À regarder :</b> le monument, et la mosquée de Taksim, inaugurée en 2021.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-kadikoy" data-place="Embarcadère de Kadıköy">
-        <header><h3>Kadıköy, l'ancienne Chalcédoine</h3><span class="when-eat">≈ 685 av. J.-C.</span></header>
-        <p>Kadıköy est plus vieille que Byzance : des colons grecs de Mégare y fondent Chalcédoine une vingtaine d'années avant que d'autres ne fondent Byzance sur la rive d'en face. Selon l'historien Hérodote, un général perse les trouva « aveugles » d'avoir choisi cette rive plutôt que le site magnifique d'en face.</p>
-        <p>En 451, un grand concile chrétien s'y tient et fixe un point de doctrine sur la nature du Christ qui divise encore certaines Églises. Aujourd'hui, c'est le quartier étudiant et branché de la rive asiatique.</p>
-        <p class="look"><b>À regarder :</b> depuis le ferry, la gare de Haydarpaşa (1908), un château néo-allemand posé sur l'eau. C'était le terminus asiatique de la ligne Berlin–Bagdad.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-balat" data-place="Balat et Fener">
-        <header><h3>Balat et Fener</h3><span class="when-eat">XV<sup>e</sup>–XIX<sup>e</sup> siècle</span></header>
-        <p>Ce sont les quartiers des minorités religieuses de l'empire. Fener est le cœur grec orthodoxe : le Patriarcat œcuménique, l'équivalent du Vatican pour une partie des orthodoxes, y siège depuis 1601. Balat a accueilli les Juifs séfarades chassés d'Espagne en 1492, que le sultan Bayezid II avait invités dans l'empire.</p>
-        <p>Les familles grecques et juives sont presque toutes parties au XX<sup>e</sup> siècle, ce qui explique les maisons colorées un peu décrépites, aujourd'hui rénovées une à une.</p>
-        <p class="look"><b>À regarder :</b> la grande école rouge du Phanar, sur la colline ; l'église bulgare Saint-Étienne, entièrement en fonte, préfabriquée à Vienne et livrée par bateau à la fin du XIX<sup>e</sup> siècle ; et la synagogue Ahrida, l'une des plus anciennes de la ville.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-
-      <article id="h-ortakoy" data-place="Ortaköy">
-        <header><h3>Mosquée d'Ortaköy</h3><span class="when-eat">1854–1856 · Abdülmecid I<sup>er</sup></span></header>
-        <p>Son vrai nom est mosquée Büyük Mecidiye. Elle a été construite pour le sultan Abdülmecid I<sup>er</sup> par la famille Balyan, des architectes arméniens qui ont aussi bâti le palais de Dolmabahçe. Elle a de grandes fenêtres et un style néo-baroque : on est en plein XIX<sup>e</sup> siècle, quand l'empire s'inspire de l'Europe.</p>
-        <p>Ortaköy était un village où cohabitaient une mosquée, une église orthodoxe et une synagogue, à quelques rues l'une de l'autre. Le pont du Bosphore, juste au-dessus, a été inauguré en 1973 pour les 50 ans de la République. C'était le premier pont sur le Bosphore.</p>
-        <p class="look"><b>À regarder :</b> la mosquée avec le pont derrière, la photo classique d'Istanbul, surtout de nuit.</p>
-        <button type="button" class="linkish to-map">Voir sur la carte</button>
-      </article>
-    </div>
-    <p class="hint">Les dates et les chiffres sont arrondis comme dans les guides. Les éléments qui relèvent de la tradition ou de la légende sont indiqués comme tels.</p>
-  </section>
-
-  <section class="day" id="j1">
-    <div class="day-head">
-      <div class="eyebrow">Mercredi 11 novembre</div>
-      <h2>Sultanahmet, le cœur historique</h2>
-      <p class="sub">Tout se fait à pied, dans un rayon d'environ 500 m.</p>
-    </div>
-    <div class="timeline">
-      <div class="slot"><div class="when">Arrivée</div><div class="what"><h3>Aéroport → hôtel</h3><p>L'hôtel est à Sirkeci. Depuis IST (1 h–1 h 30) : bus Havaist direction Sultanahmet. Depuis SAW : métro M4 jusqu'à Ayrılık Çeşmesi, puis Marmaray jusqu'à Sirkeci, à deux pas de l'hôtel. Achetez l'Istanbulkart dès l'aéroport.</p></div></div>
-      <div class="slot"><div class="when">Après-midi</div><div class="what"><h3>Sainte-Sophie</h3><p>Environ 25 € pour les visiteurs étrangers, accès à la galerie du haut seulement. Moins de monde en fin de journée.</p></div></div>
-      <div class="slot"><div class="when">Après-midi</div><div class="what"><h3>Mosquée Bleue et Hippodrome</h3><p>Entrée gratuite, fermée pendant les prières. L'Hippodrome est juste à côté, avec l'obélisque égyptien.</p></div></div>
-      <div class="slot"><div class="when">Fin d'aprèm</div><div class="what"><h3>Citerne Basilique</h3><p>Souterraine, éclairée, avec les deux têtes de Méduse. Parfait quand la nuit tombe à 17 h.</p></div></div>
-      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Karaköy</h3><p>Évitez les restaurants à rabatteurs de Sultanahmet. <strong>Tram T1, 10 min</strong> jusqu'à Karaköy pour dîner et boire un verre.</p></div></div>
-    </div>
-  </section>
-
-  <section class="day" id="j2">
-    <div class="day-head">
-      <div class="eyebrow">Jeudi 12 novembre</div>
-      <h2>Palais et bazars</h2>
-      <p class="sub">La journée la plus chargée, en descente vers la Corne d'Or.</p>
-    </div>
-    <div class="timeline">
-      <div class="slot"><div class="when">Ouverture</div><div class="what"><h3>Palais de Topkapı</h3><p>Comptez 2 à 3 h. Fermé le mardi, donc aucun souci un jeudi. Le Harem vaut le supplément.</p></div></div>
-      <div class="slot"><div class="when">Midi</div><div class="what"><h3>Grand Bazar</h3><p>Fermé le dimanche. On négocie : commencez vers la moitié du prix annoncé et restez souriants.</p></div></div>
-      <div class="slot"><div class="when">Début d'aprèm</div><div class="what"><h3>Bazar aux épices et Eminönü</h3><p>Descendez à pied à travers les ruelles marchandes. <strong>Balık ekmek</strong> (sandwich au poisson) au bord de l'eau.</p></div></div>
-      <div class="slot"><div class="when">≈ 16h30</div><div class="what"><h3>Mosquée Süleymaniye au coucher du soleil</h3><p>La plus belle vue sur la Corne d'Or, et bien moins de monde qu'à la Mosquée Bleue.</p></div></div>
-      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Galata, İstiklal, Cihangir</h3><p>La tour de Galata illuminée, la grande rue piétonne, puis rooftops et bars de Karaköy et Cihangir.</p></div></div>
-    </div>
-  </section>
-
-  <section class="day" id="j3">
-    <div class="day-head">
-      <div class="eyebrow">Vendredi 13 novembre</div>
-      <h2>Rive asiatique</h2>
-      <p class="sub">Le jour idéal pour traverser : pas de mosquées à visiter le vendredi midi.</p>
-    </div>
-    <div class="timeline">
-      <div class="slot"><div class="when">Matin</div><div class="what"><h3>Ferry Eminönü → Kadıköy</h3><p>20 minutes sur le Bosphore pour le prix d'un ticket de transport. C'est la meilleure croisière de la ville.</p></div></div>
-      <div class="slot"><div class="when">Journée</div><div class="what"><h3>Kadıköy et Moda</h3><p>Le marché, les cafés, les friperies, puis la promenade de Moda au bord de l'eau.</p></div></div>
-      <div class="slot"><div class="when">Soir</div><div class="what"><h3>Rue Kadife (« Barlar Sokağı »)</h3><p>Le vendredi soir, c'est le quartier le plus vivant pour votre âge, plus local et moins cher que Taksim.</p></div></div>
-      <div class="slot"><div class="when">Nuit</div><div class="what"><h3>Retour en ferry de nuit</h3><p>La ville illuminée depuis l'eau.</p><p class="note"><b>Vérifiez l'heure du dernier ferry</b> avant de vous installer au bar. À défaut : Marmaray (train sous le Bosphore) ou taxi via l'application.</p></div></div>
-    </div>
-  </section>
-
-  <section class="day" id="j4">
-    <div class="day-head">
-      <div class="eyebrow">Samedi 14 novembre</div>
-      <h2>Balat et départ</h2>
-      <p class="sub">À adapter à l'heure du vol.</p>
-    </div>
-    <div class="timeline">
-      <div class="slot"><div class="when">Matin</div><div class="what"><h3>Kahvaltı à Balat ou Fener</h3><p>Le grand petit-déjeuner turc, puis les rues pentues aux maisons colorées. Idéal pour les photos.</p></div></div>
-      <div class="slot"><div class="when">Si le temps le permet</div><div class="what"><h3>Ortaköy et Bebek</h3><p>Un kumpir (pomme de terre garnie) au pied de la mosquée et du pont, puis balade le long du Bosphore.</p></div></div>
-      <div class="slot"><div class="when">Départ</div><div class="what"><h3>Direction l'aéroport</h3><p class="note"><b>Partez tôt.</b> Comptez 1 h à 1 h 30 pour IST, plus avec la circulation du samedi.</p></div></div>
-    </div>
-  </section>
-
-  <section class="practical" id="pratique">
-    <div class="day-head">
-      <div class="eyebrow">À savoir</div>
-      <h2>Infos pratiques</h2>
-    </div>
-    <div class="grid">
-      <div class="card"><h3>Transports</h3><ul>
-        <li>Istanbulkart : une seule carte peut payer pour plusieurs personnes (tram, métro, ferry).</li>
-        <li>Une carte par personne si vous comptez vous séparer.</li>
-        <li>Taxis via BiTaksi ou Uber, pour éviter les compteurs « en panne ».</li>
-      </ul></div>
-      <div class="card"><h3>Arnaques classiques</h3><ul>
-        <li>Le cireur qui laisse tomber sa brosse devant vous.</li>
-        <li>L'inconnu sympa qui vous emmène dans « un bar qu'il connaît » à Taksim : l'addition se chiffre en centaines d'euros.</li>
-        <li>Refusez poliment et continuez votre chemin.</li>
-      </ul></div>
-      <div class="card"><h3>Mosquées</h3><ul>
-        <li>Épaules et genoux couverts.</li>
-        <li>Cheveux couverts pour les femmes (foulards souvent prêtés à l'entrée).</li>
-        <li>Chaussures retirées, fermeture pendant les prières.</li>
-      </ul></div>
-      <div class="card"><h3>Budget</h3><ul>
-        <li>Les prix ont beaucoup augmenté et les grands sites sont chers.</li>
-        <li>Payez en livres turques plutôt qu'en euros : le taux est meilleur.</li>
-        <li>Retirez dans les distributeurs des banques, pas dans les bureaux de change de rue.</li>
-      </ul></div>
-    </div>
-    <h3>À goûter</h3>
-    <div class="food">
-      <span>Simit <em>· pain au sésame</em></span>
-      <span>Pide <em>· pizza turque</em></span>
-      <span>Lahmacun</span>
-      <span>Balık ekmek</span>
-      <span>Kokoreç <em>· si vous osez</em></span>
-      <span>Kumpir</span>
-      <span>Baklava <em>· Karaköy Güllüoğlu</em></span>
-      <span>Çay <em>· partout, tout le temps</em></span>
-    </div>
-  </section>
-
-  <section class="practical" id="argent-tel">
-    <div class="day-head">
-      <div class="eyebrow">Avant de partir</div>
-      <h2>Argent et téléphone</h2>
-      <p class="sub">Les deux postes où l'on perd le plus d'argent sans s'en rendre compte. Dans chaque carte, les solutions sont classées de la meilleure à la moins bonne.</p>
-    </div>
-    <div class="exp-grid">
-      <div class="card tips">
-        <h3>Payer sans frais de change</h3>
-        <ol>
-          <li><strong>Partez avec une carte sans frais hors zone euro.</strong> Les néobanques et la plupart des banques en ligne ne prennent rien sur les paiements, ou très peu. Une banque classique prend souvent 2 à 3 % par paiement, plus 2 à 5 € par retrait. Vérifiez dans votre appli bancaire avant de partir.</li>
-          <li><strong>Payez et retirez toujours en livres turques.</strong> Quand le terminal ou le distributeur propose « payer en euros » ou un taux « garanti », refusez et choisissez TRY ou « sans conversion ». Ce taux de conversion dynamique est presque toujours mauvais.</li>
-          <li><strong>Retirez dans une banque publique, en agence.</strong> Ziraat, VakıfBank ou Halkbank sont souvent les moins chères. Évitez les distributeurs isolés et les Euronet. Regardez les frais affichés avant de valider.</li>
-          <li><strong>Faites un seul gros retrait pour trois</strong> plutôt que trois petits : les frais fixes ne sont payés qu'une fois.</li>
-          <li><strong>Pour changer des euros en espèces</strong>, choisissez un bureau de change (« döviz ») du centre. Il y en a beaucoup autour de Sirkeci et du Grand Bazar. Comparez l'écart entre le prix d'achat et de vente affiché. Évitez l'aéroport et l'hôtel, et ne changez pas en France.</li>
-          <li><strong>Ne changez que ce dont vous avez besoin.</strong> Revendre des livres en euros au retour fait perdre de l'argent.</li>
-        </ol>
-      </div>
-      <div class="card tips">
-        <h3>Internet sur place</h3>
-        <ol>
-          <li><strong>Regardez d'abord votre forfait.</strong> Plusieurs forfaits français incluent la Turquie : 35 Go chez Free (forfait à 19,99 € et Free Max), et certains forfaits « Voyage » chez Orange, SFR, Sosh ou B&amp;You. Sinon, coupez les données à l'étranger : hors forfait, c'est hors de prix.</li>
-          <li><strong>Sinon, une eSIM achetée en France avant de partir.</strong> Airalo, Saily et Holafly en vendent, par exemple. Comptez environ 5 € pour 1 Go et 30 € pour 20 Go. <strong>Installez-la avant le vol</strong> : plusieurs de ces sites sont bloqués depuis la Turquie. Il faut un téléphone compatible eSIM et désimlocké.</li>
-          <li><strong>Une seule connexion pour trois.</strong> Si l'un de vous a un bon forfait, il peut partager sa connexion aux deux autres pendant les sorties.</li>
-          <li><strong>Dernier recours : la SIM Turkcell.</strong> Son pack touriste coûte environ 1 800 ₺ (à peu près 32 €) pour 20 Go. Elle s'achète en boutique avec un passeport. C'est cher et long pour 4 jours.</li>
-        </ol>
-        <p class="hint">Les prix et quotas changent souvent : vérifiez-les sur le site de l'opérateur avant d'acheter.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="practical" id="convertir">
-    <div class="day-head">
-      <div class="eyebrow">Au bazar</div>
-      <h2>Convertisseur</h2>
-    </div>
-    <div class="card conv">
-      <label for="rate" class="rate-l">Taux : 1 € = <input id="rate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="?"> ₺</label>
-      <label for="c-try">Livres turques<input id="c-try" type="number" min="0" step="1" inputmode="decimal" placeholder="1000"></label>
-      <span class="conv-eq" aria-hidden="true">⇄</span>
-      <label for="c-eur">Euros<input id="c-eur" type="number" min="0" step="0.01" inputmode="decimal"></label>
-      <p class="hint conv-hint"><span id="c-hint" aria-live="polite">Récupération du taux du jour…</span> <button type="button" class="linkish" id="c-auto" hidden>Reprendre le taux automatique</button></p>
-    </div>
-  </section>
-
-  <section class="practical" id="lexique">
-    <div class="day-head">
-      <div class="eyebrow">Parler un peu turc</div>
-      <h2>Lexique de survie</h2>
-      <p class="sub">La prononciation est écrite à la française. En turc, « c » se dit « dj », « ç » « tch », « ş » « ch », et « ı » est un « eu » bref.</p>
-    </div>
-    <div class="lex">
-      <div><b>Merhaba</b><i>mèr-ha-ba</i><span>Bonjour</span></div>
-      <div><b>Teşekkürler</b><i>té-ché-ku-lèr</i><span>Merci</span></div>
-      <div><b>Lütfen</b><i>lut-fèn</i><span>S'il vous plaît</span></div>
-      <div><b>Evet / Hayır</b><i>é-vèt / ha-yeur</i><span>Oui / Non</span></div>
-      <div><b>Üç kişi</b><i>utch ki-chi</i><span>Trois personnes (au restaurant)</span></div>
-      <div><b>Ne kadar?</b><i>né ka-dar</i><span>Combien ?</span></div>
-      <div><b>Çok pahalı</b><i>tchok pa-ha-leu</i><span>Trop cher (au bazar)</span></div>
-      <div><b>Hesap, lütfen</b><i>hé-sap lut-fèn</i><span>L'addition, s'il vous plaît</span></div>
-      <div><b>Nerede?</b><i>né-ré-dé</i><span>Où est… ? (Tuvalet nerede? : où sont les toilettes ?)</span></div>
-      <div><b>Afiyet olsun</b><i>a-fi-yèt ol-soun</i><span>Bon appétit</span></div>
-      <div><b>Şerefe!</b><i>ché-ré-fé</i><span>Santé !</span></div>
-      <div><b>Çok güzel</b><i>tchok gu-zèl</i><span>Très beau, très bon</span></div>
-      <div><b>Bir, iki, üç</b><i>bir, i-ki, utch</i><span>Un, deux, trois</span></div>
-      <div><b>Hoşça kal</b><i>hoch-tcha kal</i><span>Au revoir</span></div>
-    </div>
-  </section>
-
-  <section class="practical" id="valise">
-    <div class="day-head">
-      <div class="eyebrow">Avant de partir</div>
-      <h2>Valise et formalités</h2>
-      <p class="sub">La liste est cochée sur votre téléphone seulement : chacun suit sa propre valise.</p>
-    </div>
-    <div class="exp-grid">
-      <div class="card">
-        <h3>À emporter <span class="price" id="pack-count"></span></h3>
-        <ul class="pack" id="pack"></ul>
-      </div>
-      <div class="card">
-        <h3>Bon à savoir</h3>
-        <dl class="facts-list">
-          <dt>Papiers</dt><dd>Carte d'identité ou passeport en cours de validité, pas de visa pour les Français (séjour de moins de 90 jours). À confirmer sur <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/turquie/" target="_blank" rel="noopener">Conseils aux voyageurs</a>.</dd>
-          <dt>Heure</dt><dd>+2 h par rapport à la France en novembre.</dd>
-          <dt>Prises</dt><dd>Les mêmes qu'en France, pas besoin d'adaptateur.</dd>
-          <dt>Téléphone</dt><dd>La Turquie est hors UE : vérifiez votre forfait ou prenez une eSIM avant le vol (voir <a href="#argent-tel">Argent et téléphone</a>).</dd>
-          <dt>Argent</dt><dd>La carte passe presque partout. Gardez des espèces en livres pour la street food, les bazars et les petits pourboires (5 à 10 % au restaurant).</dd>
-          <dt>Eau</dt><dd>Préférez l'eau en bouteille.</dd>
-          <dt>Urgences</dt><dd>Composez le 112. Consulat général de France : <a href="https://istanbul.consulfrance.org/" target="_blank" rel="noopener">istanbul.consulfrance.org</a>, sur İstiklal.</dd>
+      <div class="ticket" role="group" aria-label="Billet d'invitation">
+        <h2>Invitation</h2>
+        <dl>
+          <dt>Spectacle</dt><dd>La revue du Moulin Rouge, avec ses danseuses et son cancan</dd>
+          <dt>Lieu</dt><dd>82, boulevard de Clichy, Paris 18<sup>e</sup><br><small>Métro Blanche (ligne 2)</small></dd>
+          <dt>Date</dt><dd>À choisir ensemble</dd>
+          <dt>Tenue</dt><dd>Élégante (les plumes sont facultatives)</dd>
         </dl>
+        <p class="admit">Admis · Admis</p>
       </div>
+
+      <p class="signature">Avec tout notre amour</p>
+      <button class="bis" id="bis">Encore une pluie de plumes !</button>
     </div>
-  </section>
+  </main>
 
-  <footer>Les horaires et tarifs changent souvent : vérifiez-les sur les sites officiels la veille de chaque visite.</footer>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-(function () {
-  const days = [
-    { id: 1, name: "Mer. 11 · Sultanahmet", color: "var(--cobalt)" },
-    { id: 2, name: "Jeu. 12 · Palais et bazars", color: "var(--tile)" },
-    { id: 3, name: "Ven. 13 · Rive asiatique", color: "var(--turq)" },
-    { id: 4, name: "Sam. 14 · Balat et départ", color: "var(--amber)" }
-  ];
-  // [jour, nom, lat, lon, recherche Google Maps, description]
-  const places = [
-    [1, "Sainte-Sophie", 41.0086, 28.9802, "Hagia Sophia Istanbul", "Environ 25 €, galerie du haut seulement pour les visiteurs étrangers."],
-    [1, "Mosquée Bleue", 41.0054, 28.9768, "Blue Mosque Istanbul", "Gratuite, fermée pendant les prières. Tenue couvrante."],
-    [1, "Hippodrome", 41.0063, 28.9752, "Hippodrome of Constantinople", "La grande place, avec l'obélisque égyptien et la colonne serpentine."],
-    [1, "Citerne Basilique", 41.0084, 28.9779, "Basilica Cistern", "Réservoir souterrain byzantin et ses deux têtes de Méduse."],
-    [1, "Karaköy", 41.0242, 28.9773, "Karaköy Istanbul", "Quartier des bars et des cafés, au pied de Galata."],
-    [2, "Palais de Topkapı", 41.0115, 28.9834, "Topkapi Palace", "2 à 3 heures. Fermé le mardi. Le Harem vaut le supplément."],
-    [2, "Grand Bazar", 41.0107, 28.9681, "Grand Bazaar Istanbul", "Fermé le dimanche. On négocie, en partant de la moitié du prix."],
-    [2, "Bazar aux épices", 41.0165, 28.9705, "Spice Bazaar Istanbul", "Épices, loukoums et thés, à côté de la mosquée Yeni Cami."],
-    [2, "Balık ekmek d'Eminönü", 41.0176, 28.9718, "Eminönü balık ekmek", "Le sandwich au poisson grillé sur les bateaux du quai."],
-    [2, "Mosquée Süleymaniye", 41.0162, 28.9639, "Süleymaniye Mosque", "La plus belle vue sur la Corne d'Or, au coucher du soleil."],
-    [2, "Tour de Galata", 41.0256, 28.9742, "Galata Tower", "Belle de l'extérieur la nuit. La montée est payante et souvent longue."],
-    [2, "Rue İstiklal", 41.0335, 28.9779, "Istiklal Avenue", "La grande rue piétonne, avec son tramway rouge."],
-    [2, "Place Taksim", 41.0369, 28.9850, "Taksim Square", "Le bout d'İstiklal, et le quartier de la vie nocturne."],
-    [2, "Cihangir", 41.0315, 28.9830, "Cihangir Istanbul", "Rues calmes, cafés et petits bars de quartier."],
-    [3, "Embarcadère de Kadıköy", 40.9925, 29.0230, "Kadıköy İskelesi", "Arrivée du ferry depuis Eminönü ou Karaköy."],
-    [3, "Marché de Kadıköy", 40.9897, 29.0262, "Kadıköy Çarşı", "Poissonniers, fromages, épiceries fines et street food."],
-    [3, "Rue Kadife (Barlar Sokağı)", 40.9867, 29.0285, "Kadife Sokak Kadıköy", "La rue des bars, la plus animée le vendredi soir."],
-    [3, "Moda", 40.9815, 29.0258, "Moda Sahili", "Promenade au bord de l'eau, idéale au coucher du soleil."],
-    [4, "Balat et Fener", 41.0296, 28.9495, "Balat Istanbul", "Maisons colorées, rues pentues et petits-déjeuners turcs."],
-    [4, "Ortaköy", 41.0473, 29.0270, "Ortaköy Mosque", "La mosquée au pied du pont, et le kumpir des stands."],
-    [4, "Bebek", 41.0770, 29.0435, "Bebek Istanbul", "Balade chic le long du Bosphore, cafés en terrasse."]
-  ];
-  const hotel = { name: "Raymond Hotel Old City", addr: "Ebussuud Cd. 22, Sirkeci", lat: 41.0140, lon: 28.9772, q: "Raymond Hotel Old City Istanbul" };
-  const tiers = [
-    { id: "pouce", name: "Sur le pouce", price: "₺" },
-    { id: "resto", name: "Restaurant", price: "₺₺" },
-    { id: "chic", name: "Plus chic", price: "₺₺₺" }
-  ];
-  // [lettre, gamme, nom, lat, lon, description, recherche Google Maps, à caser quand]
-  const food = [
-    ["A", "pouce", "Tarihi Sultanahmet Köftecisi Selim Usta", 41.0081, 28.9764, "Köfte (boulettes grillées) et salade de haricots blancs, une institution depuis 1920.", "Tarihi Sultanahmet Köftecisi Selim Usta", "Mer. 11, entre deux visites"],
-    ["B", "pouce", "Hafız Mustafa 1864", 41.0157, 28.9763, "Baklava, loukoums et thé, à deux minutes de l'hôtel.", "Hafız Mustafa 1864 Sirkeci", "N'importe quand"],
-    ["C", "pouce", "Vefa Bozacısı", 41.0163, 28.9580, "La boza, boisson d'hiver au millet fermenté avec cannelle et pois chiches grillés. Novembre est la saison.", "Vefa Bozacısı", "Jeu. 12, près de Süleymaniye"],
-    ["D", "pouce", "Dürümzade", 41.0349, 28.9804, "Dürüm adana ou au foie, ouvert tard. Parfait avant ou après les bars.", "Dürümzade Beyoğlu", "Jeu. 12, soir"],
-    ["E", "pouce", "Kızılkayalar", 41.0366, 28.9854, "Le « ıslak burger », petit burger mou à la sauce tomate, place Taksim. Le classique de fin de soirée.", "Kızılkayalar Taksim", "Jeu. 12, fin de soirée"],
-    ["F", "resto", "Hamdi", 41.0166, 28.9718, "Kebabs du sud-est (pistache, aubergine) avec vue sur la Corne d'Or. Demandez la terrasse du dernier étage, réservation conseillée.", "Hamdi Restaurant Eminönü", "Jeu. 12, midi ou soir"],
-    ["G", "resto", "Karaköy Lokantası", 41.0237, 28.9794, "Mezzés et cuisine turque maison dans une salle carrelée de turquoise. Le soir, ambiance meyhane avec rakı.", "Karaköy Lokantası", "Mer. 11, soir"],
-    ["H", "resto", "Çiya Sofrası", 40.9898, 29.0265, "Cuisine régionale d'Anatolie, plats du jour au comptoir, prix raisonnables.", "Çiya Sofrası Kadıköy", "Ven. 13, midi"],
-    ["I", "chic", "Mikla", 41.0318, 28.9740, "Cuisine turque contemporaine au sommet d'un hôtel de Pera, vue sur toute la ville. Menu dégustation cher, réservation indispensable, tenue soignée.", "Mikla Restaurant Istanbul", "Le dîner « on se fait plaisir »"],
-    ["J", "chic", "Feriye", 41.0449, 29.0157, "Ancien palais ottoman au bord du Bosphore, près d'Ortaköy. Cuisine ottomane revisitée, terrasse sur l'eau. Réservation conseillée.", "Feriye Lokantası", "Sam. 14, si le vol est tard"]
-  ];
-  // Transports, tracés à partir des arrêts (positions approximatives)
-  const tram = [[41.0326, 28.9926], [41.0297, 28.9867], [41.0268, 28.9817], [41.0222, 28.9763], [41.0172, 28.9733], [41.0151, 28.9768], [41.0130, 28.9800], [41.0087, 28.9770], [41.0084, 28.9714], [41.0098, 28.9640]];
-  const tramStops = ["Kabataş", "Fındıklı", "Tophane", "Karaköy", "Eminönü", "Sirkeci", "Gülhane", "Sultanahmet", "Çemberlitaş", "Beyazıt"];
-  const ferryEm = [[41.0176, 28.9757], [41.0120, 28.9900], [41.0030, 29.0080], [40.9930, 29.0222]];
-  const ferryKa = [[41.0213, 28.9790], [41.0140, 28.9960], [41.0030, 29.0110], [40.9935, 29.0225]];
-  const funi = [[41.0326, 28.9926], [41.0369, 28.9858]];
-
-  const gmaps = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-
-  const legend = document.getElementById("legend");
-  const foodList = document.getElementById("food-list");
-  const markers = [], rows = [];
-  let map = null;
-
-  function select(i, fly) {
-    markers.forEach((m, j) => m && m.getElement() && m.getElement().classList.toggle("on", i === j));
-    rows.forEach((r, j) => r && r.classList.toggle("on", i === j));
-    if (fly && map && markers[i]) {
-      map.flyTo(markers[i].getLatLng(), Math.max(map.getZoom(), 16), { duration: 0.6 });
-      markers[i].openPopup();
-      document.getElementById("map").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  const corps = document.body;
+  const motifs = ['🪶', '✨', '❤️', '🪶', '⭐'];
+  function pluie(n) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('span');
+      p.className = 'plume';
+      p.textContent = motifs[Math.floor(Math.random() * motifs.length)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.fontSize = 16 + Math.random() * 26 + 'px';
+      p.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+      p.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+      p.style.animationDuration = 3.5 + Math.random() * 4 + 's';
+      p.style.animationDelay = Math.random() * 1.5 + 's';
+      p.addEventListener('animationend', () => p.remove());
+      corps.appendChild(p);
     }
   }
-
-  // Listes sous la carte (affichées même si la carte ne charge pas)
-  days.forEach(day => {
-    const box = document.createElement("div");
-    box.innerHTML = `<h3><i style="background:${day.color}"></i>${day.name}</h3>`;
-    const ol = document.createElement("ol");
-    places.forEach((pl, i) => {
-      if (pl[0] !== day.id) return;
-      const li = document.createElement("li");
-      const n = document.createElement("span");
-      n.className = "num"; n.textContent = String(i + 1).padStart(2, "0");
-      const btn = document.createElement("button");
-      btn.type = "button"; btn.textContent = pl[1];
-      btn.addEventListener("click", () => select(i, true));
-      const a = document.createElement("a");
-      a.href = gmaps(pl[4]); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Itinéraire ↗";
-      li.append(n, btn, a);
-      ol.appendChild(li);
-      rows[i] = li;
-    });
-    box.appendChild(ol);
-    legend.appendChild(box);
+  document.getElementById('lever').addEventListener('click', () => {
+    corps.classList.add('ouvert');
+    setTimeout(() => pluie(60), 900);
+    document.getElementById('accueil').setAttribute('aria-hidden', 'true');
   });
-
-  tiers.forEach(t => {
-    const box = document.createElement("div");
-    box.className = "tier";
-    box.innerHTML = `<h3>${t.name} <span class="price">${t.price}</span></h3>`;
-    const ol = document.createElement("ol");
-    food.forEach((f, k) => {
-      if (f[1] !== t.id) return;
-      const i = places.length + k;
-      const li = document.createElement("li");
-      li.innerHTML = `<span class="badge">${f[0]}</span><div class="r-body"><button type="button"></button><p></p><span class="when-eat"></span></div>`;
-      li.querySelector("button").textContent = f[2];
-      li.querySelector("p").textContent = f[5];
-      li.querySelector(".when-eat").textContent = f[7];
-      li.querySelector("button").addEventListener("click", () => select(i, true));
-      const a = document.createElement("a");
-      a.href = gmaps(f[6]); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Itinéraire ↗";
-      li.querySelector(".r-body").appendChild(a);
-      ol.appendChild(li);
-      rows[i] = li;
-    });
-    box.appendChild(ol);
-    foodList.appendChild(box);
-  });
-
-  document.getElementById("hotel-link").href = gmaps(hotel.q);
-
-  // Histoire des monuments : lien depuis la fiche du lieu, et retour vers la carte
-  const histOf = {};
-  document.querySelectorAll(".hist article[data-place]").forEach(art => {
-    const i = places.findIndex(p => p[1] === art.dataset.place);
-    if (i < 0) return;
-    histOf[i] = art.id;
-    art.querySelector(".to-map").addEventListener("click", () => select(i, true));
-  });
-  const histLink = i => histOf[i] ? `<a href="#${histOf[i]}" class="pp-hist">Son histoire ↓</a>` : "";
-
-  if (!window.L) {
-    document.getElementById("map").innerHTML = `<p class="map-fallback">La carte n'a pas pu se charger (pas de connexion ?). Les liens « Itinéraire » ci-dessous ouvrent chaque lieu dans Google Maps.</p>`;
-    return;
-  }
-
-  map = L.map("map", { zoomControl: true, scrollWheelZoom: false, tap: true }).setView([41.0150, 28.9850], 14);
-  map.on("focus", () => map.scrollWheelZoom.enable());
-  map.on("blur", () => map.scrollWheelZoom.disable());
-
-  // Fond de carte clair ou sombre selon le thème du téléphone
-  const dark = matchMedia("(prefers-color-scheme: dark)");
-  // Fonds Esri, utilisables sans clé (CARTO exige désormais une clé)
-  const esri = path => `https://server.arcgisonline.com/ArcGIS/rest/services/${path}/MapServer/tile/{z}/{y}/{x}`;
-  const attribution = 'Fond de carte &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-  const lightBase = L.tileLayer(esri("World_Street_Map"), { maxZoom: 19, maxNativeZoom: 18, attribution });
-  const darkBase = L.layerGroup([
-    L.tileLayer(esri("Canvas/World_Dark_Gray_Base"), { maxZoom: 19, maxNativeZoom: 16, attribution }),
-    L.tileLayer(esri("Canvas/World_Dark_Gray_Reference"), { maxZoom: 19, maxNativeZoom: 16 })
-  ]);
-  let base = null;
-  const setBase = d => { if (base) map.removeLayer(base); base = (d ? darkBase : lightBase).addTo(map); base.bringToBack && base.bringToBack(); };
-  setBase(dark.matches);
-  dark.addEventListener && dark.addEventListener("change", e => setBase(e.matches));
-
-  const transport = L.layerGroup().addTo(map);
-  L.polyline(tram, { color: css("--cobalt"), weight: 4, opacity: .75 }).bindTooltip("Tram T1", { sticky: true }).addTo(transport);
-  tram.forEach((p, i) => L.circleMarker(p, { radius: 3.5, color: css("--cobalt"), weight: 2, fillColor: "#fff", fillOpacity: 1 })
-    .bindTooltip("T1 · " + tramStops[i], { direction: "top" }).addTo(transport));
-  L.polyline(ferryEm, { color: css("--turq"), weight: 3, dashArray: "7 6", smoothFactor: 2 }).bindTooltip("Ferry Eminönü → Kadıköy, 20 min", { sticky: true }).addTo(transport);
-  L.polyline(ferryKa, { color: css("--turq"), weight: 3, dashArray: "7 6", opacity: .6 }).bindTooltip("Ferry Karaköy → Kadıköy, 20 min", { sticky: true }).addTo(transport);
-  L.polyline(funi, { color: css("--muted"), weight: 3, dashArray: "2 5" }).bindTooltip("Funiculaire F1 Kabataş → Taksim, 3 min", { sticky: true }).addTo(transport);
-
-  const visits = L.layerGroup().addTo(map), eats = L.layerGroup().addTo(map);
-
-  places.forEach((pl, i) => {
-    const day = days[pl[0] - 1];
-    const icon = L.divIcon({ className: "", html: `<span class="mk" style="background:${day.color}">${i + 1}</span>`, iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -12] });
-    const m = L.marker([pl[2], pl[3]], { icon, title: pl[1], riseOnHover: true })
-      .bindTooltip(esc(pl[1]), { direction: "right", offset: [12, 0], permanent: true, className: "mk-lbl" })
-      .bindPopup(`<b>${esc(pl[1])}</b><span class="pp-day">${esc(day.name)}</span><p>${esc(pl[5])}</p><span class="pp-links"><a href="${gmaps(pl[4])}" target="_blank" rel="noopener">Itinéraire ↗</a>${histLink(i)}</span>`)
-      .on("click", () => select(i));
-    m.addTo(visits);
-    markers[i] = m;
-  });
-
-  food.forEach((f, k) => {
-    const i = places.length + k;
-    const tier = tiers.find(t => t.id === f[1]);
-    const icon = L.divIcon({ className: "", html: `<span class="mk-food"><b>${f[0]}</b></span>`, iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -10] });
-    const m = L.marker([f[3], f[4]], { icon, title: f[2], riseOnHover: true })
-      .bindTooltip(esc(f[2]), { direction: "right", offset: [10, 0], permanent: true, className: "mk-lbl food" })
-      .bindPopup(`<b>${esc(f[2])}</b><span class="pp-day">${tier.name} · ${tier.price}</span><p>${esc(f[5])}</p><a href="${gmaps(f[6])}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
-      .on("click", () => select(i));
-    m.addTo(eats);
-    markers[i] = m;
-  });
-
-  const hIcon = L.divIcon({ className: "", html: `<span class="mk-hotel">H</span>`, iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -12] });
-  L.marker([hotel.lat, hotel.lon], { icon: hIcon, title: hotel.name, zIndexOffset: 1000 })
-    .bindTooltip("Hôtel", { direction: "right", offset: [14, 0], permanent: true, className: "mk-lbl hotel" })
-    .bindPopup(`<b>${hotel.name}</b><span class="pp-day">${hotel.addr}</span><p>Tram T1 à Gülhane, Marmaray à Sirkeci.</p><a href="${gmaps(hotel.q)}" target="_blank" rel="noopener">Itinéraire ↗</a>`)
-    .addTo(map);
-
-  // Les noms n'apparaissent qu'en zoomant, pour ne pas surcharger la vue d'ensemble
-  const mapEl = document.getElementById("map");
-  const labels = () => mapEl.classList.toggle("show-labels", map.getZoom() >= 16);
-  map.on("zoomend", labels); labels();
-
-  document.querySelectorAll(".filters button[data-f]").forEach(b => {
-    b.addEventListener("click", () => {
-      const f = b.dataset.f;
-      document.querySelectorAll(".filters button[data-f]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
-      [[visits, "visit"], [eats, "food"]].forEach(([layer, kind]) => {
-        if (f === "all" || f === kind) map.addLayer(layer); else map.removeLayer(layer);
-      });
-    });
-  });
-
-  // Vues rapides
-  const views = {
-    europe: [[41.0040, 28.9600], [41.0380, 28.9950]],
-    kadikoy: [[40.9790, 29.0180], [40.9950, 29.0320]],
-    tout: [[40.9790, 28.9450], [41.0790, 29.0460]]
-  };
-  document.querySelectorAll(".filters button[data-v]").forEach(b => {
-    b.addEventListener("click", () => {
-      if (b.dataset.v === "hotel") map.flyTo([hotel.lat, hotel.lon], 16, { duration: 0.6 });
-      else map.flyToBounds(views[b.dataset.v], { duration: 0.6, padding: [20, 20] });
-    });
-  });
-
-  // Ma position (demande l'autorisation du téléphone)
-  const locBtn = document.getElementById("locate"), locMsg = document.getElementById("locate-msg");
-  let me = null;
-  locBtn.addEventListener("click", () => {
-    locMsg.textContent = "Recherche de votre position…";
-    map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
-  });
-  map.on("locationfound", e => {
-    locMsg.textContent = "";
-    if (me) me.setLatLng(e.latlng); else me = L.circleMarker(e.latlng, { radius: 8, color: "#fff", weight: 3, fillColor: "#1a73e8", fillOpacity: 1 }).bindTooltip("Vous êtes ici").addTo(map);
-  });
-  map.on("locationerror", () => { locMsg.textContent = "Position indisponible : autorisez la localisation pour ce site dans le navigateur."; });
-
-  map.fitBounds(views.europe, { padding: [10, 10] });
-})();
-
-// Compte à rebours (heure d'Istanbul, UTC+3)
-(function () {
-  const chip = document.getElementById("countdown");
-  const start = Date.UTC(2026, 10, 10, 21, 0); // 11 nov. 00:00 à Istanbul
-  const DAY = 86400000;
-  const now = Date.now();
-  if (now < start) {
-    const d = Math.ceil((start - now) / DAY);
-    chip.textContent = d === 1 ? "Départ demain" : "Départ dans " + d + " jours";
-  } else if (now < start + 4 * DAY) {
-    chip.textContent = "Jour " + (Math.floor((now - start) / DAY) + 1) + " sur 4";
-  } else {
-    chip.textContent = "Voyage terminé, bon retour";
-  }
-})();
-
-// Valise : cochée localement, par personne
-(function () {
-  const items = [
-    "Carte d'identité ou passeport", "Billets d'avion et réservation de l'hôtel", "Carte bancaire sans frais à l'étranger",
-    "eSIM ou option internet à l'étranger", "Chargeur et batterie externe", "Veste imperméable ou parapluie",
-    "Chaussures confortables (ça grimpe)", "Foulard ou écharpe pour les mosquées", "Un pull pour les soirées sur le ferry",
-    "Médicaments et carte d'assurance", "Un peu d'euros en espèces", "Sac à dos pour la journée"
-  ];
-  const KEY = "istanbul-valise";
-  let done = {};
-  try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
-  const ul = document.getElementById("pack"), count = document.getElementById("pack-count");
-  const refresh = () => { count.textContent = items.filter((_, i) => done[i]).length + " / " + items.length; };
-  items.forEach((t, i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<label for="pk${i}"><input type="checkbox" id="pk${i}"><span></span></label>`;
-    li.querySelector("span").textContent = t;
-    const cb = li.querySelector("input");
-    cb.checked = !!done[i];
-    cb.addEventListener("change", () => {
-      done[i] = cb.checked; refresh();
-      try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
-    });
-    ul.appendChild(li);
-  });
-  refresh();
-})();
-
-// Convertisseur : taux du jour récupéré automatiquement, modifiable à la main
-(function () {
-  const $ = id => document.getElementById(id);
-  const rateInput = $("rate"), cTry = $("c-try"), cEur = $("c-eur"), hint = $("c-hint"), autoBtn = $("c-auto");
-  const KEY = "istanbul-taux-v2"; // { auto: {rate, date, source}, manual: number|null }
-  let store = { auto: null, manual: null };
-  try { store = Object.assign(store, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
-  const rate = () => store.manual || (store.auto && store.auto.rate) || null;
-  const fmtDate = d => new Date(d + "T12:00:00Z").toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
-
-  const fromTry = () => { const r = rate(); cEur.value = r && cTry.value ? (cTry.value / r).toFixed(2) : ""; };
-  const fromEur = () => { const r = rate(); cTry.value = r && cEur.value ? Math.round(cEur.value * r) : ""; };
-
-  function show(note) {
-    if (document.activeElement !== rateInput) rateInput.value = rate() ? +rate().toFixed(2) : "";
-    autoBtn.hidden = !(store.manual && store.auto);
-    if (store.manual) hint.textContent = "Taux saisi à la main, enregistré sur ce téléphone.";
-    else if (store.auto) hint.textContent = "Taux du " + fmtDate(store.auto.date) + " (" + store.auto.source + "), mis à jour automatiquement." + (note ? " " + note : "");
-    else hint.textContent = note || "Récupération du taux du jour…";
-    fromTry();
-  }
-
-  // Deux sources gratuites : la BCE (via Frankfurter), puis ExchangeRate-API en secours
-  async function fetchRate() {
-    const sources = [
-      ["https://api.frankfurter.dev/v1/latest?base=EUR&symbols=TRY", d => ({ rate: d.rates.TRY, date: d.date, source: "BCE" })],
-      ["https://open.er-api.com/v6/latest/EUR", d => ({ rate: d.rates.TRY, date: new Date(d.time_last_update_unix * 1000).toISOString().slice(0, 10), source: "ExchangeRate-API" })]
-    ];
-    for (const [url, parse] of sources) {
-      try {
-        const res = await fetch(url, { signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined });
-        if (!res.ok) continue;
-        const r = parse(await res.json());
-        if (r.rate > 0) return r;
-      } catch (e) {}
-    }
-    return null;
-  }
-
-  rateInput.addEventListener("input", () => {
-    const r = parseFloat(rateInput.value);
-    store.manual = r > 0 ? r : null;
-    save(); show();
-  });
-  autoBtn.addEventListener("click", () => { store.manual = null; save(); show(); });
-  cTry.addEventListener("input", fromTry);
-  cEur.addEventListener("input", fromEur);
-
-  show();
-  fetchRate().then(r => {
-    if (r) { store.auto = r; save(); show(); }
-    else if (store.auto) show("Pas de connexion : dernier taux connu.");
-    else if (!store.manual) show("Taux indisponible sans connexion. Saisissez-le à la main.");
-  });
-})();
+  document.getElementById('bis').addEventListener('click', () => pluie(45));
 </script>
-
 </body>
 </html>
